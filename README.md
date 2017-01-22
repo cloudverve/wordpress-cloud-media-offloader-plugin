@@ -20,4 +20,4 @@ From their web site:
 
 *Note: The authentication fields contain fake data.*
 
-![Settings Page](https://raw.githubusercontent.com/dmhendricks/wp-backblaze-image-offloader/master/assets/screenshot-1.png "Settings Page")
+![Settings Page](https://raw.githubusercontent.com/dmhendricks/backblaze-media-offloader/master/assets/screenshot-1.png "Settings Page")
