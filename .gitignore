@@ -1,3 +1,5 @@
+.gitignore
 composer.lock
 .DS_Store
 #vendor/
+.notes.txt
