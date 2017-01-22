@@ -1,0 +1,37 @@
+{
+  "name": "dmhendricks/backblaze-media-offloader",
+  "type": "wordpress-plugin",
+  "description": "A simple plugin that allows you to serve your WordPress Media Library files via the Backblaze B2 cloud storage service.",
+  "keywords": ["wordpress", "plugin", "backblaze", "b2", "media", "library", "offload"],
+  "homepage": "https://2lab.net",
+  "license": "GPL-2.0",
+  "authors": [
+    {
+      "name": "Daniel M. Hendricks",
+      "homepage": "https://danhendricks.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/dmhendricks/backblaze-media-offloader/issues/",
+    "wiki": "https://github.com/dmhendricks/backblaze-media-offloader/wiki/",
+    "source": "https://github.com/dmhendricks/backblaze-media-offloader/"
+  },
+  "require": {
+    "php": ">=5.5.0",
+    "mnsami/composer-custom-directory-installer": "*",
+    "htmlburger/carbon-fields": "dev-master",
+    "composer/installers": "*"
+  },
+  "extra":{
+    "installer-paths":{
+      "./vendor/carbon-fields": ["htmlburger/carbon-fields"]
+    }
+  },
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "TwoLabNet\\BackblazeB2\\": "src/"
+    }
+  }
+}
