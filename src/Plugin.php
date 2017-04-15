@@ -6,8 +6,6 @@ class Plugin {
     public static $settings;
     public static $_b2_account_id;
 
-    public function __construct() {}
-
     public static function init($_settings) {
 
         self::$_b2_account_id = trim(carbon_get_theme_option($_settings['prefix'].'account_id'));
@@ -27,13 +25,13 @@ class Plugin {
         }
 
         // Enqueue scripts
-        new EnqueueScripts();
+        EnqueueScripts::load();
 
-        // Run the plugin
-        new Core();
+        // Core plugin logic
+        Core::load();
 
         // Deploy settings page(s)
-        new AdminPages();
+        Settings::load();
 
     }
 

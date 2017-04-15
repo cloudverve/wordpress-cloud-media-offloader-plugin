@@ -5,8 +5,6 @@ use Carbon_Fields\Field;
 
 class Helpers extends Plugin {
 
-    public function __construct() { }
-
     public static function current_admin_page() {
       return isset($_GET['page']) ? $_GET['page'] : null;
     }
