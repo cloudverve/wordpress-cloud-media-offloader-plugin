@@ -6,12 +6,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/composer/installers.git",
-            "reference": "f1a0de61fb7f7a8cc5e67ab70b68f11573490a55"
+            "reference": "fda8fe5c90d7612927f4533dab7d54df6d345028"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/f1a0de61fb7f7a8cc5e67ab70b68f11573490a55",
-            "reference": "f1a0de61fb7f7a8cc5e67ab70b68f11573490a55",
+            "url": "https://api.github.com/repos/composer/installers/zipball/fda8fe5c90d7612927f4533dab7d54df6d345028",
+            "reference": "fda8fe5c90d7612927f4533dab7d54df6d345028",
             "shasum": ""
         },
         "require": {
@@ -25,7 +25,7 @@
             "composer/composer": "1.0.*@dev",
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2017-01-22 07:37:08",
+        "time": "2017-03-13T09:27:45+00:00",
         "type": "composer-plugin",
         "extra": {
             "class": "Composer\\Installers\\Plugin",
@@ -55,6 +55,7 @@
         "keywords": [
             "Craft",
             "Dolibarr",
+            "Eliasis",
             "Hurad",
             "ImageCMS",
             "Kanboard",
@@ -86,9 +87,11 @@
             "fuelphp",
             "grav",
             "installer",
+            "itop",
             "joomla",
             "kohana",
             "laravel",
+            "lavalite",
             "lithium",
             "magento",
             "mako",
@@ -103,6 +106,7 @@
             "roundcube",
             "shopware",
             "silverstripe",
+            "sydes",
             "symfony",
             "typo3",
             "wordpress",
@@ -130,7 +134,7 @@
             "composer-plugin-api": "^1.0",
             "php": ">=5.3"
         },
-        "time": "2016-05-25 08:26:02",
+        "time": "2016-05-25T08:26:02+00:00",
         "type": "composer-plugin",
         "extra": {
             "class": [
@@ -172,18 +176,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/htmlburger/carbon-fields.git",
-            "reference": "d4c0f9b72e0edbcd0c5d6eabde01882491b97994"
+            "reference": "727d9eb8f2dab32af6c12804164bae3d65b94066"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/htmlburger/carbon-fields/zipball/d4c0f9b72e0edbcd0c5d6eabde01882491b97994",
-            "reference": "d4c0f9b72e0edbcd0c5d6eabde01882491b97994",
+            "url": "https://api.github.com/repos/htmlburger/carbon-fields/zipball/727d9eb8f2dab32af6c12804164bae3d65b94066",
+            "reference": "727d9eb8f2dab32af6c12804164bae3d65b94066",
             "shasum": ""
         },
         "require": {
             "composer/installers": "~1.0"
         },
-        "time": "2017-01-12 08:50:16",
+        "time": "2017-03-15T07:18:00+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "autoload": {
