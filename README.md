@@ -1,6 +1,6 @@
 # Backblaze B2 Media Offloader for WordPress
 
-**Warning:** This is currently **under development** and is in alpha. Test in a development environment first and use at your own risk.
+**Warning:** This is currently **under development and does not work** yet. Test in a development environment first and use at your own risk.
 
 ## Description
 
