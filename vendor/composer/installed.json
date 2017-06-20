@@ -6,12 +6,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/composer/installers.git",
-            "reference": "fda8fe5c90d7612927f4533dab7d54df6d345028"
+            "reference": "ae73c5dfec9279bd4c35a49a49fcb6568aa8aba4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/fda8fe5c90d7612927f4533dab7d54df6d345028",
-            "reference": "fda8fe5c90d7612927f4533dab7d54df6d345028",
+            "url": "https://api.github.com/repos/composer/installers/zipball/ae73c5dfec9279bd4c35a49a49fcb6568aa8aba4",
+            "reference": "ae73c5dfec9279bd4c35a49a49fcb6568aa8aba4",
             "shasum": ""
         },
         "require": {
@@ -25,7 +25,7 @@
             "composer/composer": "1.0.*@dev",
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2017-03-13T09:27:45+00:00",
+        "time": "2017-06-07T10:23:00+00:00",
         "type": "composer-plugin",
         "extra": {
             "class": "Composer\\Installers\\Plugin",
@@ -176,18 +176,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/htmlburger/carbon-fields.git",
-            "reference": "727d9eb8f2dab32af6c12804164bae3d65b94066"
+            "reference": "03b28ded9b3eb44347091935185ab8fbb844d2f4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/htmlburger/carbon-fields/zipball/727d9eb8f2dab32af6c12804164bae3d65b94066",
-            "reference": "727d9eb8f2dab32af6c12804164bae3d65b94066",
+            "url": "https://api.github.com/repos/htmlburger/carbon-fields/zipball/03b28ded9b3eb44347091935185ab8fbb844d2f4",
+            "reference": "03b28ded9b3eb44347091935185ab8fbb844d2f4",
             "shasum": ""
         },
         "require": {
             "composer/installers": "~1.0"
         },
-        "time": "2017-03-15T07:18:00+00:00",
+        "time": "2017-05-23T08:19:29+00:00",
         "type": "wordpress-plugin",
         "installation-source": "source",
         "autoload": {
