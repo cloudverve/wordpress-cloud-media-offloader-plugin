@@ -4,11 +4,15 @@
 
 ## Description
 
-This is a WordPress plugin that allows you to serve your WordPress Media Library files via the [Backblaze B2](https://www.backblaze.com/b2/cloud-storage.html) cloud storage service.
+This is a WordPress plugin that allows you to serve your WordPress Media Library files via the [Backblaze B2](https://www.backblaze.com/b2/cloud-storage.html#af9kre) cloud storage service.
 
 From their web site:
 
 > *The lowest cost cloud storage on the planet: $0.005/GB a month. Try it and get the first 10 GB free on us.*
+
+## Requirements
+
+* PHP 5.5 or greater
 
 ## Installation
 
