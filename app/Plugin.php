@@ -1,101 +1,148 @@
 <?php
 namespace TwoLabNet\BackblazeB2;
+use Carbon_Fields;
 
 class Plugin {
 
-    public static $settings;
-    public static $_b2_account_id;
+  public static $settings;
+  public static $textdomain;
+  public static $prefix;
+  public static $b2_account_id;
 
-    public static function init($_settings) {
+  function __construct($_settings) {
 
-        self::$_b2_account_id = trim(carbon_get_theme_option($_settings['prefix'].'account_id'));
-        $_b2_api_key    = trim(carbon_get_theme_option($_settings['prefix'].'application_key'));
+    // Set text domain and option prefix
+    self::$textdomain = $_settings['data']['TextDomain'];
+    self::$prefix     = $_settings['prefix'];
+    self::$settings   = $_settings;
 
-        $_settings['b2'] = array_merge_recursive($_settings['b2'], [
-          'accountId' => self::$_b2_account_id,
-          'credentials' => base64_encode(self::$_b2_account_id . ':' . $_b2_api_key),
-        ]);
-        self::$settings = $_settings;
+    if(!$this->verify_dependencies()) return;
 
-        // Check for missing B2 credentials
-        if(!self::$_b2_account_id || !$_b2_api_key) {
-          add_action( 'admin_notices', function() {
-            Helpers::show_notice('The <strong>Backblaze B2 Media Offloader</strong> plugin is not configured properly. Please visit the settings page.');
-          });
-        }
+    // Add B2 credentials to settings array
+    self::$b2_account_id  = trim(carbon_get_theme_option(self::$prefix.'account_id'));
+    $b2_api_key           = trim(carbon_get_theme_option(self::$prefix.'application_key'));
 
-        // Enqueue scripts
-        EnqueueScripts::load();
+    self::$settings['b2'] = array_merge_recursive($_settings['b2'], [
+      'accountId' => self::$b2_account_id,
+      'credentials' => base64_encode(self::$b2_account_id . ':' . $b2_api_key),
+    ]);
 
-        // Core plugin logic
-        Core::load();
-
-        // Deploy settings page(s)
-        Settings::load();
-
+    // Check for missing B2 credentials
+    if(!self::$b2_account_id || !$b2_api_key) {
+      add_action( 'admin_notices', function() {
+        Helpers::show_notice('The <strong>Backblaze B2 Media Offloader</strong> plugin is not configured properly. Please visit the settings page.');
+      });
     }
 
-    /**
-      * Add/update theme option in current settings array.
-      *
-      * Example usage:
-      *     parent::set_option(['site_name' => 'My WordPress Site'])
-      *
-      * @param array $value An array of value(s) that you wish to merge into
-      *     self::$settings array.
-      *
-      * @return bool
-      */
-    public static function set_option($values = array()) {
-      if(!$values || !is_array($values)) return false;
+    // Core plugin logic
+    new Core();
 
-      try {
-        self::$settings = Helpers::array_merge_recursive_distinct(self::$settings, $values);
-      } catch (Exception $e) {
-        return false;
-      }
+    // Enqueue scripts
+    new EnqueueScripts();
 
+    // Add admin settings page(s)
+    new Settings();
+
+  }
+
+  private function verify_dependencies() {
+    // Check if outdated version of Carbon Fields loaded
+    if(!defined('Carbon_Fields\VERSION')) {
+      Helpers::show_notice('<strong>'.self::$settings['data']['Name'].':</strong> '.__('A fatal error occurred while trying to load dependencies.'), 'error', false);
+      return false;
+    } else if( version_compare( Carbon_Fields\VERSION, self::$settings['deps']['carbon_fields'], '<' ) ) {
+      Helpers::show_notice('<strong>'.self::$settings['data']['Name'].':</strong> '.__('Unable to load. An outdated version of Carbon Fields has been loaded:' . ' ' . Carbon_Fields\VERSION) . ' (&gt;= '.self::$settings['deps']['carbon_fields'].' '.__('required').')', 'error', false);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+    * Returns true if WP_ENV is anything other than 'development' or 'staging'.
+    *   Useful for determining whether or not to enqueue a minified or non-
+    *   minified script (which can be useful for debugging via browser).
+    *
+    * @return bool
+    */
+  public function is_production() {
+    if( !defined('WP_ENV') ) {
       return true;
+    } else {
+      return !in_array(WP_ENV, ['development', 'staging']);
+    }
+  }
+
+  /**
+    * Returns true if request is via AJAX.
+    *
+    * @return bool
+    */
+  public function is_ajax() {
+    return defined('DOING_AJAX') && DOING_AJAX;
+  }
+
+  /**
+    * Returns script ?ver= version based on environment (WP_ENV)
+    *
+    * If WP_ENV is not defined or equals anything other than 'development' or 'staging'
+    * returns $script_version (if defined) else plugin verson. If WP_ENV is defined
+    * as 'development' or 'staging', returns string representing file last modification
+    * date (to discourage browser during development).
+    *
+    * @param string $script The filesystem path (relative to the script location of
+    *    calling script) to return the version for.
+    * @param string $script_version (optional) The version that will be returned if
+    *    WP_ENV is defined as anything other than 'development' or 'staging'.
+    *
+    * @return string
+    */
+  public function get_script_version($script, $return_minified = false, $script_version = null) {
+    $version = $script_version ?: self::$settings['data']['Version'];
+    if($this->is_production()) return $version;
+
+    $script = $this->get_script_path($script, $return_minified);
+    if(file_exists($script)) {
+      $version = date("ymd-Gis", filemtime( $script ) );
     }
 
-    /**
-      * Get single plugin setting defined in main plugin PHP loader (ex: wordpress-base-plugin.php)
-      *
-      * Example usage:
-      *     parent::get_option()
-      *       By default, returns self::$settings['prefix']
-      *     parent::get_option('url')
-      *       Returns self::$settings['url'])
-      *     parent::get_option(['data', 'Version'])
-      *       Returns self::$settings['data']['Version'])
-      *
-      * @param mixed $key The string key of array or an array path of keys.
-      *
-      * @return mixed Value of self::$settings array specified, if set
-      */
-    public static function get_option($key = array('prefix')) {
-      if(!is_array($key)) $key = array($key);
+    return $version;
+  }
 
-      $return = self::$settings;
-
-      try {
-        foreach($key as $idx) {
-          $return = $return[$idx];
-        }
-      } catch (Exception $e) {
-        return null;
-      }
-
-      return $return;
+  /**
+    * Returns script path or URL, either regular or minified (if exists).
+    *
+    * If in production mode or if @param $force_minify == true, inserts '.min' to the filename
+    * (if exists), else return script name without (example: style.css vs style.min.css).
+    *
+    * @param string $script The relative (to the plugin folder) path to the script.
+    * @param bool $return_minified If true and is_production() === true then will prefix the
+    *   extension with .min. NB! Due to performance reasons, I did not include logic to check
+    *   to see if the script_name.min.ext exists, so use only when you know it exists.
+    * @param bool $return_url If true, returns full-qualified URL rather than filesystem path.
+    *
+    * @return string The URL or path to minified or regular $script.
+    */
+  public function get_script_path($script, $return_minified = false, $return_url = false) {
+    $script = trim($script, '/');
+    if($return_minified && strpos($script, '.') && $this->is_production()) {
+      $script_parts = explode('.', $script);
+      $script_extension = end($script_parts);
+      array_pop($script_parts);
+      $script = implode('.', $script_parts) . '.min.' . $script_extension;
     }
 
-    /**
-      * Return all plugin settings defined in main plugin PHP loader (ex: wordpress-base-plugin.php)
-      *
-      * @return array Current plugin settings
-      */
-    public static function get_options() {
-      return self::$settings;
-    }
+    return self::$settings[$return_url ? 'url' : 'path'] . $script;
+  }
+
+  /**
+    * Returns absolute URL of $script.
+    *
+    * @param string $script The relative (to the plugin folder) path to the script.
+    * @param bool
+    */
+  public function get_script_url($script, $return_minified = false) {
+    return $this->get_script_path($script, $return_minified, true);
+  }
 
 }
