@@ -4,7 +4,7 @@
  * Plugin Name:       Backblaze B2 Media Offloader
  * Plugin URI:        https://github.com/dmhendricks/backblaze-media-offloader
  * Description:       A simple plugin that allows you to serve your WordPress Media Library files via the Backblaze B2 cloud storage service.
- * Version:           0.1.3
+ * Version:           0.2.0
  * Author:            2Lab Internet Services
  * Author URI:        https://www.danhendricks.com
  * Text Domain:       b2mo
@@ -30,18 +30,21 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-if(!defined('ABSPATH')) exit;
+
+if(!defined('WPINC')) die();
 
 require( __DIR__ . '/vendor/autoload.php' );
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-// Initialize plugin
-\TwoLabNet\BackblazeB2\Plugin::init(array(
-	'slug' => substr(plugin_basename(__FILE__), 0, strpos(plugin_basename(__FILE__), '/')),
+// Initialize plugin - Change to use your own namespace
+new \TwoLabNet\BackblazeB2\Plugin(array(
 	'data' => get_plugin_data(__FILE__),
 	'path' => realpath(plugin_dir_path(__FILE__)).DIRECTORY_SEPARATOR,
 	'url' => plugin_dir_url(__FILE__),
+	'object_cache_group' => 'b2mo_cache',
+	'object_cache_expire' => 72, // In hours
 	'prefix' => 'b2mo_',
+	'deps' => ['carbon_fields' => '1.6.0'],
 	'b2' => ['apiUrl' => 'https://api.backblazeb2.com/b2api/v1/']
 ));
 ?>
