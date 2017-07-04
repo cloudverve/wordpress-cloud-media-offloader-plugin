@@ -20,6 +20,15 @@ From their web site:
 2. Upload to wp-content/plugins/ folder
 3. Activate through wp-admin/plugin.php page.
 
+## Changelog
+
+**0.1.2 (master)**
+* Moved /src to /app
+* Added Gulp support
+
+**0.1.0**
+* Initial commit
+
 ## Screenshot
 
 *Note: The authentication fields contain fake data.*
