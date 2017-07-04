@@ -20,9 +20,17 @@ From their web site:
 2. Upload to wp-content/plugins/ folder
 3. Activate through wp-admin/plugin.php page.
 
+## Known Incompatibilities
+
+* [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) - If you have this plugin installed (or use a plugin/theme in which it is embedded), you/they must be running the latest _release_ version.
+
+If you are aware of any other compatibility issues, please [report them](https://github.com/dmhendricks/backblaze-media-offloader/issues).
+
 ## Changelog
 
-**0.1.2 (master)**
+**0.2.0 (master)**
+* Refactored to use latest Core template
+* Added dependency checker
 * Moved /src to /app
 * Added Gulp support
 
