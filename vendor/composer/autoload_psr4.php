@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'TwoLabNet\\BackblazeB2\\' => array($baseDir . '/src'),
+    'TwoLabNet\\BackblazeB2\\' => array($baseDir . '/app'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
     'Carbon_Fields\\' => array($vendorDir . '/carbon-fields/core'),
 );
