@@ -12,7 +12,7 @@ class B2 extends Plugin {
     if(isset($_auth['apiUrl'])) $_auth['apiUrl'] = $_auth['apiUrl'] . '/b2api/v1/';
 
     // Display error if not authenticated
-    if(parent::$_b2_account_id && !array_key_exists('authorizationToken', $_auth)) {
+    if(self::$b2_account_id && !array_key_exists('authorizationToken', $_auth)) {
       add_action( 'admin_notices', function() {
         Helpers::show_notice('<strong>Error:</strong> Authentication to Backblaze B2 failed.', 'error', true);
       });
@@ -20,29 +20,29 @@ class B2 extends Plugin {
     }
 
     // Add results to session configuration
-    parent::set_option(['b2' => $_auth]);
+    self::$settings['b2'] = Helpers::array_merge_recursive_distinct(self::$settings['b2'], $_auth);
 
     // Update cache
     $_auth_cache = $_auth;
     unset($_auth_cache['authorizationToken'], $_auth_cache['minimumPartSize']);
-    update_option(parent::get_option().'auth_cache', $_auth_cache, 'yes');
+    update_option(self::$prefix.'auth_cache', $_auth_cache, 'yes');
 
     return $_auth;
   }
 
   public static function curl($endpoint, $action = 'GET', $data = array(), $headers = null, $_api_url = null, $post_fields = null) {
     // Reference: http://php.net/manual/en/function.curl-setopt.php
-    $_api_url = $_api_url ? $_api_url : parent::get_option('b2')['apiUrl'] . $endpoint;
+    $_api_url = $_api_url ? $_api_url : self::$settings['b2']['apiUrl'] . $endpoint;
 
     //echo $action.' - '; print_r($data);
-    $_token = @parent::get_option('b2')['authorizationToken'];
+    $_token = @self::$settings['b2']['authorizationToken'];
 
     $ch = curl_init($_api_url);
 
     if(!$headers) {
       $headers = array(
         'Accept: application/json',
-        'Authorization: ' . ($_token ? $_token : 'Basic ' . parent::get_option('b2')['credentials'])
+        'Authorization: ' . ($_token ? $_token : 'Basic ' . self::$settings['b2']['credentials'])
       );
     }
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
