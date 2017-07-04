@@ -6,12 +6,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/composer/installers.git",
-            "reference": "ae73c5dfec9279bd4c35a49a49fcb6568aa8aba4"
+            "reference": "553b33c8cb50875b5a058627c57e34a9eddc36cf"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/ae73c5dfec9279bd4c35a49a49fcb6568aa8aba4",
-            "reference": "ae73c5dfec9279bd4c35a49a49fcb6568aa8aba4",
+            "url": "https://api.github.com/repos/composer/installers/zipball/553b33c8cb50875b5a058627c57e34a9eddc36cf",
+            "reference": "553b33c8cb50875b5a058627c57e34a9eddc36cf",
             "shasum": ""
         },
         "require": {
@@ -25,7 +25,7 @@
             "composer/composer": "1.0.*@dev",
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2017-06-07T10:23:00+00:00",
+        "time": "2017-07-04T09:46:55+00:00",
         "type": "composer-plugin",
         "extra": {
             "class": "Composer\\Installers\\Plugin",
