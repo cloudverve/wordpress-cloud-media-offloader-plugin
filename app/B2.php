@@ -14,7 +14,7 @@ class B2 extends Plugin {
     // Display error if not authenticated
     if(self::$b2_account_id && !array_key_exists('authorizationToken', $_auth)) {
       add_action( 'admin_notices', function() {
-        Helpers::show_notice('<strong>Error:</strong> Authentication to Backblaze B2 failed.', 'error', true);
+        Helpers::show_notice(__('<strong>Error:</strong> Authentication to Backblaze B2 failed.'), 'error', true);
       });
 
     }

@@ -53,10 +53,10 @@ class Settings extends Plugin {
           ->help_text('If enabled, Media Library URLs will be changed to serve from Backblaze. <em>You will likely want this checked unless you are using another plugin/method to rewrite URLs.</em>')
       ))
       ->add_tab( __('MIME Types'), array(
-        Field::make('radio', self::$prefix.'filter_mime_type', 'File Types to Process')->set_default_value('*')
-          ->help_text('Unless specified, all file (MIME) types are processed.')
+        Field::make('radio', self::$prefix.'filter_mime_type', __('File Types to Process'))->set_default_value('*')
+          ->help_text(__('Unless specified, all file (MIME) types are processed.'))
           ->add_options( array($this->mine_filter_options)),
-        Field::make( 'set', self::$prefix.'mime_types', 'File (MIME) Types' )
+        Field::make( 'set', self::$prefix.'mime_types', __('File (MIME) Types') )
           ->set_conditional_logic( array(array( 'field' => self::$prefix.'filter_mime_type', 'value' => array('include', 'exclude'), 'compare' => 'IN' )) )
           ->set_default_value(array('image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff', 'image/svg', 'image/svgz'))
           ->add_options( $this->get_formatted_mime_types() )
