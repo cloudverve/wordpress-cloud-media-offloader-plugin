@@ -20,11 +20,17 @@ From their web site:
 2. Upload to wp-content/plugins/ folder
 3. Activate through wp-admin/plugin.php page.
 
-## Known Incompatibilities
+## Known Compatibilities & Conflicts
+
+#### Compatible Plugins
+
+* [SVG Support](https://wordpress.org/plugins/svg-support/)
+
+#### Conflicts
 
 * [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) - If you have this plugin installed (or use a plugin/theme in which it is embedded), you/they must be running the latest _release_ version.
 
-If you are aware of any other compatibility issues, please [report them](https://github.com/dmhendricks/backblaze-media-offloader/issues).
+If you are aware of any others, please [share](https://github.com/dmhendricks/backblaze-media-offloader/issues).
 
 ## Changelog
 
@@ -34,7 +40,7 @@ If you are aware of any other compatibility issues, please [report them](https:/
 * Refactored to use latest Core template
 * Added dependency checker
 * Moved /src to /app
-* Added Gulp support
+* Added Gulp love
 
 **0.1.0**
 * Initial commit
