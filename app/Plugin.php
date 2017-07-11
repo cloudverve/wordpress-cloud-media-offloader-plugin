@@ -30,7 +30,7 @@ class Plugin {
     // Check for missing B2 credentials
     if(!self::$b2_account_id || !$b2_api_key) {
       add_action( 'admin_notices', function() {
-        Helpers::show_notice('The <strong>Backblaze B2 Media Offloader</strong> plugin is not configured properly. Please visit the settings page.');
+        Helpers::show_notice(__('The <strong>Backblaze B2 Media Offloader</strong> plugin is not configured properly. Please visit the settings page.'));
       });
     }
 
