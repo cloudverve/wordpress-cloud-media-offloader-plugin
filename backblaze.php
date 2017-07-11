@@ -34,7 +34,8 @@
 if(!defined('WPINC')) die();
 
 require( __DIR__ . '/vendor/autoload.php' );
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+require_once( ABSPATH . WPINC . '/pluggable.php' );
+require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 // Initialize plugin - Change to use your own namespace
 new \TwoLabNet\BackblazeB2\Plugin(array(
