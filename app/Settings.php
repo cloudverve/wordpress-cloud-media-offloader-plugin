@@ -5,11 +5,14 @@ use Carbon_Fields\Field;
 
 class Settings extends Plugin {
 
+  private $mine_filter_options;
+
   /**
     * Create a options/settings page in WP Admin
     */
   function __construct() {
-    //var_dump(get_allowed_mime_types()); exit;
+
+    $this->mine_filter_options = array('*' => 'All File Types', 'exclude' => __('All Types Except'), 'include' => __('Only Types Specified'));
 
     // Create admin options page
     $this->add_plugin_options_page();
@@ -50,10 +53,12 @@ class Settings extends Plugin {
           ->help_text('If enabled, Media Library URLs will be changed to serve from Backblaze. <em>You will likely want this checked unless you are using another plugin/method to rewrite URLs.</em>')
       ))
       ->add_tab( __('MIME Types'), array(
-        Field::make('checkbox', self::$prefix.'filter_mimes', 'Restrict by MIME Type')->set_option_value(1)->set_default_value(0)
-          ->help_text('If enabled, only the specified MIME types will be uploaded/rewritten.'),
-        Field::make( 'set', self::$prefix.'mime_types', 'Enabled MIME Types' )
-          ->set_conditional_logic( array(array( 'field' => self::$prefix.'filter_mimes', 'value' => true )) )
+        Field::make('radio', self::$prefix.'filter_mime_type', 'File Types to Process')->set_default_value('*')
+          ->help_text('Unless specified, all file (MIME) types are processed.')
+          ->add_options( array($this->mine_filter_options)),
+        Field::make( 'set', self::$prefix.'mime_types', 'File (MIME) Types' )
+          ->set_conditional_logic( array(array( 'field' => self::$prefix.'filter_mime_type', 'value' => array('include', 'exclude'), 'compare' => 'IN' )) )
+          ->set_default_value(array('image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff', 'image/svg', 'image/svgz'))
           ->add_options( $this->get_formatted_mime_types() )
       ));
   }
@@ -88,5 +93,13 @@ class Settings extends Plugin {
 
     return $types;
   }
+
+  /*
+  private function get_filter_list_label() {
+    $filter_type = carbon_get_theme_option(self::$prefix.'filter_mime_type');
+    if(in_array($filter_type, array('include', 'exclude'))) array_search ($filter_type, $this->mine_filter_options);
+    return '';
+  }
+  */
 
 }

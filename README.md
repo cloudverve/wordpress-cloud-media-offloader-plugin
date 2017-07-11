@@ -29,6 +29,7 @@ If you are aware of any other compatibility issues, please [report them](https:/
 ## Changelog
 
 **0.2.0 (master)**
+* Added MIME-type filtering
 * Refactored to use latest Core template
 * Added dependency checker
 * Moved /src to /app
