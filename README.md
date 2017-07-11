@@ -22,15 +22,32 @@ From their web site:
 
 ## Known Compatibilities & Conflicts
 
-#### Compatible Plugins
+### Compatible Plugins
 
 * [SVG Support](https://wordpress.org/plugins/svg-support/)
 
-#### Conflicts
+### Conflicts
 
 * [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) - If you have this plugin installed (or use a plugin/theme in which it is embedded), you/they must be running the latest _release_ version.
 
 If you are aware of any others, please [share](https://github.com/dmhendricks/backblaze-media-offloader/issues).
+
+## Goals
+
+### TODO
+
+* Currently, the plugin uploads the files to B2. However:
+	* It does not rewrite the image URLs
+	* When you delete a file from Media Library, it is not deleted from B2.
+ * Extensive documentation & code cleanup
+ * Test on ancient versions of WordPress to determine compatibility
+ * Language translations
+
+### Long-term
+
+* Hooks
+* Support for file uploaders from the likes of [ACF](https://www.advancedcustomfields.com/) and [CMB2](https://wordpress.org/plugins/cmb2/), [Pods](https://wordpress.org/plugins/pods/), etc...
+* Ability to selectively password protect files and/or the possibility of link expiration (WooCommerce integration?).
 
 ## Changelog
 
