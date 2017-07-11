@@ -56,7 +56,7 @@ class Core extends Plugin {
     );
     $result = B2::curl('b2_upload_file', 'POST', array(), $headers, self::$settings['b2']['uploadUrl'], $read_file);
 
-    //wp_mail('hendridm@gmail.com', 'file array', print_r($file, true));
+    //wp_mail('backblaze-media-offloader@mailhog.local', 'file array', print_r($file, true));
 
     return $file;
   }
