@@ -12,7 +12,7 @@ class Settings extends Plugin {
     */
   function __construct() {
 
-    $this->mine_filter_options = array('*' => 'All File Types', 'exclude' => __('All Types Except'), 'include' => __('Only Types Specified'));
+    $this->mine_filter_options = array('*' => __('All File Types'), 'exclude' => __('All Types Except'), 'include' => __('Only Types Specified'));
 
     // Create admin options page
     $this->add_plugin_options_page();
@@ -31,15 +31,15 @@ class Settings extends Plugin {
     Container::make('theme_options', 'Backblaze B2')
       ->set_page_parent('options-general.php')
       ->add_tab( __('General'), array(
-        Field::make('checkbox', self::$prefix.'enabled', 'Enable Plugin')->set_option_value(1)
-          ->help_text('Check to enable the plugin. Images will be uploaded to your B2 bucket as specified below.'),
+        Field::make('checkbox', self::$prefix.'enabled', __('Enable Plugin'))->set_option_value(1)
+          ->help_text(__('Check to enable the plugin. Images will be uploaded to your B2 bucket as specified below.')),
         Field::make('html', self::$prefix.'section_header_auth')
-          ->set_html('<h3>Access Credentials</h3><p>You can find these values by logging into your <a href="https://www.backblaze.com/" target="_blank">Backblaze</a> account, clicking <strong>Buckets</strong, then clicking the <strong>Show Account ID and Application Key</strong> link.'),
-        Field::make('text', self::$prefix.'account_id', 'Account ID'),
-        Field::make('text', self::$prefix.'application_key', 'Application Key'),
+          ->set_html('<h3>'.__('Access Credentials').'</h3><p>'.__('You can find these values by logging into your').' <a href="https://www.backblaze.com/" target="_blank">Backblaze</a> '.('account, clicking <strong>Buckets</strong, then clicking the <strong>Show Account ID and Application Key</strong> link')),
+        Field::make('text', self::$prefix.'account_id', __('Account ID')),
+        Field::make('text', self::$prefix.'application_key', __('Application Key')),
         Field::make('html', self::$prefix.'section_header_bucket')
-          ->set_html('<h3>Bucket &amp; Path</h3>'),
-        Field::make('select', self::$prefix.'bucket_id', 'Bucket List')
+          ->set_html('<h3>'.__('Bucket &amp; Path').'</h3>'),
+        Field::make('select', self::$prefix.'bucket_id', __('Bucket List'))
           ->add_options($bucket_list)
           ->help_text('If you see <em>no options</em>, log into your Backblaze B2 account and make that you have at least one bucket created and that it is marked <strong>Public</strong>.'),
         Field::make('text', self::$prefix.'path', 'Path')
