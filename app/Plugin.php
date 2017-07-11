@@ -66,11 +66,10 @@ class Plugin {
     * @return bool
     */
   public function is_production() {
-    if( !defined('WP_ENV') ) {
+    if( !defined('WP_ENV') || (defined('WP_ENV') && !in_array(WP_ENV, ['development', 'staging']) ) ) {
       return true;
-    } else {
-      return !in_array(WP_ENV, ['development', 'staging']);
     }
+    return false;
   }
 
   /**
