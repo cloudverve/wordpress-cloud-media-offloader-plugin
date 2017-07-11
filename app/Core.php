@@ -12,8 +12,14 @@ class Core extends Plugin {
   }
 
   public function upload_prefilter_handler($file) {
+
     // Determine if MIME type should be processed
-    if(carbon_get_theme_option(self::$prefix.'filter_mimes') && !in_array($file['type'], carbon_get_theme_option(self::$prefix.'mime_types'))) return $file;
+    $filter_type = carbon_get_theme_option(self::$prefix.'filter_mime_type');
+    $mime_types = carbon_get_theme_option(self::$prefix.'mime_types');
+    if(in_array($filter_type, array('include', 'exclude'))) {
+      $in_filter_list = in_array($file['type'], $mime_types);
+      if(($filter_type == 'exclude' && $in_filter_list) || ($filter_type == 'include' && !$in_filter_list)) return $file;
+    }
 
     // Authenticate
     B2::auth();
