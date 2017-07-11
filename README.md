@@ -41,6 +41,4 @@ If you are aware of any other compatibility issues, please [report them](https:/
 
 ## Screenshot
 
-*Note: The authentication fields contain fake data.*
-
 ![Settings Page](https://raw.githubusercontent.com/dmhendricks/backblaze-media-offloader/master/assets/screenshot-1.png "Settings Page")
