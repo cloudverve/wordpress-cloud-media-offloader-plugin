@@ -5,6 +5,9 @@ class Core extends Plugin {
 
   function __construct() {
 
+    // Rage against Automattic's war on SVG
+    add_filter('upload_mimes', array($this, 'add_svg_to_mime_types'));
+
     // Add WordPress pre-upload filters
     add_filter( 'upload_dir', array($this, 'upload_dir_handler') );
     add_filter( 'wp_handle_upload_prefilter', array($this, 'upload_prefilter_handler') );
@@ -53,6 +56,8 @@ class Core extends Plugin {
     );
     $result = B2::curl('b2_upload_file', 'POST', array(), $headers, self::$settings['b2']['uploadUrl'], $read_file);
 
+    //wp_mail('hendridm@gmail.com', 'file array', print_r($file, true));
+
     return $file;
   }
 
@@ -60,6 +65,11 @@ class Core extends Plugin {
     $new_file = $file;
     $new_file['url'] = $this->create_media_url();
     return $new_file;
+  }
+
+  public function add_svg_to_mime_types($mimes) {
+    $mimes = array_merge(array('svg|svgz' => 'image/svg+xml'), $mimes);
+    return $mimes;
   }
 
   private function create_media_url() {
