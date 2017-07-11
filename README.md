@@ -37,7 +37,7 @@ If you are aware of any others, please [share](https://github.com/dmhendricks/ba
 ### TODO
 
 * Currently, the plugin uploads the files to B2. However:
-	* It does not rewrite the image URLs
+	* It does not rewrite URLs
 	* When you delete a file from Media Library, it is not deleted from B2.
  * Extensive documentation & code cleanup
  * Test on ancient versions of WordPress to determine compatibility
@@ -46,7 +46,7 @@ If you are aware of any others, please [share](https://github.com/dmhendricks/ba
 ### Long-term
 
 * Hooks
-* Support for file uploaders from the likes of [ACF](https://www.advancedcustomfields.com/) and [CMB2](https://wordpress.org/plugins/cmb2/), [Pods](https://wordpress.org/plugins/pods/), etc...
+* Support for file uploaders such as [ACF](https://www.advancedcustomfields.com/) and [CMB2](https://wordpress.org/plugins/cmb2/), [Pods](https://wordpress.org/plugins/pods/), [Xbox Framework](https://codecanyon.net/item/xbox-framework-create-meta-boxes-theme-options-admin-pages-for-wordpress/19250995), etc...
 * Ability to selectively password protect files and/or the possibility of link expiration (WooCommerce integration?).
 
 ## Changelog
