@@ -46,7 +46,7 @@ If you are aware of any others, please [share](https://github.com/dmhendricks/ba
 ### Long-term
 
 * Hooks
-* Support for file uploaders such as [ACF](https://www.advancedcustomfields.com/) and [CMB2](https://wordpress.org/plugins/cmb2/), [Pods](https://wordpress.org/plugins/pods/), [Xbox Framework](https://codecanyon.net/item/xbox-framework-create-meta-boxes-theme-options-admin-pages-for-wordpress/19250995), etc...
+* Support for file upload fields in frameworks like [ACF](https://www.advancedcustomfields.com/) and [CMB2](https://wordpress.org/plugins/cmb2/), [Pods](https://wordpress.org/plugins/pods/), [Xbox Framework](https://codecanyon.net/item/xbox-framework-create-meta-boxes-theme-options-admin-pages-for-wordpress/19250995), etc...
 * Ability to selectively password protect files and/or the possibility of link expiration (WooCommerce integration?).
 
 ## Changelog
