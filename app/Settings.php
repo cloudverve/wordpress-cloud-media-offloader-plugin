@@ -31,11 +31,11 @@ class Settings extends Plugin {
         Field::make('checkbox', self::$prefix.'enabled', 'Enable Plugin')->set_option_value(1)
           ->help_text('Check to enable the plugin. Images will be uploaded to your B2 bucket as specified below.'),
         Field::make('html', self::$prefix.'section_header_auth')
-          ->set_html('<h3 style="font-weight: bold;">Access Credentials</h3><p>You can find these values by logging into your <a href="https://www.backblaze.com/" target="_blank">Backblaze</a> account, clicking <strong>Buckets</strong, then clicking the <strong>Show Account ID and Application Key</strong> link.'),
+          ->set_html('<h3>Access Credentials</h3><p>You can find these values by logging into your <a href="https://www.backblaze.com/" target="_blank">Backblaze</a> account, clicking <strong>Buckets</strong, then clicking the <strong>Show Account ID and Application Key</strong> link.'),
         Field::make('text', self::$prefix.'account_id', 'Account ID'),
         Field::make('text', self::$prefix.'application_key', 'Application Key'),
         Field::make('html', self::$prefix.'section_header_bucket')
-          ->set_html('<h3 style="font-weight: bold;">Bucket &amp; Path</h3>'),
+          ->set_html('<h3>Bucket &amp; Path</h3>'),
         Field::make('select', self::$prefix.'bucket_id', 'Bucket List')
           ->add_options($bucket_list)
           ->help_text('If you see <em>no options</em>, log into your Backblaze B2 account and make that you have at least one bucket created and that it is marked <strong>Public</strong>.'),
@@ -43,7 +43,7 @@ class Settings extends Plugin {
           ->help_text('Optional. The folder path that you want files uploaded to. Leave blank for the root of the bucket.')
           ->set_default_value('wp-content/uploads/'), //->set_placeholder('wp-content/uploads/'),
         Field::make('html', self::$prefix.'section_header_optional')
-          ->set_html('<h3 style="font-weight: bold;">Advanced Settings</h3>'),
+          ->set_html('<h3>Advanced Settings</h3>'),
         Field::make('checkbox', self::$prefix.'append_year_month', 'Add Year and Month to Path')->set_option_value(1)->set_default_value(1)
           ->help_text('For example, if your folder path is <tt>wp-content/uploads/</tt>, the resulting path will be: <tt>wp-content/uploads/'.date('Y').'/'.date('m').'/</tt>'),
         Field::make('checkbox', self::$prefix.'rewrite_urls', 'Rewrite Media URLs')->set_option_value(1)->set_default_value(1)

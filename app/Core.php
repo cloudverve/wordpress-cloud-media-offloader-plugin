@@ -12,6 +12,10 @@ class Core extends Plugin {
   }
 
   public function upload_prefilter_handler($file) {
+    // Determine if MIME type should be processed
+    if(carbon_get_theme_option(self::$prefix.'filter_mimes') && !in_array($file['type'], carbon_get_theme_option(self::$prefix.'mime_types'))) return $file;
+
+    // Authenticate
     B2::auth();
 
     // Update file download path
