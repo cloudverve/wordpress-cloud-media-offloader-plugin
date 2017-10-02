@@ -24,6 +24,10 @@ From their web site:
 * WordPress 4.0 or higher
 * PHP 5.6 or higher
 
+## Installation
+
+Until sufficient testing and a proper translation file has been completed, you may [download an installable ZIP](https://f001.backblazeb2.com/file/hendricks/projects/github/dmhendricks/backblaze-media-offloader/releases/backblaze-media-offloader.zip) of this plugin.
+
 ## Known Compatibilities & Conflicts
 
 ### Compatible Plugins
@@ -33,9 +37,9 @@ From their web site:
 
 ### Conflicts
 
-* [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) - This plugin is **_not_** compatible with legacy versions of Carbon Fields. If it detects that a version <=1.6.0 is loaded, it will refuse to load.
+* [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) - This plugin is **_not_** compatible with legacy versions of Carbon Fields. If it detects that a version <=1.6.0 is loaded, it will deactivate.
 
-There are probably many other incompatibilities due to the current method being used rewrite URLs.
+There are probably other incompatibilities due to the current method being used rewrite URLs.
 
 If you are aware of any others, please [share](https://github.com/dmhendricks/backblaze-media-offloader/issues).
 
@@ -71,7 +75,7 @@ Release changes will be noted on the [Releases](https://github.com/dmhendricks/b
 
 ## Credits
 
-Please support [humans.txt](http://humanstxt.org/). It's an initiative for knowing the people behind a web site. It's an unobtrusive text file that contains information about the different people who have contributed to building the web site.
+Please support [humans.txt](http://humanstxt.org/). It's an initiative for knowing the people behind the web. It's an unobtrusive text file that contains information about the different people who have contributed to building the web site/project.
 
 **Carbon Fields**
 
