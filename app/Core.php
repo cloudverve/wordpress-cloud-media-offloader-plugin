@@ -1,91 +1,147 @@
 <?php
 namespace TwoLabNet\BackblazeB2;
+use Carbon_Fields\Container;
+use Carbon_Fields\Field;
 
 class Core extends Plugin {
 
   function __construct() {
 
-    // Rage against Automattic's war on SVG
-    add_filter('upload_mimes', array($this, 'add_svg_to_mime_types'));
+    // Check API credentials
+    $this->check_api_credentials();
 
-    // Add WordPress pre-upload filters
-    add_filter( 'upload_dir', array($this, 'upload_dir_handler') );
-    add_filter( 'wp_handle_upload_prefilter', array($this, 'upload_prefilter_handler') );
+    // Add 'Document' file type to Media Library filter dropdown
+    if( $this->get_plugin_option( 'add_media_library_document_type' ) ) {
+      add_filter( 'post_mime_types', array( $this, 'post_mime_types_filter' ) );
+    }
+
+    // Rewrite uploaded file URLs
+    if( $this->get_plugin_option( 'rewrite_urls' ) ) {
+      add_filter( 'wp_get_attachment_url', array( $this, 'rewrite_attachment_url' ), 10, 2 );
+    }
+
+    if( $this->get_plugin_option( 'enabled' ) ) {
+
+      // Add media upload filter
+      add_filter( 'add_attachment', array( $this, 'add_attachment_handler' ), 10, 2 );
+
+      // Add media delete filter
+      add_action( 'delete_attachment', array( $this, 'delete_attachment_handler' ), 10, 2 );
+
+    }
 
   }
 
-  public function upload_prefilter_handler($file) {
+  public function add_attachment_handler( $attachment_id ) {
 
-    // Determine if MIME type should be processed
-    $filter_type = carbon_get_theme_option(self::$prefix.'filter_mime_type');
-    $mime_types = carbon_get_theme_option(self::$prefix.'mime_types');
-    if(in_array($filter_type, array('include', 'exclude'))) {
-      $in_filter_list = in_array($file['type'], $mime_types);
-      if(($filter_type == 'exclude' && $in_filter_list) || ($filter_type == 'include' && !$in_filter_list)) return $file;
+    $bucket_id = $this->get_plugin_option( 'bucket_id' );
+    $bucket_name = Helpers::get_bucket_by_id( $bucket_id, 'name' );
+    $file = Helpers::get_attachment_info( $attachment_id );
+    $mime_list = Helpers::get_mime_list();
+    $valid_mime = !$mime_list || in_array( $file['mime_type'], $mime_list );
+
+    if( !$bucket_name || !$file || !$valid_mime ) return;
+
+    if( !self::$client ) self::$client = Helpers::auth();
+
+    $upload = self::$client->upload([
+      'BucketId' => $bucket_id,
+      'FileName' => $file['destfile'],
+      'Body' => fopen($file['filepath'], 'r')
+    ]);
+
+    // Get upload filename
+    $url = self::$client->getDownloadUrl( [ 'BucketName' => $bucket_name, 'FileName' => $file['destfile'] ] );
+
+    // Set upload name
+    update_post_meta( $attachment_id, self::prefix( 'external_url' ), $url );
+
+  }
+
+  public function delete_attachment_handler( $attachment_id ) {
+
+    // Check if file was uploaded to B2
+    $attachment_meta = get_post_meta( $attachment_id );
+    if( !isset( $attachment_meta[ $this->prefix( 'external_url' ) ] ) ) {
+      return;
     }
 
-    // Authenticate
-    B2::auth();
+    $bucket_id = $this->get_plugin_option( 'bucket_id' );
+    $bucket_name = Helpers::get_bucket_by_id( $bucket_id, 'name' );
+    $file = Helpers::get_attachment_info( $attachment_id );
+    if( !$bucket_name || !$file ) return;
 
-    // Update file download path
-    $_new_media_file_url = $this->create_media_url();
-    add_filter( 'pre_option_upload_url_path', function() {
-      return $_new_media_file_url;
+    if( !self::$client ) self::$client = Helpers::auth();
+
+    $delete = self::$client->deleteFile([
+        'BucketName' => $bucket_name,
+        'FileName' => $file['destfile']
+    ]);
+
+  }
+
+  public function rewrite_attachment_url( $url ) {
+
+    $post_id = attachment_url_to_postid( $url );
+    $attachment_meta = get_post_meta( $post_id );
+
+    if( isset( $attachment_meta[ $this->prefix( 'external_url' ) ] ) ) {
+      return current( $attachment_meta[ $this->prefix( 'external_url' ) ] );
+    } else {
+      return $url;
+    }
+
+  }
+
+  /**
+    * Check if provided B2 credentials are valid. Store valid result in database,
+    *    (cached, where availavle) so we don't hammer the B2 API. This value is
+    *    reset every time settings are saved.
+    * @since 0.7.0
+    */
+  public function check_api_credentials() {
+
+    $credentials_check = self::$cache->get_object( self::prefix( 'credentials_check' ), function() {
+      return get_option( $this->prefix( 'credentials_check' ) );
     });
 
-    // Get Backblack B2 upload URL, if not set
-    if(!isset(self::$settings['b2']['uploadUrl'])) {
-      $_bucket_id = explode(':', carbon_get_theme_option(self::$prefix.'bucket_id'))[0];
-      $_upload_creds = B2::curl('b2_get_upload_url', 'POST', ['bucketId' => $_bucket_id]); // Verify what auth token should be
-      self::$settings['b2']['uploadUrl'] = $_upload_creds->uploadUrl;
-      self::$settings['b2']['uploadAuthorizationToken'] = $_upload_creds->authorizationToken;
+    if( $credentials_check ) {
+      return;
+    } else {
+      $credentials_check = Helpers::auth();
+      update_option( $this->prefix( 'credentials_check' ), !is_null( $credentials_check ) );
     }
 
-    // Upload file to B2 Bucket
-    $_folder = carbon_get_theme_option(self::$prefix.'path');
-    if(strpos($_folder, '/') !== 0) $_folder = trim($_folder, '/').'/';
-    if(substr($_folder, strlen($_folder)-2, 1) == '/') $_folder .= substr($_folder, 0, strlen($_folder)-2);
+    $settings_page = get_admin_url( null, 'options-general.php?page=crb_carbon_fields_container_backblaze_b2.php#!general' );
+    $settings_notice = __( 'Please check your {|access credentials|}.', self::$textdomain );
+    $settings_parts = preg_split('/[{}]/', $settings_notice, null, PREG_SPLIT_NO_EMPTY);
 
-    $handle = fopen($file['tmp_name'], 'r');
-    $read_file = fread($handle,filesize($file['tmp_name']));
-    $headers = array(
-      'Authorization: ' . self::$settings['b2']['uploadAuthorizationToken'],
-      'X-Bz-File-Name: ' . $_folder . $file['name'],
-      'Content-Type: ' . $file['type'],
-      'X-Bz-Content-Sha1: ' . sha1_file($file['tmp_name'])
-    );
-    $result = B2::curl('b2_upload_file', 'POST', array(), $headers, self::$settings['b2']['uploadUrl'], $read_file);
+    if( count( $settings_notice > 1 ) ) {
 
-    //wp_mail('backblaze-media-offloader@mailhog.local', 'file array', print_r($file, true));
+      $settings_notice = '';
+      foreach( $settings_parts as $part ) {
+        $settings_notice .= strstr( $part, '|' ) ? '<a href="' . $settings_page . '">' . trim( $part, '|' ) . '</a>' : $part;
+      }
 
-    return $file;
+    }
+
+    if( !$credentials_check ) {
+      Helpers::show_notice( '<strong>' . self::$config->get('plugin/meta/Name') . '</strong>: ' . __( 'Unable to connect to the Backblaze B2 API.', self::$textdomain ) . ' ' . $settings_notice, 'error', false );
+    }
+
   }
 
-  public function upload_dir_handler($file) {
-    $new_file = $file;
-    $new_file['url'] = $this->create_media_url();
-    return $new_file;
-  }
+  /**
+    * Adds 'Document' file type to Media Library filter dropdown
+    * @param array $post_mime_types
+    * @return array
+    * @since 0.7.0
+    */
+  function post_mime_types_filter( $post_mime_types ) {
 
-  public function add_svg_to_mime_types($mimes) {
-    $mimes = array_merge(array('svg|svgz' => 'image/svg+xml'), $mimes);
-    return $mimes;
-  }
+      $post_mime_types['application'] = array( __( 'Document', self::$textdomain ), __( 'Manage Documents', self::$textdomain ), _n_noop( 'Document <span class="count">(%s)</span>', 'Documents <span class="count">(%s)</span>' ) );
+      return $post_mime_types;
 
-  private function create_media_url() {
-    // TODO: remove @
-    $_url = @self::$settings['b2']['downloadUrl'].'/file/';
-
-    // Get bucket path
-    $_bucket = carbon_get_theme_option(self::$prefix.'bucket_id');
-    if(!$_bucket) return;
-    $_bucket = explode(':', $_bucket);
-
-    $_folder = carbon_get_theme_option(self::$prefix.'path');
-    if(strpos($_folder, '/') !== 0) $_folder = '/'.trim($_folder, '/');
-    if(substr($_folder, strlen($_folder)-2, 1) == '/') $_folder .= substr($_folder, 0, strlen($_folder)-2);
-
-    return $_url . $_bucket[1] . $_folder;
   }
 
 }

@@ -1,17 +1,17 @@
 [
     {
         "name": "composer/installers",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "v1.4.0",
+        "version_normalized": "1.4.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/composer/installers.git",
-            "reference": "553b33c8cb50875b5a058627c57e34a9eddc36cf"
+            "reference": "9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/553b33c8cb50875b5a058627c57e34a9eddc36cf",
-            "reference": "553b33c8cb50875b5a058627c57e34a9eddc36cf",
+            "url": "https://api.github.com/repos/composer/installers/zipball/9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b",
+            "reference": "9ce17fb70e9a38dd8acff0636a29f5cf4d575c1b",
             "shasum": ""
         },
         "require": {
@@ -25,7 +25,7 @@
             "composer/composer": "1.0.*@dev",
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2017-07-04T09:46:55+00:00",
+        "time": "2017-08-09T07:53:48+00:00",
         "type": "composer-plugin",
         "extra": {
             "class": "Composer\\Installers\\Plugin",
@@ -33,7 +33,7 @@
                 "dev-master": "1.0-dev"
             }
         },
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
                 "Composer\\Installers\\": "src/Composer/Installers"
@@ -59,6 +59,7 @@
             "Hurad",
             "ImageCMS",
             "Kanboard",
+            "Lan Management System",
             "MODX Evo",
             "Mautic",
             "Maya",
@@ -82,6 +83,7 @@
             "croogo",
             "dokuwiki",
             "drupal",
+            "eZ Platform",
             "elgg",
             "expressionengine",
             "fuelphp",
@@ -98,6 +100,7 @@
             "mediawiki",
             "modulework",
             "moodle",
+            "osclass",
             "phpbb",
             "piwik",
             "ppi",
@@ -116,40 +119,34 @@
         ]
     },
     {
-        "name": "mnsami/composer-custom-directory-installer",
+        "name": "psr/http-message",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/mnsami/composer-custom-directory-installer.git",
-            "reference": "8cc82e0c5801cc3bf53ba452afdcaa5c6ff645a5"
+            "url": "https://github.com/php-fig/http-message.git",
+            "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mnsami/composer-custom-directory-installer/zipball/8cc82e0c5801cc3bf53ba452afdcaa5c6ff645a5",
-            "reference": "8cc82e0c5801cc3bf53ba452afdcaa5c6ff645a5",
+            "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+            "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
             "shasum": ""
         },
         "require": {
-            "composer-plugin-api": "^1.0",
-            "php": ">=5.3"
+            "php": ">=5.3.0"
         },
-        "time": "2016-05-25T08:26:02+00:00",
-        "type": "composer-plugin",
+        "time": "2016-08-06T14:39:51+00:00",
+        "type": "library",
         "extra": {
-            "class": [
-                "Composer\\CustomDirectoryInstaller\\LibraryPlugin",
-                "Composer\\CustomDirectoryInstaller\\PearPlugin",
-                "Composer\\CustomDirectoryInstaller\\PluginPlugin"
-            ],
             "branch-alias": {
-                "dev-master": "1.1.x-dev"
+                "dev-master": "1.0.x-dev"
             }
         },
         "installation-source": "source",
         "autoload": {
-            "psr-0": {
-                "Composer\\CustomDirectoryInstaller": "src/"
+            "psr-4": {
+                "Psr\\Http\\Message\\": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -158,46 +155,237 @@
         ],
         "authors": [
             {
-                "name": "Mina Nabil Sami",
-                "email": "mina.nsami@gmail.com"
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
             }
         ],
-        "description": "A composer plugin, to help install packages of different types in custom paths.",
+        "description": "Common interface for HTTP messages",
+        "homepage": "https://github.com/php-fig/http-message",
         "keywords": [
-            "composer",
-            "composer-installer",
-            "composer-plugin"
+            "http",
+            "http-message",
+            "psr",
+            "psr-7",
+            "request",
+            "response"
         ]
     },
     {
-        "name": "htmlburger/carbon-fields",
+        "name": "guzzlehttp/psr7",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/htmlburger/carbon-fields.git",
-            "reference": "03b28ded9b3eb44347091935185ab8fbb844d2f4"
+            "url": "https://github.com/guzzle/psr7.git",
+            "reference": "811b676fbab9c99e359885032e5ebc70e442f5b8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/htmlburger/carbon-fields/zipball/03b28ded9b3eb44347091935185ab8fbb844d2f4",
-            "reference": "03b28ded9b3eb44347091935185ab8fbb844d2f4",
+            "url": "https://api.github.com/repos/guzzle/psr7/zipball/811b676fbab9c99e359885032e5ebc70e442f5b8",
+            "reference": "811b676fbab9c99e359885032e5ebc70e442f5b8",
             "shasum": ""
         },
         "require": {
-            "composer/installers": "~1.0"
+            "php": ">=5.4.0",
+            "psr/http-message": "~1.0"
         },
-        "time": "2017-05-23T08:19:29+00:00",
-        "type": "wordpress-plugin",
+        "provide": {
+            "psr/http-message-implementation": "1.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2017-07-17T09:11:21+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.4-dev"
+            }
+        },
         "installation-source": "source",
         "autoload": {
             "psr-4": {
-                "Carbon_Fields\\": "core/"
+                "GuzzleHttp\\Psr7\\": "src/"
             },
             "files": [
-                "carbon-fields.php",
-                "core/functions.php"
+                "src/functions_include.php"
             ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Michael Dowling",
+                "email": "mtdowling@gmail.com",
+                "homepage": "https://github.com/mtdowling"
+            },
+            {
+                "name": "Tobias Schultze",
+                "homepage": "https://github.com/Tobion"
+            }
+        ],
+        "description": "PSR-7 message implementation that also provides common utility methods",
+        "keywords": [
+            "http",
+            "message",
+            "request",
+            "response",
+            "stream",
+            "uri",
+            "url"
+        ]
+    },
+    {
+        "name": "guzzlehttp/promises",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/guzzle/promises.git",
+            "reference": "09e549f5534380c68761260a71f847644d8f65aa"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/guzzle/promises/zipball/09e549f5534380c68761260a71f847644d8f65aa",
+            "reference": "09e549f5534380c68761260a71f847644d8f65aa",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.0"
+        },
+        "time": "2017-05-20T23:14:18+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.4-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "GuzzleHttp\\Promise\\": "src/"
+            },
+            "files": [
+                "src/functions_include.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Michael Dowling",
+                "email": "mtdowling@gmail.com",
+                "homepage": "https://github.com/mtdowling"
+            }
+        ],
+        "description": "Guzzle promises library",
+        "keywords": [
+            "promise"
+        ]
+    },
+    {
+        "name": "guzzlehttp/guzzle",
+        "version": "6.3.0",
+        "version_normalized": "6.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/guzzle/guzzle.git",
+            "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
+            "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
+            "shasum": ""
+        },
+        "require": {
+            "guzzlehttp/promises": "^1.0",
+            "guzzlehttp/psr7": "^1.4",
+            "php": ">=5.5"
+        },
+        "require-dev": {
+            "ext-curl": "*",
+            "phpunit/phpunit": "^4.0 || ^5.0",
+            "psr/log": "^1.0"
+        },
+        "suggest": {
+            "psr/log": "Required for using the Log middleware"
+        },
+        "time": "2017-06-22T18:50:49+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "6.2-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "src/functions_include.php"
+            ],
+            "psr-4": {
+                "GuzzleHttp\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Michael Dowling",
+                "email": "mtdowling@gmail.com",
+                "homepage": "https://github.com/mtdowling"
+            }
+        ],
+        "description": "Guzzle is a PHP HTTP client library",
+        "homepage": "http://guzzlephp.org/",
+        "keywords": [
+            "client",
+            "curl",
+            "framework",
+            "http",
+            "http client",
+            "rest",
+            "web service"
+        ]
+    },
+    {
+        "name": "htmlburger/carbon-fields",
+        "version": "2.1.1-beta.1",
+        "version_normalized": "2.1.1.0-beta1",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/htmlburger/carbon-fields.git",
+            "reference": "4235e18c8bf1a3d052cdfbe76023db591a85665e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/htmlburger/carbon-fields/zipball/4235e18c8bf1a3d052cdfbe76023db591a85665e",
+            "reference": "4235e18c8bf1a3d052cdfbe76023db591a85665e",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3"
+        },
+        "require-dev": {
+            "mockery/mockery": "^0.9.7",
+            "phpunit/phpunit": "~4.8"
+        },
+        "time": "2017-09-27T07:36:08+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Carbon_Fields\\": "core/"
+            }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
@@ -278,9 +466,131 @@
                 "name": "Atanas Angelov",
                 "email": "atanas.angelov.dev@gmail.com",
                 "role": "Developer"
+            },
+            {
+                "name": "Alexander Panayotov",
+                "email": "alexander.panayotov@gmail.com",
+                "homepage": "http://alexanderpanayotov.com/",
+                "role": "Developer"
+            },
+            {
+                "name": "Viktor Vasilev",
+                "email": "liberalcho@gmail.com",
+                "role": "Developer"
             }
         ],
         "description": "WordPress developer-friendly custom fields for post types, taxonomy terms, users, comments, widgets, options and more.",
         "homepage": "http://carbonfields.net/"
+    },
+    {
+        "name": "dmhendricks/wordpress-toolkit",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dmhendricks/wordpress-toolkit.git",
+            "reference": "a518af8b97c647759ed7e90ce3de6a57e03e598b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dmhendricks/wordpress-toolkit/zipball/a518af8b97c647759ed7e90ce3de6a57e03e598b",
+            "reference": "a518af8b97c647759ed7e90ce3de6a57e03e598b",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6"
+        },
+        "time": "2017-10-01T01:42:25+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "WordPress_ToolKit\\": "core/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Daniel M. Hendricks",
+                "homepage": "https://danhendricks.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "A collection of helper classes and functions for WordPress plugins and themes.",
+        "homepage": "https://github.com/dmhendricks/wordpress-toolkit"
+    },
+    {
+        "name": "dmhendricks/b2-sdk-php",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dmhendricks/b2-sdk-php.git",
+            "reference": "86bc82a9d29e620408d1fdacea6a980b5f75bf2f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dmhendricks/b2-sdk-php/zipball/86bc82a9d29e620408d1fdacea6a980b5f75bf2f",
+            "reference": "86bc82a9d29e620408d1fdacea6a980b5f75bf2f",
+            "shasum": ""
+        },
+        "require": {
+            "guzzlehttp/guzzle": "^6.1",
+            "php": ">=5.6.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.8.*"
+        },
+        "time": "2017-10-01T19:57:44+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "ChrisWhite\\B2\\": "src/"
+            }
+        },
+        "autoload-dev": {
+            "psr-4": {
+                "ChrisWhite\\B2\\Tests\\": "tests/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Chris White",
+                "email": "chris@cwhite.me",
+                "homepage": "https://cwhite.me"
+            },
+            {
+                "name": "Ahmad Fikrizaman",
+                "email": "fikri@runcloud.io",
+                "homepage": "https://runcloud.io",
+                "role": "CTO"
+            },
+            {
+                "name": "Daniel M. Hendricks",
+                "homepage": "https://daniel.hn",
+                "role": "Contributor"
+            }
+        ],
+        "description": "An SDK for working with B2 cloud storage.",
+        "homepage": "https://github.com/dmhendricks/b2-sdk-php",
+        "keywords": [
+            "b2",
+            "backblaze",
+            "backup",
+            "cloud",
+            "filesystem",
+            "storage"
+        ],
+        "support": {
+            "source": "https://github.com/dmhendricks/b2-sdk-php/tree/master",
+            "issues": "https://github.com/dmhendricks/b2-sdk-php/issues"
+        }
     }
 ]

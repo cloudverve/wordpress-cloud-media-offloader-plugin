@@ -6,7 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'WordPress_ToolKit\\' => array($vendorDir . '/dmhendricks/wordpress-toolkit/core'),
     'TwoLabNet\\BackblazeB2\\' => array($baseDir . '/app'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
+    'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
+    'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
-    'Carbon_Fields\\' => array($vendorDir . '/carbon-fields/core'),
+    'ChrisWhite\\B2\\' => array($vendorDir . '/dmhendricks/b2-sdk-php/src'),
+    'Carbon_Fields\\' => array($vendorDir . '/htmlburger/carbon-fields/core'),
 );

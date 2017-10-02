@@ -1,9 +1,3 @@
-.gitignore
-gulpfile.js
-package-lock.json
-#vendor/
-.notes.txt
-
 # Packages #
 ############
 *.7z
@@ -32,11 +26,11 @@ Thumbs.db
 ._*
 
 # Vim generated files #
-######################
+#######################
 *.un~
 
 # SASS #
-##########
+########
 **/.sass-cache
 **/.sass-cache/*
 **/.map
@@ -44,22 +38,25 @@ Thumbs.db
 config.rb
 
 # Composer #
-##########
-vendors/composer/
-!assets/js/vendor/
+############
+!src/js/vendor/
 wpcs/
 composer.lock
 
+# Gulp #
+########
+package-lock.json
+
 # Bower #
-##########
-assets/bower_components/*
+#########
+#assets/components/
 
 # Codekit #
-##########
+###########
 /codekit-config.json
 *.codekit
 **.codekit-cache/*
 
 # NPM #
-##########
+#######
 node_modules

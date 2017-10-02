@@ -1,61 +1,205 @@
 <?php
 namespace TwoLabNet\BackblazeB2;
-use Carbon_Fields;
+use WordPress_ToolKit\ObjectCache;
+use WordPress_ToolKit\ConfigRegistry;
+use WordPress_ToolKit\Helpers\ArrayHelper;
+use Carbon_Fields\Container;
+use Carbon_Fields\Field;
+use Config;
 
 class Plugin {
 
-  public static $settings;
   public static $textdomain;
-  public static $prefix;
-  public static $b2_account_id;
+  public static $config;
+  public static $client;
+  protected static $cache;
 
-  function __construct($_settings) {
+  function __construct() {
 
-    // Set text domain and option prefix
-    self::$textdomain = $_settings['data']['TextDomain'];
-    self::$prefix     = $_settings['prefix'];
-    self::$settings   = $_settings;
+    // Set plugin system properties
+    $plugin_data['path'] = plugin_dir_path( __DIR__ );
+    $plugin_data['slug'] = end( explode( '/', trim( $plugin_data['path'], '/' ) ) );
+    $plugin_data['file'] = end( explode( '/', debug_backtrace()[0]['file'] ) );
+    $plugin_data = array( 'plugin' => array(
+      'identifier' => $plugin_data['slug'] . DIRECTORY_SEPARATOR . $plugin_data['file'],
+      'slug' => $plugin_data['slug'],
+      'path' => $plugin_data['path'],
+      'url' => plugin_dir_url( __DIR__ ),
+      'meta' => get_plugin_data( $plugin_data['path'] . $plugin_data['file'] )
+    ));
 
-    if(!$this->verify_dependencies()) return;
+    self::$config = new ConfigRegistry( $plugin_data['plugin']['path'] . 'plugin.json' );
+    self::$config = self::$config->merge( new ConfigRegistry( $plugin_data ) );
+    self::$textdomain = self::$config->get( 'plugin/meta/TextDomain' ) ?: self::$config->get( 'plugin/slug' );
 
-    // Add B2 credentials to settings array
-    self::$b2_account_id  = trim(carbon_get_theme_option(self::$prefix.'account_id'));
-    $b2_api_key           = trim(carbon_get_theme_option(self::$prefix.'application_key'));
+    // Define plugin version constant
+    if ( !defined( __NAMESPACE__ . '\VERSION' ) ) define( __NAMESPACE__ . '\VERSION', self::$config->get( 'plugin/meta/Version' ) );
 
-    self::$settings['b2'] = array_merge_recursive($_settings['b2'], [
-      'accountId' => self::$b2_account_id,
-      'credentials' => base64_encode(self::$b2_account_id . ':' . $b2_api_key),
-    ]);
+    // Do not load on the frontend
+    if( !is_admin() ) return;
 
-    // Check for missing B2 credentials
-    if(!self::$b2_account_id || !$b2_api_key) {
-      add_action( 'admin_notices', function() {
-        Helpers::show_notice(__('The <strong>Backblaze B2 Media Offloader</strong> plugin is not configured properly. Please visit the settings page.'));
-      });
-    }
+    // Initialize ObjectCache
+    self::$cache = new ObjectCache( self::$config );
 
-    // Core plugin logic
-    new Core();
-
-    // Enqueue scripts
-    new EnqueueScripts();
-
-    // Add admin settings page(s)
-    new Settings();
+    // Verify dependecies and load plugin logic
+    register_activation_hook( self::$config->get( 'plugin/identifier' ), array( $this, 'activate' ) );
+    add_action( 'plugins_loaded', array( $this, 'init' ) );
 
   }
 
-  private function verify_dependencies() {
-    // Check if outdated version of Carbon Fields loaded
-    if(!defined('Carbon_Fields\VERSION')) {
-      Helpers::show_notice('<strong>'.self::$settings['data']['Name'].':</strong> '.__('A fatal error occurred while trying to load dependencies.'), 'error', false);
-      return false;
-    } else if( version_compare( Carbon_Fields\VERSION, self::$settings['deps']['carbon_fields'], '<' ) ) {
-      Helpers::show_notice('<strong>'.self::$settings['data']['Name'].':</strong> '.__('Unable to load. An outdated version of Carbon Fields has been loaded:' . ' ' . Carbon_Fields\VERSION) . ' (&gt;= '.self::$settings['deps']['carbon_fields'].' '.__('required').')', 'error', false);
-      return false;
+  /**
+    * Check plugin dependencies on activation.
+    *
+    * @since 0.2.0
+    */
+  public function activate() {
+
+    $dependency_check = $this->verify_dependencies( true, array( 'activate' => true, 'echo' => false ) );
+    if( $dependency_check !== true ) die( $dependency_check );
+
+  }
+
+  /**
+    * Initialize Carbon Fields and load plugin logic
+    *
+    * @since 0.2.0
+    */
+  public function init() {
+
+    if( class_exists( 'Carbon_Fields\\Carbon_Fields' ) ) {
+      add_action( 'after_setup_theme', array( 'Carbon_Fields\\Carbon_Fields', 'boot' ) );
     }
 
-    return true;
+    if( $this->verify_dependencies( 'carbon_fields' ) === true ) {
+      add_action( 'carbon_fields_loaded', array( $this, 'load_plugin' ));
+    }
+
+  }
+
+  /**
+    * Load plugin classes
+    *
+    * @since 0.2.0
+    */
+  public function load_plugin() {
+
+    if( !$this->verify_dependencies( 'carbon_fields' ) ) return;
+
+    // Add admin settings page using Carbon Fields framework
+    new Settings\Plugin_Settings();
+
+    // Perform core plugin logic
+    new Core();
+
+  }
+
+  /**
+    * Function to verify dependencies, such as if an outdated version of Carbon
+    *    Fields is detected.
+    *
+    * Normally, we wouldn't be so persistant about checking for dependencies and
+    *    I would just pass it off to TGMPA, however, if they have an ancient version
+    *    of Carbon Fields loaded (via plugin or dependency), it causes problems.
+    *
+    * @param string|array|bool $deps A string (single) or array of deps to check. `true`
+    *    checks all defined dependencies.
+    * @param array $args An array of arguments.
+    * @return bool|string Result of dependency check. Returns bool if $args['echo']
+    *    is false, string if true.
+    * @since 0.2.0
+    */
+  private function verify_dependencies( $deps = true, $args = array() ) {
+
+    if( is_bool( $deps ) && $deps ) $deps = self::$config->get( 'dependencies' );
+    if( !is_array( $deps ) ) $deps = array( $deps => self::$config->get( 'dependencies/' . $deps ) );
+
+    $args = ArrayHelper::set_default_atts( array(
+      'echo' => true,
+      'activate' => true
+    ), $args);
+
+    $notices = array();
+
+    foreach( $deps as $dep => $version ) {
+
+      switch( $dep ) {
+
+        case 'php':
+
+          if( version_compare( phpversion(), $version, '<' ) ) {
+            $notices[] = __( 'This plugin is not supported on versions of PHP below', self::$textdomain ) . ' ' . self::$config->get( 'dependencies/php' ) . '.' ;
+          }
+          break;
+
+        case 'carbon_fields':
+
+          //if( defined('\\Carbon_Fields\\VERSION') || ( defined('\\Carbon_Fields\\VERSION') && version_compare( \Carbon_Fields\VERSION, $version, '<' ) ) ) {
+          if( !$args['activate'] && !defined('\\Carbon_Fields\\VERSION') ) {
+            $notices[] = __( 'An unknown error occurred while trying to load the Carbon Fields framework.', self::$textdomain );
+          } else if ( defined('\\Carbon_Fields\\VERSION') && version_compare( \Carbon_Fields\VERSION, $version, '<' ) ) {
+            $notices[] = __( 'An outdated version of Carbon Fields has been detected:', self::$textdomain ) . ' ' . \Carbon_Fields\VERSION . ' (&gt;= ' . self::$config->get( 'dependencies/carbon_fields' ) . ' ' . __( 'required', self::$textdomain ) . ').' . ' <strong>' . self::$config->get( 'plugin/meta/Name' ) . '</strong> ' . __( 'deactivated.', self::$textdomain ) ;
+          }
+          break;
+
+        }
+
+    }
+
+    if( $notices ) {
+
+      deactivate_plugins( self::$config->get( 'plugin/identifier' ) );
+
+      $notices = '<ul><li>' . implode( "</li>\n<li>", $notices ) . '</li></ul>';
+
+      if( $args['echo'] ) {
+        Helpers::show_notice($notices, 'error', false);
+        return false;
+      } else {
+        return $notices;
+      }
+
+    }
+
+    return !$notices;
+
+  }
+
+  /**
+    * Get Carbon Fields option, with object caching (if available). Currently
+    *   only supports plugin options because meta fields would need to have the
+    *   cache flushed appropriately.
+    *
+    * @param string $key The name of the option key
+    * @return mixed The value of specified Carbon Fields option key
+    * @link https://carbonfields.net/docs/containers-usage/ Carbon Fields containers
+    * @since 0.2.0
+    *
+    */
+  public function get_plugin_option( $key, $cache = true ) {
+    $key = self::prefix( $key );
+
+    if( $cache ) {
+      // Attempt to get value from cache, else fetch value from database
+      return self::$cache->get_object( $key, function() use ( &$key ) {
+        return carbon_get_theme_option( $key );
+      });
+    } else {
+      // Return uncached value
+      return carbon_get_theme_option( $key );
+    }
+
+  }
+
+  /**
+    * A wrapper for the plugin's data fiala prefix as defined in $config
+    *
+    * @param string|null $field_name The string/field to prefix
+    * @param string $start Optional string to prefix field with
+    * @return string Prefixed string/field value
+    * @since 0.2.0
+    */
+  public function prefix( $field_name = null, $start = '' ) {
+    return $field_name !== null ? $start . self::$config->get( 'prefix' ) . $field_name : self::$config->get( 'prefix' );
   }
 
   /**
@@ -64,84 +208,21 @@ class Plugin {
     *   minified script (which can be useful for debugging via browser).
     *
     * @return bool
+    * @since 0.1.0
     */
   public function is_production() {
-    if( !defined('WP_ENV') || (defined('WP_ENV') && !in_array(WP_ENV, ['development', 'staging']) ) ) {
-      return true;
-    }
-    return false;
+    $env = @constant( self::$config->get( 'environment_constant' ) ) ?: 'production';
+    return ( !in_array( $env, array('development', 'staging') ) );
   }
 
   /**
-    * Returns true if request is via AJAX.
+    * Returns true if request is via Ajax.
     *
     * @return bool
+    * @since 0.1.0
     */
   public function is_ajax() {
     return defined('DOING_AJAX') && DOING_AJAX;
-  }
-
-  /**
-    * Returns script ?ver= version based on environment (WP_ENV)
-    *
-    * If WP_ENV is not defined or equals anything other than 'development' or 'staging'
-    * returns $script_version (if defined) else plugin verson. If WP_ENV is defined
-    * as 'development' or 'staging', returns string representing file last modification
-    * date (to discourage browser during development).
-    *
-    * @param string $script The filesystem path (relative to the script location of
-    *    calling script) to return the version for.
-    * @param string $script_version (optional) The version that will be returned if
-    *    WP_ENV is defined as anything other than 'development' or 'staging'.
-    *
-    * @return string
-    */
-  public function get_script_version($script, $return_minified = false, $script_version = null) {
-    $version = $script_version ?: self::$settings['data']['Version'];
-    if($this->is_production()) return $version;
-
-    $script = $this->get_script_path($script, $return_minified);
-    if(file_exists($script)) {
-      $version = date("ymd-Gis", filemtime( $script ) );
-    }
-
-    return $version;
-  }
-
-  /**
-    * Returns script path or URL, either regular or minified (if exists).
-    *
-    * If in production mode or if @param $force_minify == true, inserts '.min' to the filename
-    * (if exists), else return script name without (example: style.css vs style.min.css).
-    *
-    * @param string $script The relative (to the plugin folder) path to the script.
-    * @param bool $return_minified If true and is_production() === true then will prefix the
-    *   extension with .min. NB! Due to performance reasons, I did not include logic to check
-    *   to see if the script_name.min.ext exists, so use only when you know it exists.
-    * @param bool $return_url If true, returns full-qualified URL rather than filesystem path.
-    *
-    * @return string The URL or path to minified or regular $script.
-    */
-  public function get_script_path($script, $return_minified = false, $return_url = false) {
-    $script = trim($script, '/');
-    if($return_minified && strpos($script, '.') && $this->is_production()) {
-      $script_parts = explode('.', $script);
-      $script_extension = end($script_parts);
-      array_pop($script_parts);
-      $script = implode('.', $script_parts) . '.min.' . $script_extension;
-    }
-
-    return self::$settings[$return_url ? 'url' : 'path'] . $script;
-  }
-
-  /**
-    * Returns absolute URL of $script.
-    *
-    * @param string $script The relative (to the plugin folder) path to the script.
-    * @param bool
-    */
-  public function get_script_url($script, $return_minified = false) {
-    return $this->get_script_path($script, $return_minified, true);
   }
 
 }
