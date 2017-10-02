@@ -24,12 +24,6 @@ From their web site:
 * WordPress 4.0 or higher
 * PHP 5.6 or higher
 
-## Installation
-
-Until this plugin is stable and has been tested enough for a release, you can download an installable ZIP file here.
-
-When a stable version is released, auto-update will be supported.
-
 ## Known Compatibilities & Conflicts
 
 ### Compatible Plugins
