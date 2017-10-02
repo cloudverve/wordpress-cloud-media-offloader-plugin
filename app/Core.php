@@ -32,6 +32,12 @@ class Core extends Plugin {
 
   }
 
+  /**
+    * Upload media file to B2 if MIME type is whitelisted
+    *
+    * @param int $attachment_id Post ID of media
+    * @since 0.7.0
+    */
   public function add_attachment_handler( $attachment_id ) {
 
     $bucket_id = $this->get_plugin_option( 'bucket_id' );
@@ -58,6 +64,12 @@ class Core extends Plugin {
 
   }
 
+  /**
+    * Delete media file from B2 when deleted from WordPress Media Library
+    *
+    * @param int $attachment_id Post ID of media
+    * @since 0.7.0
+    */
   public function delete_attachment_handler( $attachment_id ) {
 
     // Check if file was uploaded to B2
@@ -80,6 +92,13 @@ class Core extends Plugin {
 
   }
 
+  /**
+    * Rewrite media URLs to B2 links
+    *
+    * @param string $url Original, local media URL
+    * @return URL of B2 media object
+    * @since 0.7.0
+    */
   public function rewrite_attachment_url( $url ) {
 
     $post_id = attachment_url_to_postid( $url );
