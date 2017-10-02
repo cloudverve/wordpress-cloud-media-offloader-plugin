@@ -35,5 +35,10 @@
     "psr-4": {
       "TwoLabNet\\BackblazeB2\\": "app/"
     }
+  },
+  "scripts": {
+    "pre-autoload-dump": [
+      "find ./vendor -name '.git*' -exec rm -rf {} +"
+    ]
   }
 }
