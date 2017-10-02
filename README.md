@@ -36,6 +36,10 @@ One of the best ways that you can contribute is to help me make it better, eithe
 
 Until sufficient testing and a proper translation file has been completed, you may [download an installable ZIP](https://f001.backblazeb2.com/file/hendricks/projects/github/dmhendricks/backblaze-media-offloader/releases/backblaze-media-offloader.zip) of this plugin.
 
+### Updates
+
+Once I produce a release version, automatic updates will be available via WordPress. For now, you will have to update manually.
+
 ## Known Compatibilities & Conflicts
 
 ### Compatible Plugins
