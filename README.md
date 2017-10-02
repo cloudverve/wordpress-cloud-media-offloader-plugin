@@ -19,12 +19,20 @@ From their web site:
 
 > *The lowest cost cloud storage on the planet: $0.005/GB a month. Try it and get the first 10 GB free on us.*
 
+### Contributing
+
+I am open to pull requests as well as other feedback. Once I get a clean translation file created, I would appreciate assistance/sponsorship for translation (as well as testing).
+
+I am open to other sponsorship and giving credit (either here or within the plugin, depending on terms) as well.
+
+One of the best ways that you can contribute is to help me make it better, either with code or with constructive feedback.
+
 ## Requirements
 
 * WordPress 4.0 or higher
 * PHP 5.6 or higher
 
-## Installation
+### Installation
 
 Until sufficient testing and a proper translation file has been completed, you may [download an installable ZIP](https://f001.backblazeb2.com/file/hendricks/projects/github/dmhendricks/backblaze-media-offloader/releases/backblaze-media-offloader.zip) of this plugin.
 
