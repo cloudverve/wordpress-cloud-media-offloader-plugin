@@ -21,11 +21,11 @@ From their web site:
 
 ### Contributing
 
-I am open to pull requests as well as other feedback. Once I get a clean translation file created, I would appreciate assistance/sponsorship for translation (as well as testing).
+I am open to pull requests as well as other feedback. One of the best ways that you can contribute is to help me make it better, either with code or with constructive feedback. Other ways:
 
-I am open to other sponsorship and giving credit (either here or within the plugin, depending on terms) as well.
-
-One of the best ways that you can contribute is to help me make it better, either with code or with constructive feedback.
+* Translations (**after** I get a clean translation file created)
+* Sponsor a personal account on WP Engine (for testing plugins) or provide me with SFTP access to a transferrable install.
+* I recently got laid off from my job, so if you have any leads/ideas...
 
 ## Requirements
 
