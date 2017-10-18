@@ -9,7 +9,9 @@
 
 This is currently **under development and only supports basic functions**. Test in a development environment first and use at your own risk.
 
-**This plugin has not been tested on a WordPress multisite setup.**
+**Notes:**
+* If you want to try this plugin, use the [installable WordPress ZIP file](#installation). If you download the repo ZIP file, it will fail to activate unless you run `composer install` first.
+* This plugin has not been tested on a WordPress multisite setup.
 
 ## Description
 

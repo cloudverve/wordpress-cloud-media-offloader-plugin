@@ -60,3 +60,10 @@ package-lock.json
 # NPM #
 #######
 node_modules
+
+# Development #
+###############
+vendor/
+assets/css/**/*.css
+assets/css/**/*.map
+assets/js/**/*.js
