@@ -57,25 +57,29 @@ I have disabled GitHub Updater support because I don't want to store the `/vendo
 
 ### Conflicts
 
-* [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) - This plugin is **_not_** compatible with legacy versions of Carbon Fields. If it detects that a version <=1.6.0 is loaded, it will deactivate.
+* [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) - This plugin uses the latest _release_ version of the Carbon Fields framework (currently 2.1.0). As such, it is **_not_** compatible with **legacy** versions of Carbon Fields. If it detects that a version <=1.6.0 is loaded, it will deactivate. (Note: If you wish to use Carbon Fields as a _plugin_, consider using [Carbon Fields Loader](https://github.com/dmhendricks/carbon-fields-loader) instead of the version on the wordpress.org repo)
 
 If you encounter any other in/compatibilities, please [report them](https://github.com/dmhendricks/backblaze-media-offloader/issues).
 
-## TODO
+## Goals
 
-#### Immediate Goals
+#### Immediate
 
 * Testing: Localization, multisite, etc.
 
-#### Future Goals
+#### Medium-Term
 
-* Add ability to password-protect content
 * Add ability to store files in private buckets
+* Add ability to password-protect content, time-expiring URLs and relevant tracking/statistics
+* Add various shortcodes & hooks
 
-#### Long-Term Goals
+#### Long-Term
 
 * Add one-click feature to migrate existing local media to B2
-* Add time-expiring URLs
+* Look at options for supporting some popular WooCommerce digital media plugins.
+* Possibility of serving external CSS/JS from B2 bucket
+* Add support for [Enable Media Replace](https://wordpress.org/plugins/enable-media-replace/)
+* Possibility to browse B2 files from WP Admin
 
 ## Change Log
 
