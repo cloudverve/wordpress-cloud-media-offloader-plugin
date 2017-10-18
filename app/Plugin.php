@@ -34,6 +34,9 @@ class Plugin {
     // Initialize ObjectCache
     self::$cache = new ObjectCache( self::$config );
 
+    // Load Localization
+    load_plugin_textdomain( self::$textdomain, false, self::$config->get( 'plugin/slug' ) . '/languages' );
+
     // Verify dependecies and load plugin logic
     register_activation_hook( self::$config->get( 'plugin/identifier' ), array( $this, 'activate' ) );
     add_action( 'plugins_loaded', array( $this, 'init' ) );

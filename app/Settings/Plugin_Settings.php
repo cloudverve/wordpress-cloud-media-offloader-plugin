@@ -78,9 +78,9 @@ class Plugin_Settings extends Plugin {
         )
       )
       ->add_tab( __( 'MIME Types', self::$textdomain ), array(
-        Field::make( 'checkbox', $this->prefix( 'limit_mime_types' ), __( 'Limit to Specific Mime Types', self::$textdomain ) )
+        Field::make( 'checkbox', $this->prefix( 'limit_mime_types' ), __( 'Limit to Specific MIME Types', self::$textdomain ) )
           ->help_text( __( 'If checked, uploads to Backblaze B2 are limited to specific MIME types.', self::$textdomain ) ),
-        Field::make( 'complex', $this->prefix( 'custom_mime_types' ), __( 'Custom Mime Types', self::$textdomain ) )
+        Field::make( 'complex', $this->prefix( 'custom_mime_types' ), __( 'Custom MIME Types', self::$textdomain ) )
           ->add_fields( array(
             Field::make( 'text', 'label', __( 'Extension/Label', self::$textdomain ) )
               ->set_attribute( 'placeholder', __( 'Example:', self::$textdomain ) . ' WEBP' ),

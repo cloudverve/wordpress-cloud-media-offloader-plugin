@@ -168,7 +168,7 @@ class Core extends Plugin {
     * @return array
     * @since 0.7.0
     */
-  function post_mime_types_filter( $post_mime_types ) {
+  public function post_mime_types_filter( $post_mime_types ) {
 
       $post_mime_types['application'] = array( __( 'Document', self::$textdomain ), __( 'Manage Documents', self::$textdomain ), _n_noop( 'Document', 'Documents' ) . ' <span class="count">(%s)</span>' );
       return $post_mime_types;
