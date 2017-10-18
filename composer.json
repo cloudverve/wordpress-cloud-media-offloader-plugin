@@ -27,7 +27,7 @@
     "php": ">=5.6.0",
     "dmhendricks/wordpress-toolkit": "dev-master",
     "dmhendricks/b2-sdk-php": "dev-master",
-    "htmlburger/carbon-fields": "^2.1.0",
+    "htmlburger/carbon-fields": "2.1.0",
     "composer/installers": "^1.4.0"
   },
   "minimum-stability": "dev",
