@@ -51,130 +51,138 @@ msgstr ""
 msgid "deactivated"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:75, ../app/Settings/Plugin_Settings.php:87
+#: ../app/Settings/Plugin_Settings.php:80, ../app/Settings/Plugin_Settings.php:92
 msgid "MIME Types"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:77
+#: ../app/Settings/Plugin_Settings.php:82
 msgid "If checked, uploads to Backblaze B2 are limited to specific MIME types."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:76
+#: ../app/Settings/Plugin_Settings.php:81
 msgid "Limit to Specific Mime Types"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:92
+#: ../app/Settings/Plugin_Settings.php:97
 msgid "Add New"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:87, ../app/Settings/Plugin_Settings.php:82
+#: ../app/Settings/Plugin_Settings.php:92, ../app/Settings/Plugin_Settings.php:87
 msgid "MIME Type"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:85
+#: ../app/Settings/Plugin_Settings.php:90
 msgid "Add extra MIME types that are not listed below."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:85
+#: ../app/Settings/Plugin_Settings.php:90
 msgid "Examples"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:81, ../app/Settings/Plugin_Settings.php:83
+#: ../app/Settings/Plugin_Settings.php:86, ../app/Settings/Plugin_Settings.php:88
 msgid "Example:"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:80
+#: ../app/Settings/Plugin_Settings.php:85
 msgid "Extension/Label"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:78
+#: ../app/Settings/Plugin_Settings.php:83
 msgid "Custom Mime Types"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:93
+#: ../app/Settings/Plugin_Settings.php:99
+msgid "Registers custom MIME types (if specified)."
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:98
+msgid "Register Custom MIME Types"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:106
 msgid "Built-in MIME Types"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:45
+#: ../app/Settings/Plugin_Settings.php:50
 msgid "General"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:48
+#: ../app/Settings/Plugin_Settings.php:53
 msgid "Check to enable the plugin. Media Library items will be uploaded to the B2 bucket specified below."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:46
+#: ../app/Settings/Plugin_Settings.php:51
 msgid "Enable Plugin"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:51
+#: ../app/Settings/Plugin_Settings.php:56
 msgid "If enabled, Media Library URLs will be changed to serve from Backblaze. <em>It is <strong>highly likely</strong> that you'll want this checked unless you are using another plugin/method to rewrite URLs.</em>"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:49
+#: ../app/Settings/Plugin_Settings.php:54
 msgid "Rewrite Media URLs"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:53
+#: ../app/Settings/Plugin_Settings.php:58
 msgid "If enabled, uploaded files will be deleted from your web host after they are uploaded to Backblaze B2."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:53
+#: ../app/Settings/Plugin_Settings.php:58
 msgid "Note: This may cause incompatibilities with other plugins that rely on a local copy of uploaded media."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:52
+#: ../app/Settings/Plugin_Settings.php:57
 msgid "Remove Files From Server"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:55
+#: ../app/Settings/Plugin_Settings.php:60
 msgid "For convenience, adds a <em>Document</em> file type to the Media Library dropdown filter."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:54
+#: ../app/Settings/Plugin_Settings.php:59
 msgid "Add \"Document\" to Media Library Filter Dropdown"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:57
+#: ../app/Settings/Plugin_Settings.php:62
 msgid "Settings will only be deleted if you remove the plugin from Installed Plugins. They will not be removed by simply deactivating the plugin."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:56
+#: ../app/Settings/Plugin_Settings.php:61
 msgid "Delete Plugin Settings On Uninstall"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:58
+#: ../app/Settings/Plugin_Settings.php:63
 msgid "Access Credentials"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:60
+#: ../app/Settings/Plugin_Settings.php:65
 msgid "You can find these values by logging into your <a href=\"https://www.backblaze.com/b2/cloud-storage.html#af9kre\" target=\"_blank\">Backblaze</a> account, clicking <strong>Buckets</strong>, then clicking the <strong>Show Account ID and Application Key</strong> link."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:61
+#: ../app/Settings/Plugin_Settings.php:66
 msgid "Account ID"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:63
+#: ../app/Settings/Plugin_Settings.php:68
 msgid "Application Key"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:65
+#: ../app/Settings/Plugin_Settings.php:70
 msgid "Bucket & Path"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:68
+#: ../app/Settings/Plugin_Settings.php:73
 msgid "If you see <em>no options</em>, log into your Backblaze B2 account and make that you have at least one bucket created and that it is marked <strong>Public</strong>."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:66
+#: ../app/Settings/Plugin_Settings.php:71
 msgid "Bucket List"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:70
+#: ../app/Settings/Plugin_Settings.php:75
 msgid "Optional. The folder path that you want files uploaded to. Leave blank for the root of the bucket."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:69
+#: ../app/Settings/Plugin_Settings.php:74
 msgid "Path"
 msgstr ""

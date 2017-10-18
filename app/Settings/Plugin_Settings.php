@@ -31,6 +31,11 @@ class Plugin_Settings extends Plugin {
       register_uninstall_hook( self::$config->get( 'plugin/identifier' ), array( $this, 'plugin_settings_uninstall' ) );
     }
 
+    // Register custom MIME types
+    if( $this->get_plugin_option( 'register_custom_mime_types' ) && $this->get_plugin_option( 'custom_mime_types' ) ) {
+      add_filter( 'upload_mimes', array( $this, 'register_custom_mimes_types' ) );
+    }
+
   }
 
   /**
@@ -90,6 +95,14 @@ class Plugin_Settings extends Plugin {
             'value' => true )
           ))
           ->set_header_template( '<% if (label) { %><%- _.upperCase(label) %><% } else { %>' . __( 'Add New', self::$textdomain ) . '<% } %>' ),
+        Field::make( 'checkbox', $this->prefix( 'register_custom_mime_types' ), __( 'Register Custom MIME Types', self::$textdomain ) )
+          ->help_text( __( 'Registers custom MIME types (if specified).', self::$textdomain ) )
+          ->set_default_value( true )
+          ->set_conditional_logic( array( array(
+            'field' => $this->prefix( 'limit_mime_types' ),
+            'value' => true )
+          )
+        ),
         Field::make( 'set', $this->prefix( 'mime_types' ), __( 'Built-in MIME Types', self::$textdomain ) )
           ->set_conditional_logic( array( array(
             'field' => $this->prefix( 'limit_mime_types' ),
@@ -154,6 +167,23 @@ class Plugin_Settings extends Plugin {
 
     delete_option( $this->prefix( 'credentials_check' ) );
     self::$cache->flush();
+
+  }
+
+  /**
+    * Register custom MIME types
+    *
+    * @since 0.7.0
+    */
+  public function register_custom_mimes_types( $mimes ) {
+
+    $custom_types = $this->get_plugin_option( 'custom_mime_types' );
+
+    foreach( $custom_types as $mime ) {
+      $mimes[ $mime['label'] ] = $mime['mime'];
+    }
+
+    return $mimes;
 
   }
 
