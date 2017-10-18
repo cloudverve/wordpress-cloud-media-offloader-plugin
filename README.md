@@ -11,7 +11,9 @@ This is currently **under development and only supports basic functions**. Test 
 
 **Notes:**
 * If you want to try this plugin, use the [installable WordPress ZIP file](#installation). If you download the repo ZIP file, it will fail to activate unless you run `composer install` first.
-* This plugin has not been tested on a WordPress multisite setup.
+* This plugin has not yet been tested on a WordPress multisite setup. I will do so eventually, but feedback is welcome.
+
+**Status:** I am close to creating a release, but I want to test the localization support first.
 
 ## Description
 
@@ -25,9 +27,11 @@ From their web site:
 
 I am open to pull requests as well as other feedback. One of the best ways that you can contribute is to help me make it better, either with code or with constructive feedback. Other ways:
 
-* Translations (**after** I get a clean translation file created)
+* I am open to pull requests and welcome improvements.
+* [Feedback](https://github.com/dmhendricks/backblaze-media-offloader/issues) on how I can make it better.
+* **Testing!** If you try the plugin - please use the [installable ZIP](#installation), let me know what works and what doesn't. If you have an [issue](https://github.com/dmhendricks/backblaze-media-offloader/issues), it is helpful if you can describe (as much as you are aware of) your environment - install method, WordPress version, PHP version, operating system, and web server (Apache, Nginx, etc).
+* Translations (or [donations](https://paypal.me/danielhendricks) to create/maintain them)
 * Sponsor a personal account on WP Engine (for testing plugins) or provide me with SFTP access to a transferrable install.
-* I recently got laid off from my job, so if you have any leads/ideas...
 
 ## Requirements
 
@@ -42,9 +46,11 @@ Until sufficient testing and a proper translation file has been completed, you m
 
 Once I produce a release version, automatic updates will be available via WordPress. For now, you will have to update manually.
 
+I have disabled GitHub Updater support because I don't want to store the `/vendor` folder in the repo (plus other technical reasons). Rest assured, when this plugin reaches a reasonable level of stability, automatic updates will be supported.
+
 ## Known Compatibilities & Conflicts
 
-### Compatible Plugins
+### Known Compatibilities
 
 * [Safe SVG](https://wordpress.org/plugins/safe-svg/)
 * [SVG Support](https://wordpress.org/plugins/svg-support/)
@@ -53,14 +59,13 @@ Once I produce a release version, automatic updates will be available via WordPr
 
 * [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) - This plugin is **_not_** compatible with legacy versions of Carbon Fields. If it detects that a version <=1.6.0 is loaded, it will deactivate.
 
-If you encounter any other incompatibilities, please [report them](https://github.com/dmhendricks/backblaze-media-offloader/issues).
+If you encounter any other in/compatibilities, please [report them](https://github.com/dmhendricks/backblaze-media-offloader/issues).
 
 ## TODO
 
 #### Immediate Goals
 
-* Clean up and create a proper translation (`.pot`) file
-* Clean up settings page
+* Testing: Localization, multisite, etc.
 
 #### Future Goals
 
@@ -81,6 +86,8 @@ Release changes will be noted on the [Releases](https://github.com/dmhendricks/b
 * Completely refactored code
 * Switched from direct API calls to a fork of [Backblaze B2 SDK for PHP](https://github.com/cwhite92/b2-sdk-php/)
 * Added option to delete local media after being uploaded to B2.
+* Added initial POT translation
+* Added setting to register custom MIME types
 
 ## Credits
 
