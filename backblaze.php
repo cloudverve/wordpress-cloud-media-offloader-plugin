@@ -11,7 +11,6 @@
  * License URI:       https://opensource.org/licenses/GPL-2.0
  * Text Domain: 			backblaze-media-offloader
  * Domain Path: 			languages
- * GitHub Plugin URI: dmhendricks/backblaze-media-offloader
  */
 
 /*	Copyright 2017	  Daniel M. Hendricks (https://www.danhendricks.com/)
