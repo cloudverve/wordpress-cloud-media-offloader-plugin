@@ -2,6 +2,7 @@
 namespace TwoLabNet\BackblazeB2;
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
+use ChrisWhite\B2\Exceptions;
 
 class Core extends Plugin {
 
@@ -45,22 +46,33 @@ class Core extends Plugin {
     $file = Helpers::get_attachment_info( $attachment_id );
     $mime_list = Helpers::get_mime_list();
     $valid_mime = !$mime_list || in_array( $file['mime_type'], $mime_list );
+    $upload = null;
 
     if( !$bucket_name || !$file || !$valid_mime ) return;
 
     if( !self::$client ) self::$client = Helpers::auth();
 
-    $upload = self::$client->upload([
-      'BucketId' => $bucket_id,
-      'FileName' => $file['destfile'],
-      'Body' => fopen($file['filepath'], 'r')
-    ]);
+    try {
+      $upload = self::$client->upload([
+        'BucketId' => $bucket_id,
+        'FileName' => $file['destfile'],
+        'Body' => fopen($file['filepath'], 'r')
+      ]);
+    } catch ( \ChrisWhite\B2\Exceptions\BadJsonException $e ) {
+      echo $e->getMessage();
+      return;
+    }
 
     // Get upload filename
     $url = self::$client->getDownloadUrl( [ 'BucketName' => $bucket_name, 'FileName' => $file['destfile'] ] );
 
     // Set upload name
     update_post_meta( $attachment_id, self::prefix( 'external_url' ), $url );
+
+    // Delete local file
+    if( $upload && $this->get_plugin_option( 'remove_local_media' ) ) {
+      unlink( $this->get_wordpress_root( $upload->getName() ) );
+    }
 
   }
 

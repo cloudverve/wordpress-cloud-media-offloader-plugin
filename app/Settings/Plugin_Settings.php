@@ -49,10 +49,12 @@ class Plugin_Settings extends Plugin {
         Field::make( 'checkbox', $this->prefix( 'rewrite_urls' ), __( 'Rewrite Media URLs', self::$textdomain ) )
           ->set_default_value( true )
           ->help_text( __( 'If enabled, Media Library URLs will be changed to serve from Backblaze. <em>It is <strong>highly likely</strong> that you\'ll want this checked unless you are using another plugin/method to rewrite URLs.</em>', self::$textdomain ) ),
-        Field::make( 'checkbox', $this->prefix( 'uninstall_remove_settings' ), __( 'Delete Plugin Settings On Uninstall', self::$textdomain ) )
-          ->help_text( __( 'Settings will only be delete if you remove the plugin from Installed Plugins. They will not be removed by simply deactivating the plugin.', self::$textdomain ) ),
+        Field::make( 'checkbox', $this->prefix( 'remove_local_media' ), __( 'Remove Files From Server', self::$textdomain ) )
+          ->help_text( __( 'If enabled, uploaded files will be deleted from your web host after they are uploaded to Backblaze B2.', self::$textdomain ) . '<br /><strong>' . __( 'Note: This may cause incompatibilities with other plugins that rely on a local copy of uploaded media.', self::$textdomain ) . '</strong>' ),
         Field::make( 'checkbox', $this->prefix( 'add_media_library_document_type' ), __( 'Add "Document" to Media Library Filter Dropdown', self::$textdomain ) )
           ->help_text( __( 'For convenience, adds a <em>Document</em> file type to the Media Library dropdown filter.', self::$textdomain ) ),
+        Field::make( 'checkbox', $this->prefix( 'uninstall_remove_settings' ), __( 'Delete Plugin Settings On Uninstall', self::$textdomain ) )
+          ->help_text( __( 'Settings will only be delete if you remove the plugin from Installed Plugins. They will not be removed by simply deactivating the plugin.', self::$textdomain ) ),
         Field::make( 'separator', $this->prefix( 'separator_general_credentials' ), __( 'Access Credentials', self::$textdomain ) ),
         Field::make( 'html', $this->prefix( 'html_general_credentials' ) )
           ->set_html( __( 'You can find these values by logging into your <a href="https://www.backblaze.com/b2/cloud-storage.html#af9kre" target="_blank">Backblaze</a> account, clicking <strong>Buckets</strong>, then clicking the <strong>Show Account ID and Application Key</strong> link.', self::$textdomain ) ),

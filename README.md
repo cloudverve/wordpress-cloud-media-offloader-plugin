@@ -53,18 +53,12 @@ Once I produce a release version, automatic updates will be available via WordPr
 
 * [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) - This plugin is **_not_** compatible with legacy versions of Carbon Fields. If it detects that a version <=1.6.0 is loaded, it will deactivate.
 
-There are probably other incompatibilities due to the current method being used rewrite URLs.
-
-If you are aware of any others, please [share](https://github.com/dmhendricks/backblaze-media-offloader/issues).
+If you encounter any other incompatibilities, please [report them](https://github.com/dmhendricks/backblaze-media-offloader/issues).
 
 ## TODO
 
 #### Immediate Goals
 
-* **Ability to Delete Locally-Uploaded Files** - Currently, the plugin only uploads media to and deleted from B2, which limits the usefulness of "offloading" content.
-* Fix bug with checkboxes on Settings page not being checked by default
-* Extensive testing, documentation/wiki and code cleanup
-* Implement a better, more persistent means of URL rewriting
 * Clean up and create a proper translation (`.pot`) file
 * Clean up settings page
 
@@ -86,6 +80,7 @@ Release changes will be noted on the [Releases](https://github.com/dmhendricks/b
 
 * Completely refactored code
 * Switched from direct API calls to a fork of [Backblaze B2 SDK for PHP](https://github.com/cwhite92/b2-sdk-php/)
+* Added option to delete local media after being uploaded to B2.
 
 ## Credits
 
