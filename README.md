@@ -1,7 +1,6 @@
 [![Author](https://img.shields.io/badge/author-Daniel%20M.%20Hendricks-blue.svg?colorB=9900cc )](https://www.danhendricks.com)
 [![Latest Version](https://img.shields.io/github/release/dmhendricks/backblaze-media-offloader.svg)](https://github.com/dmhendricks/backblaze-media-offloader/releases)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/danielhendricks)
-[![WP Engine](https://img.shields.io/badge/WP%20Engine-Compatible-orange.svg)](http://bit.ly/WPEnginePlans)
 [![GitHub License](https://img.shields.io/badge/license-GPLv2-yellow.svg)](https://raw.githubusercontent.com/dmhendricks/backblaze-media-offloader/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/dmhendricks/backblaze-media-offloader.svg?style=social)](https://twitter.com/danielhendricks)
 
@@ -90,8 +89,9 @@ Release changes will be noted on the [Releases](https://github.com/dmhendricks/b
 * Completely refactored code
 * Switched from direct API calls to a fork of [Backblaze B2 SDK for PHP](https://github.com/cwhite92/b2-sdk-php/)
 * Added option to delete local media after being uploaded to B2.
-* Added initial POT translation
+* Added initial POT translation file
 * Added setting to register custom MIME types
+* Fixed unhandled exception triggered by invalid API credentials
 
 ## Credits
 

@@ -46,7 +46,12 @@ class Helpers extends Plugin {
 
     if( !$account_id || !$application_key ) return null;
 
-    return new Client( $account_id, $application_key );
+    try {
+      $client = new Client( $account_id, $application_key );
+      return $client;
+    } catch ( \ChrisWhite\B2\Exceptions\B2Exception $e ) {
+      return null;
+    }
 
   }
 
@@ -80,6 +85,7 @@ class Helpers extends Plugin {
     $buckets = self::$cache->get_object( self::prefix( 'b2_bucket_list' ), function() use ( &$account_id, &$application_key ) {
       try {
         self::$client = self::auth();
+        if( !self::$client ) return array();
         return self::$client->listBuckets();
       } catch( B2Exception $e ) {
         self::show_notice( $e->getMessage(), 'error', true );
