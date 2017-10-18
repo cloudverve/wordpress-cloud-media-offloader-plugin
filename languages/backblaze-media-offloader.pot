@@ -1,0 +1,180 @@
+# Copyright (C) 2017 true
+# This file is distributed under the same license as the true package.
+msgid ""
+msgstr ""
+"Project-Id-Version: true\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../app/Core.php:147
+msgid "Please check your {|access credentials|}."
+msgstr ""
+
+#: ../app/Core.php:160
+msgid "Unable to connect to the Backblaze B2 API."
+msgstr ""
+
+#: ../app/Core.php:173, ../app/Core.php:173
+msgid "Document"
+msgid_plural "Documents"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/Core.php:173
+msgid "Manage Documents"
+msgstr ""
+
+#: ../app/Plugin.php:123
+msgid "This plugin is not supported on versions of PHP below"
+msgstr ""
+
+#: ../app/Plugin.php:131
+msgid "An unknown error occurred while trying to load the Carbon Fields framework."
+msgstr ""
+
+#: ../app/Plugin.php:133
+msgid "An outdated version of Carbon Fields has been detected:"
+msgstr ""
+
+#: ../app/Plugin.php:133
+msgid "required"
+msgstr ""
+
+#: ../app/Plugin.php:133
+msgid "deactivated"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:75, ../app/Settings/Plugin_Settings.php:87
+msgid "MIME Types"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:77
+msgid "If checked, uploads to Backblaze B2 are limited to specific MIME types."
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:76
+msgid "Limit to Specific Mime Types"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:92
+msgid "Add New"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:87, ../app/Settings/Plugin_Settings.php:82
+msgid "MIME Type"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:85
+msgid "Add extra MIME types that are not listed below."
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:85
+msgid "Examples"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:81, ../app/Settings/Plugin_Settings.php:83
+msgid "Example:"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:80
+msgid "Extension/Label"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:78
+msgid "Custom Mime Types"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:93
+msgid "Built-in MIME Types"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:45
+msgid "General"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:48
+msgid "Check to enable the plugin. Media Library items will be uploaded to the B2 bucket specified below."
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:46
+msgid "Enable Plugin"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:51
+msgid "If enabled, Media Library URLs will be changed to serve from Backblaze. <em>It is <strong>highly likely</strong> that you'll want this checked unless you are using another plugin/method to rewrite URLs.</em>"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:49
+msgid "Rewrite Media URLs"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:53
+msgid "If enabled, uploaded files will be deleted from your web host after they are uploaded to Backblaze B2."
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:53
+msgid "Note: This may cause incompatibilities with other plugins that rely on a local copy of uploaded media."
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:52
+msgid "Remove Files From Server"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:55
+msgid "For convenience, adds a <em>Document</em> file type to the Media Library dropdown filter."
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:54
+msgid "Add \"Document\" to Media Library Filter Dropdown"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:57
+msgid "Settings will only be deleted if you remove the plugin from Installed Plugins. They will not be removed by simply deactivating the plugin."
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:56
+msgid "Delete Plugin Settings On Uninstall"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:58
+msgid "Access Credentials"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:60
+msgid "You can find these values by logging into your <a href=\"https://www.backblaze.com/b2/cloud-storage.html#af9kre\" target=\"_blank\">Backblaze</a> account, clicking <strong>Buckets</strong>, then clicking the <strong>Show Account ID and Application Key</strong> link."
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:61
+msgid "Account ID"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:63
+msgid "Application Key"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:65
+msgid "Bucket & Path"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:68
+msgid "If you see <em>no options</em>, log into your Backblaze B2 account and make that you have at least one bucket created and that it is marked <strong>Public</strong>."
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:66
+msgid "Bucket List"
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:70
+msgid "Optional. The folder path that you want files uploaded to. Leave blank for the root of the bucket."
+msgstr ""
+
+#: ../app/Settings/Plugin_Settings.php:69
+msgid "Path"
+msgstr ""
