@@ -60,6 +60,7 @@ If you encounter any other in/compatibilities, please [report them](https://gith
 
 #### Immediate
 
+* Bug: When uploading images via "Add Media" from post editor, resized images do not upload
 * Significant testing in various environments
 
 #### Medium-Term
