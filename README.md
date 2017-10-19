@@ -9,7 +9,11 @@
 
 This is currently **under development** and may contain bugs. Test in a development environment first and use at your own risk.
 
-**Note:** If you want to try this plugin, use the [installable WordPress ZIP file](#installation). If you download the repo ZIP file, it will fail to activate unless you run `composer install` at the command line first.
+**Important installation note:** If you want to try this plugin, use the [installable WordPress ZIP file](#installation). If you download the repo ZIP file, it will fail to activate unless you run `composer install` at the command line first. If you're not sure what this means, just download the installable ZIP.
+
+**Current Status:** This plugin seems to work reliably with most media types (documents, video, archives, etc), however, it still has some issues with offloading images. It seems to work okay if you upload images from the Media page but not from the post editor's "Add Media" overlay.
+
+In short, I would probably not use this plugin to offload _images_ just yet, but it should be suitable in its current form for other binaries.
 
 ## Description
 
@@ -61,13 +65,14 @@ If you encounter any other in/compatibilities, please [report them](https://gith
 #### Immediate
 
 * Bug: When uploading images via "Add Media" from post editor, resized images do not upload
+* Bug: Settings defaults do not work (I am waiting for a CF update to address this)
 * Significant testing in various environments
 
 #### Medium-Term
 
 * Add ability to store files in private buckets
 * Add ability to password-protect content, time-expiring URLs and relevant tracking/statistics
-* Add various shortcodes & hooks
+* Add shortcodes & hooks?
 
 #### Long-Term
 
