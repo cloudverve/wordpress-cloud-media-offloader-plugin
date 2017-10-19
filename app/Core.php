@@ -24,13 +24,16 @@ class Core extends Plugin {
       }
 
       // Add media upload filter
-      add_filter( 'add_attachment', array( $this, 'add_attachment_handler' ), 10, 2 );
+      add_filter( 'add_attachment', array( $this, 'add_attachment_filter' ), 10, 2 );
 
       // Add media delete filter
-      add_action( 'delete_attachment', array( $this, 'delete_attachment_handler' ), 10, 2 );
+      add_action( 'delete_attachment', array( $this, 'delete_attachment_filter' ), 10, 2 );
 
       // Get image size when files are removed locally
       add_filter( 'image_send_to_editor', array( $this, 'insert_image_filter' ), 10, 9 );
+
+      //
+      add_filter( 'wp_generate_attachment_metadata', array( $this, 'wp_generate_attachment_metadata_filter' ), 10, 2 );
 
     }
 
@@ -42,7 +45,7 @@ class Core extends Plugin {
     * @param int $attachment_id Post ID of media
     * @since 0.7.0
     */
-  public function add_attachment_handler( $attachment_id ) {
+  public function add_attachment_filter( $attachment_id ) {
 
     $bucket_id = $this->get_plugin_option( 'bucket_id' );
     $bucket_name = Helpers::get_bucket_by_id( $bucket_id, 'name' );
@@ -55,16 +58,8 @@ class Core extends Plugin {
 
     if( !self::$client ) self::$client = Helpers::auth();
 
-    try {
-      $upload = self::$client->upload([
-        'BucketId' => $bucket_id,
-        'FileName' => $file['destfile'],
-        'Body' => fopen($file['filepath'], 'r')
-      ]);
-    } catch ( \ChrisWhite\B2\Exceptions\BadJsonException $e ) {
-      echo $e->getMessage();
-      return;
-    }
+    // Copy uploaded file to B2 bucket
+    $this->upload_file_to_bucket( $file, $bucket_id );
 
     // Store image dimensions
     $file_type = $this->get_upload_filetype( $file['filepath'] );
@@ -87,12 +82,38 @@ class Core extends Plugin {
   }
 
   /**
+    * Upload resized images to B2 bucket
+    *
+    * @param string $metadata Image metadata
+    * @param int Attachment ID
+    * @since 0.7.0
+    */
+  public function wp_generate_attachment_metadata_filter( $metadata, $attachment_id ) {
+
+    if( isset( $metadata['sizes'] ) ) {
+
+      $bucket_id = $this->get_plugin_option( 'bucket_id' );
+      $file = Helpers::get_attachment_info( $attachment_id );
+
+      foreach( $metadata['sizes'] as $size => $meta ) {
+
+        $this->upload_file_to_bucket( $file, $bucket_id, $meta['file'] );
+
+      }
+
+    }
+
+    return $metadata;
+
+  }
+
+  /**
     * Delete media file from B2 when deleted from WordPress Media Library
     *
     * @param int $attachment_id Post ID of media
     * @since 0.7.0
     */
-  public function delete_attachment_handler( $attachment_id ) {
+  public function delete_attachment_filter( $attachment_id ) {
 
     // Check if file was uploaded to B2
     $attachment_meta = get_post_meta( $attachment_id );
@@ -107,10 +128,20 @@ class Core extends Plugin {
 
     if( !self::$client ) self::$client = Helpers::auth();
 
-    $delete = self::$client->deleteFile([
-        'BucketName' => $bucket_name,
-        'FileName' => $file['destfile']
-    ]);
+    // Delete file from B2 bucket
+    $this->delete_file_from_bucket( $file, $bucket_name );
+
+    // Delete resized images
+    if( $this->get_upload_filetype( $file['filepath'] ) == 'image' ) {
+
+      foreach( get_intermediate_image_sizes() as $size ) {
+
+        $resized_image = $this->get_resized_image_path( $attachment_id, $size, $file['filename'], $file['destpath'] );
+        $this->delete_file_from_bucket( $file, $bucket_name, $resized_image );
+
+      }
+
+    }
 
   }
 
@@ -228,6 +259,82 @@ class Core extends Plugin {
     }
 
     return $html;
+
+  }
+
+  /**
+    * Upload file to B2 bucket
+    * @param array $file Array of file properties from Helpers::get_attachment_info()
+    * @param string $bucket_id The B2 bucket ID to upload to
+    * @return \ChrisWhite\B2\File Object
+    * @since 0.7.0
+    */
+  public function upload_file_to_bucket( $file, $bucket_id, $resized_image = null ) {
+
+    $destfile = $file['destfile'];
+    if( $resized_image ) {
+      $destfile = $file['destpath'] . '/' . $resized_image;
+    }
+
+    $srcfile = $file['filepath'];
+    if( $resized_image ) {
+      $srcfile = wp_upload_dir()['path'] . DIRECTORY_SEPARATOR . $resized_image;
+    }
+
+    try {
+      $upload = self::$client->upload([
+        'BucketId' => $bucket_id,
+        'FileName' => $destfile,
+        'Body' => fopen( $srcfile, 'r' )
+      ]);
+      return $upload;
+    } catch ( \ChrisWhite\B2\Exceptions\BadJsonException $e ) {
+      echo $e->getMessage();
+      return null;
+    }
+
+  }
+
+  /**
+    * Delete file from B2 bucket
+    * @param array $file Array of file properties from Helpers::get_attachment_info()
+    * @param string $bucket_name The name of the bucket that contains the file
+    * @return \ChrisWhite\B2\File Object
+    * @since 0.7.0
+    */
+  public function delete_file_from_bucket( $file, $bucket_name, $resized_image = null ) {
+
+    $target = $file['destfile'];
+    if( $resized_image ) {
+      $target = $file['destpath'] . '/' . $resized_image;
+    }
+
+    try {
+      $delete = self::$client->deleteFile([
+        'BucketName' => $bucket_name,
+        'FileName' => $target
+      ]);
+    } catch ( \ChrisWhite\B2\Exceptions\NotFoundException $e ) {
+      return null;
+    }
+
+  }
+
+  /**
+    * Get resized image path
+    * @return string Path to resize image
+    * @since 0.7.0
+    */
+  public function get_resized_image_path( $attachment_id, $size, $filename, $dir ) {
+
+    $url = wp_get_attachment_image_src( $attachment_id, $size );
+
+    if( isset( $url[0] ) ) {
+      $resized_image = end( explode( $dir, $url[0] ) );
+      return trim( $resized_image, '/' );
+    } else {
+      return null;
+    }
 
   }
 

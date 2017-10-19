@@ -7,9 +7,9 @@
 
 # Backblaze B2 Media Offloader Plugin for WordPress
 
-This is currently **under development and only supports basic functions**. Test in a development environment first and use at your own risk.
+This is currently **under development** and may contain bugs. Test in a development environment first and use at your own risk.
 
-**Note:** If you want to try this plugin, use the [installable WordPress ZIP file](#installation). If you download the repo ZIP file, it will fail to activate unless you run `composer install` first.
+**Note:** If you want to try this plugin, use the [installable WordPress ZIP file](#installation). If you download the repo ZIP file, it will fail to activate unless you run `composer install` at the command line first.
 
 ## Description
 
@@ -21,13 +21,12 @@ From their web site:
 
 ### Contributing
 
-I am open to pull requests as well as other feedback. One of the best ways that you can contribute is to help me make it better, either with code or with constructive feedback. Other ways:
+One of the best ways that you can contribute is to help me make it better, either with code or with constructive feedback. Ways to help:
 
 * I am open to pull requests and welcome improvements.
 * [Feedback](https://github.com/dmhendricks/backblaze-media-offloader/issues) on how I can make it better.
 * **Testing!** If you try the plugin - please use the [installable ZIP](#installation), let me know what works and what doesn't. If you have an [issue](https://github.com/dmhendricks/backblaze-media-offloader/issues), it is helpful if you can describe (as much as you are aware of) your environment - install method, WordPress version, PHP version, operating system, and web server (Apache, Nginx, etc).
 * Translations (or [donations](https://paypal.me/danielhendricks) to create/maintain them)
-* Sponsor a personal account on WP Engine (for testing plugins) or provide me with SFTP access to a transferrable install.
 
 ## Requirements
 
@@ -36,13 +35,13 @@ I am open to pull requests as well as other feedback. One of the best ways that 
 
 ### Installation
 
-Until sufficient testing and a proper translation file has been completed, you may [download an installable ZIP](https://f001.backblazeb2.com/file/hendricks/projects/github/dmhendricks/backblaze-media-offloader/releases/backblaze-media-offloader.zip) of this plugin.
+Until sufficient testing has been completed, you may [download an installable ZIP](https://f001.backblazeb2.com/file/hendricks/projects/github/dmhendricks/backblaze-media-offloader/releases/backblaze-media-offloader.zip) of this plugin.
 
 ### Automatic Updates
 
 Once I produce a release version, automatic updates will be available via WordPress. For now, you will have to update manually.
 
-I have disabled GitHub Updater support because I don't want to store the `/vendor` folder in the repo (plus other technical reasons). Rest assured, when this plugin reaches a reasonable level of stability, automatic updates will be supported.
+I have disabled GitHub Updater support because I don't want to store the `/vendor` folder in the repo (plus other technical reasons). when this plugin reaches a reasonable level of stability, automatic updates will be supported.
 
 ## Known Compatibilities & Conflicts
 
@@ -61,9 +60,7 @@ If you encounter any other in/compatibilities, please [report them](https://gith
 
 #### Immediate
 
-* Fix compatibility issues when "Remove Files From Server" is enabled, including image preview
-* Support resized images
-* Testing in various environments
+* Significant testing in various environments
 
 #### Medium-Term
 
@@ -92,6 +89,8 @@ Release changes will be noted on the [Releases](https://github.com/dmhendricks/b
 * Added setting to register custom MIME types
 * Fixed unhandled exception triggered by invalid API credentials
 * Fixed image dimensions bug when inserting images into a post
+* Fixed exception when trying to delete file that does not exist
+* Added support for resized images
 
 ## Credits
 
