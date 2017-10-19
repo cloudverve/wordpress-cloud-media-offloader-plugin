@@ -13,41 +13,41 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../app/Core.php:147
+#: ../app/Core.php:157
 msgid "Please check your {|access credentials|}."
 msgstr ""
 
-#: ../app/Core.php:160
+#: ../app/Core.php:170
 msgid "Unable to connect to the Backblaze B2 API."
 msgstr ""
 
-#: ../app/Core.php:173, ../app/Core.php:173
+#: ../app/Core.php:183, ../app/Core.php:183
 msgid "Document"
 msgid_plural "Documents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../app/Core.php:173
+#: ../app/Core.php:183
 msgid "Manage Documents"
 msgstr ""
 
-#: ../app/Plugin.php:123
+#: ../app/Plugin.php:126
 msgid "This plugin is not supported on versions of PHP below"
 msgstr ""
 
-#: ../app/Plugin.php:131
+#: ../app/Plugin.php:134
 msgid "An unknown error occurred while trying to load the Carbon Fields framework."
 msgstr ""
 
-#: ../app/Plugin.php:133
+#: ../app/Plugin.php:136
 msgid "An outdated version of Carbon Fields has been detected:"
 msgstr ""
 
-#: ../app/Plugin.php:133
+#: ../app/Plugin.php:136
 msgid "required"
 msgstr ""
 
-#: ../app/Plugin.php:133
+#: ../app/Plugin.php:136
 msgid "deactivated"
 msgstr ""
 
@@ -60,7 +60,7 @@ msgid "If checked, uploads to Backblaze B2 are limited to specific MIME types."
 msgstr ""
 
 #: ../app/Settings/Plugin_Settings.php:81
-msgid "Limit to Specific Mime Types"
+msgid "Limit to Specific MIME Types"
 msgstr ""
 
 #: ../app/Settings/Plugin_Settings.php:97
@@ -88,7 +88,7 @@ msgid "Extension/Label"
 msgstr ""
 
 #: ../app/Settings/Plugin_Settings.php:83
-msgid "Custom Mime Types"
+msgid "Custom MIME Types"
 msgstr ""
 
 #: ../app/Settings/Plugin_Settings.php:99
@@ -128,7 +128,7 @@ msgid "If enabled, uploaded files will be deleted from your web host after they 
 msgstr ""
 
 #: ../app/Settings/Plugin_Settings.php:58
-msgid "Note: This may cause incompatibilities with other plugins that rely on a local copy of uploaded media."
+msgid "<strong>Note:</strong> This may cause incompatibilities with other plugins that rely on a local copy of uploaded media. If you deactivate this plugin, the media links will be broken."
 msgstr ""
 
 #: ../app/Settings/Plugin_Settings.php:57

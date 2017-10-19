@@ -62,6 +62,7 @@ If you encounter any other in/compatibilities, please [report them](https://gith
 #### Immediate
 
 * Fix compatibility issues when "Remove Files From Server" is enabled, including image preview
+* Support resized images
 * Testing in various environments
 
 #### Medium-Term
