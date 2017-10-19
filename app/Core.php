@@ -70,7 +70,7 @@ class Core extends Plugin {
     $file_type = $this->get_upload_filetype( $file['filepath'] );
     if( $file_type == 'image' && $this->get_plugin_option( 'remove_local_media' ) ) {
       $image_size = getimagesize( $file['filepath'] );
-      update_post_meta( $attachment_id, self::prefix( 'dimensions' ), array( $image_size[0], $image_size[1] ) );
+      if( isset( $image_size[0] ) && $image_size[0] ) update_post_meta( $attachment_id, self::prefix( 'dimensions' ), array( $image_size[0], $image_size[1] ) );
     }
 
     // Get upload filename
