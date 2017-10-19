@@ -11,11 +11,6 @@ class Core extends Plugin {
     // Check API credentials
     $this->check_api_credentials();
 
-    // Add 'Document' file type to Media Library filter dropdown
-    if( $this->get_plugin_option( 'add_media_library_document_type' ) ) {
-      add_filter( 'post_mime_types', array( $this, 'post_mime_types_filter' ) );
-    }
-
     // Rewrite uploaded file URLs
     if( $this->get_plugin_option( 'rewrite_urls' ) ) {
       add_filter( 'wp_get_attachment_url', array( $this, 'rewrite_attachment_url' ), 10, 2 );
@@ -23,11 +18,19 @@ class Core extends Plugin {
 
     if( $this->get_plugin_option( 'enabled' ) ) {
 
+      // Add 'Document' file type to Media Library filter dropdown
+      if( $this->get_plugin_option( 'add_media_library_document_type' ) ) {
+        add_filter( 'post_mime_types', array( $this, 'post_mime_types_filter' ) );
+      }
+
       // Add media upload filter
       add_filter( 'add_attachment', array( $this, 'add_attachment_handler' ), 10, 2 );
 
       // Add media delete filter
       add_action( 'delete_attachment', array( $this, 'delete_attachment_handler' ), 10, 2 );
+
+      // Get image size when files are removed locally
+      add_filter( 'image_send_to_editor', array( $this, 'insert_image_filter' ), 10, 9 );
 
     }
 
@@ -61,6 +64,13 @@ class Core extends Plugin {
     } catch ( \ChrisWhite\B2\Exceptions\BadJsonException $e ) {
       echo $e->getMessage();
       return;
+    }
+
+    // Store image dimensions
+    $file_type = $this->get_upload_filetype( $file['filepath'] );
+    if( $file_type == 'image' && $this->get_plugin_option( 'remove_local_media' ) ) {
+      $image_size = getimagesize( $file['filepath'] );
+      update_post_meta( $attachment_id, self::prefix( 'dimensions' ), array( $image_size[0], $image_size[1] ) );
     }
 
     // Get upload filename
@@ -172,6 +182,52 @@ class Core extends Plugin {
 
       $post_mime_types['application'] = array( __( 'Document', self::$textdomain ), __( 'Manage Documents', self::$textdomain ), _n_noop( 'Document', 'Documents' ) . ' <span class="count">(%s)</span>' );
       return $post_mime_types;
+
+  }
+
+  /**
+    * Returns the first half of the MIME type (ie, image, application, etc)
+    * @param string $path The path of the file to check
+    * @return string File type
+    * @since 0.7.0
+    */
+  private function get_upload_filetype( $path ) {
+
+    $file_type = wp_check_filetype( $path );
+    if( isset( $file_type['type'] ) && strstr( $file_type['type'], '/' ) ) {
+      return current( explode( '/', $file_type['type'] ) );
+    } else {
+      return null;
+    }
+
+  }
+
+  /**
+    * Get image size when files are removed locally
+    * @return string $html Image HTML markup
+    * @since 0.7.0
+    */
+  public function insert_image_filter( $html, $attachment_id, $caption, $title, $align, $url, $size, $alt ) {
+
+    $attachment_meta = get_post_meta( $attachment_id );
+    if( isset( $attachment_meta[ $this->prefix( 'dimensions' ) ][0] ) ) {
+
+      $image_size = unserialize( $attachment_meta[ $this->prefix( 'dimensions' ) ][0] );
+
+      $dom = new \DOMDocument;
+      $dom->loadHTML( $html );
+      $anchor = $dom->getElementsByTagName('a')->item(0);
+      $image = $dom->getElementsByTagName('img')->item(0);
+
+      if( $image ) {
+        $image->setAttribute('width', $image_size[0]);
+        $image->setAttribute('height', $image_size[1]);
+        $html = $dom->saveHTML( $anchor ? $anchor : $image);
+      }
+
+    }
+
+    return $html;
 
   }
 

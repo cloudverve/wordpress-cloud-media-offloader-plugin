@@ -1,6 +1,7 @@
 [![Author](https://img.shields.io/badge/author-Daniel%20M.%20Hendricks-blue.svg?colorB=9900cc )](https://www.danhendricks.com)
 [![Latest Version](https://img.shields.io/github/release/dmhendricks/backblaze-media-offloader.svg)](https://github.com/dmhendricks/backblaze-media-offloader/releases)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/danielhendricks)
+[![WP Engine](https://img.shields.io/badge/WP%20Engine-Compatible-orange.svg)](http://bit.ly/WPEnginePlans)
 [![GitHub License](https://img.shields.io/badge/license-GPLv2-yellow.svg)](https://raw.githubusercontent.com/dmhendricks/backblaze-media-offloader/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/dmhendricks/backblaze-media-offloader.svg?style=social)](https://twitter.com/danielhendricks)
 
@@ -8,11 +9,7 @@
 
 This is currently **under development and only supports basic functions**. Test in a development environment first and use at your own risk.
 
-**Notes:**
-* If you want to try this plugin, use the [installable WordPress ZIP file](#installation). If you download the repo ZIP file, it will fail to activate unless you run `composer install` first.
-* This plugin has not yet been tested on a WordPress multisite setup. I will do so eventually, but feedback is welcome.
-
-**Status:** I am close to creating a release, but I want to test the localization support first.
+**Note:** If you want to try this plugin, use the [installable WordPress ZIP file](#installation). If you download the repo ZIP file, it will fail to activate unless you run `composer install` first.
 
 ## Description
 
@@ -41,7 +38,7 @@ I am open to pull requests as well as other feedback. One of the best ways that 
 
 Until sufficient testing and a proper translation file has been completed, you may [download an installable ZIP](https://f001.backblazeb2.com/file/hendricks/projects/github/dmhendricks/backblaze-media-offloader/releases/backblaze-media-offloader.zip) of this plugin.
 
-### Updates
+### Automatic Updates
 
 Once I produce a release version, automatic updates will be available via WordPress. For now, you will have to update manually.
 
@@ -64,7 +61,8 @@ If you encounter any other in/compatibilities, please [report them](https://gith
 
 #### Immediate
 
-* Testing: Localization, multisite, etc.
+* Fix compatibility issues when "Remove Files From Server" is enabled, including image preview
+* Testing in various environments
 
 #### Medium-Term
 
@@ -92,6 +90,7 @@ Release changes will be noted on the [Releases](https://github.com/dmhendricks/b
 * Added initial POT translation file
 * Added setting to register custom MIME types
 * Fixed unhandled exception triggered by invalid API credentials
+* Fixed image dimensions bug when inserting images into a post
 
 ## Credits
 
