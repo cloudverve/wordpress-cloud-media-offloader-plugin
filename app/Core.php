@@ -32,7 +32,7 @@ class Core extends Plugin {
       // Get image size when files are removed locally
       add_filter( 'image_send_to_editor', array( $this, 'insert_image_filter' ), 10, 9 );
 
-      //
+      // Upload
       add_filter( 'wp_generate_attachment_metadata', array( $this, 'wp_generate_attachment_metadata_filter' ), 10, 2 );
 
     }
@@ -59,7 +59,7 @@ class Core extends Plugin {
     if( !self::$client ) self::$client = Helpers::auth();
 
     // Copy uploaded file to B2 bucket
-    $this->upload_file_to_bucket( $file, $bucket_id );
+    $upload = $this->upload_file_to_bucket( $file, $bucket_id );
 
     // Store image dimensions
     $file_type = $this->get_upload_filetype( $file['filepath'] );
@@ -74,8 +74,8 @@ class Core extends Plugin {
     // Set upload name
     update_post_meta( $attachment_id, self::prefix( 'external_url' ), $url );
 
-    // Delete local file
-    if( $upload && $this->get_plugin_option( 'remove_local_media' ) ) {
+    // Delete original file
+    if( $upload && $file_type != 'image' && $this->get_plugin_option( 'remove_local_media' ) ) {
       unlink( $this->get_wordpress_root( $upload->getName() ) );
     }
 
@@ -97,10 +97,19 @@ class Core extends Plugin {
 
       foreach( $metadata['sizes'] as $size => $meta ) {
 
-        $this->upload_file_to_bucket( $file, $bucket_id, $meta['file'] );
+        $upload = $this->upload_file_to_bucket( $file, $bucket_id, $meta['file'] );
+
+        if( $upload && $this->get_plugin_option( 'remove_local_media' ) ) {
+          unlink( $this->get_wordpress_root( $upload->getName() ) );
+        }
 
       }
 
+    }
+
+    // Remove original file
+    if( $this->get_plugin_option( 'remove_local_media' ) ) {
+      unlink( $file['filepath'] );
     }
 
     return $metadata;
