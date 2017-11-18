@@ -59,6 +59,7 @@ If you encounter any conflicts, please [report them](https://github.com/dmhendri
 
 #### Immediate
 
+* Create documentation
 * Bug: Settings defaults do not work (this is an issue with Carbon Fields)
 * Significant testing in various environments
 
