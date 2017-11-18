@@ -9,11 +9,9 @@
 
 This is currently **under development** and may contain bugs. Test in a development environment first and use at your own risk.
 
-**Important installation note:** If you want to try this plugin, use the [installable WordPress ZIP file](#installation). If you download the repo ZIP file, it will fail to activate unless you run `composer install` at the command line first. If you're not sure what this means, just download the installable ZIP.
+### Download Plugin
 
-**Current Status:** This plugin seems to work reliably with most media types (documents, video, archives, etc), however, it still has some issues with offloading images. It seems to work okay if you upload images from the Media page but not from the post editor's "Add Media" overlay.
-
-In short, I would probably not use this plugin to offload _images_ just yet, but it should be suitable in its current form for other binaries.
+To try this plugin, use the installable WordPress ZIP file: [backblaze-media-offloader.zip](https://github.com/dmhendricks/backblaze-media-offloader/releases/download/0.7.1/backblaze-media-offloader.zip).
 
 ## Description
 
@@ -39,11 +37,11 @@ One of the best ways that you can contribute is to help me make it better, eithe
 
 ### Installation
 
-Until sufficient testing has been completed, you may [download an installable ZIP](https://f001.backblazeb2.com/file/hendricks/projects/github/dmhendricks/backblaze-media-offloader/releases/backblaze-media-offloader.zip) of this plugin.
+Download the [installable WordPress ZIP file](https://github.com/dmhendricks/backblaze-media-offloader/releases/download/0.7.1/backblaze-media-offloader.zip) and add via **Plugins** > **Add New** in WP Admin.
 
 ### Automatic Updates
 
-Once I produce a release version, automatic updates will be available via WordPress. For now, updates are supported via GitHub Updater.
+Automatic updates are currently supported via [GitHub Updater](https://github.com/afragen/github-updater).
 
 ## Known Compatibilities & Conflicts
 
@@ -51,18 +49,17 @@ Once I produce a release version, automatic updates will be available via WordPr
 
 * [Safe SVG](https://wordpress.org/plugins/safe-svg/)
 * [SVG Support](https://wordpress.org/plugins/svg-support/)
+* [WordPress SVG Plugin](https://github.com/Lewiscowles1986/WordPressSVGPlugin)
 
 ### Conflicts
 
-* [Carbon Fields](https://wordpress.org/plugins/carbon-fields/) - This plugin uses the latest _release_ version of the Carbon Fields framework (currently 2.1.0). As such, it is **_not_** compatible with **legacy** versions of Carbon Fields. If it detects that a version <=1.6.0 is loaded, it will deactivate. (Note: If you wish to use Carbon Fields as a _plugin_, consider using [Carbon Fields Loader](https://github.com/dmhendricks/carbon-fields-loader) instead of the version on the wordpress.org repo)
-
-If you encounter any other in/compatibilities, please [report them](https://github.com/dmhendricks/backblaze-media-offloader/issues).
+If you encounter any conflicts, please [report them](https://github.com/dmhendricks/backblaze-media-offloader/issues).
 
 ## Goals
 
 #### Immediate
 
-* Bug: Settings defaults do not work
+* Bug: Settings defaults do not work (this is an issue with Carbon Fields)
 * Significant testing in various environments
 
 #### Medium-Term
@@ -85,7 +82,7 @@ Release changes will be noted on the [Releases](https://github.com/dmhendricks/b
 
 #### Branch: `master`
 
-* None
+* None since release
 
 ## Credits
 
