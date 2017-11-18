@@ -3,6 +3,7 @@ namespace TwoLabNet\BackblazeB2\Settings;
 use TwoLabNet\BackblazeB2\Plugin;
 use TwoLabNet\BackblazeB2\Helpers;
 use WordPress_ToolKit\ConfigRegistry;
+use Carbon_Fields\Datastore\Datastore\Serialized_Theme_Options_Datastore;
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
 
@@ -12,6 +13,8 @@ use Carbon_Fields\Field;
   * @since 0.1.0
   */
 class Plugin_Settings extends Plugin {
+
+  // https://raw.githubusercontent.com/dmhendricks/WordPressSVGPlugin/master/wp-content/plugins/lc-wp-svg/index.php
 
   protected $settings_containers;
 
@@ -26,9 +29,9 @@ class Plugin_Settings extends Plugin {
     // Create tabbed plugin options page (Settings > Plugin Name)
     $this->create_tabbed_options_page();
 
-    // Register uninstall hook to delete settings
+    // Register uninstall hook to delete settings (registered as static method due to WP requirements)
     if( $this->get_plugin_option( 'uninstall_remove_settings' ) ) {
-      register_uninstall_hook( self::$config->get( 'plugin/identifier' ), array( $this, 'plugin_settings_uninstall' ) );
+      register_uninstall_hook( self::$config->get( 'plugin/identifier' ), 'self::plugin_settings_uninstall' );
     }
 
     // Register custom MIME types
@@ -58,13 +61,14 @@ class Plugin_Settings extends Plugin {
           ->help_text( __( 'If enabled, uploaded files will be deleted from your web host after they are uploaded to Backblaze B2.', self::$textdomain ) . '<br />' . __( '<strong>Note:</strong> This may cause incompatibilities with other plugins that rely on a local copy of uploaded media. If you deactivate this plugin, the media links will be broken.', self::$textdomain ) ),
         Field::make( 'checkbox', $this->prefix( 'add_media_library_document_type' ), __( 'Add "Document" to Media Library Filter Dropdown', self::$textdomain ) )
           ->help_text( __( 'For convenience, adds a <em>Document</em> file type to the Media Library dropdown filter.', self::$textdomain ) ),
+        /*
         Field::make( 'checkbox', $this->prefix( 'uninstall_remove_settings' ), __( 'Delete Plugin Settings On Uninstall', self::$textdomain ) )
           ->help_text( __( 'Settings will only be deleted if you remove the plugin from Installed Plugins. They will not be removed by simply deactivating the plugin.', self::$textdomain ) ),
+        */
         Field::make( 'separator', $this->prefix( 'separator_general_credentials' ), __( 'Access Credentials', self::$textdomain ) ),
         Field::make( 'html', $this->prefix( 'html_general_credentials' ) )
           ->set_html( __( 'You can find these values by logging into your <a href="https://www.backblaze.com/b2/cloud-storage.html#af9kre" target="_blank">Backblaze</a> account, clicking <strong>Buckets</strong>, then clicking the <strong>Show Account ID and Application Key</strong> link.', self::$textdomain ) ),
-        Field::make( 'text', $this->prefix( 'account_id' ), __( 'Account ID', self::$textdomain ) )
-          ->set_attribute( 'type', 'password' ),
+        Field::make( 'text', $this->prefix( 'account_id' ), __( 'Account ID', self::$textdomain ) ),
         Field::make( 'text', $this->prefix( 'application_key' ), __('Application Key', self::$textdomain ) )
           ->set_attribute( 'type', 'password' ),
         Field::make( 'separator', $this->prefix( 'separator_general_bucket_path' ), __( 'Bucket & Path', self::$textdomain ) ),
@@ -81,6 +85,7 @@ class Plugin_Settings extends Plugin {
         Field::make( 'checkbox', $this->prefix( 'limit_mime_types' ), __( 'Limit to Specific MIME Types', self::$textdomain ) )
           ->help_text( __( 'If checked, uploads to Backblaze B2 are limited to specific MIME types.', self::$textdomain ) ),
         Field::make( 'complex', $this->prefix( 'custom_mime_types' ), __( 'Custom MIME Types', self::$textdomain ) )
+          ->set_datastore( new Serialized_Theme_Options_Datastore() )
           ->add_fields( array(
             Field::make( 'text', 'label', __( 'Extension/Label', self::$textdomain ) )
               ->set_attribute( 'placeholder', __( 'Example:', self::$textdomain ) . ' WEBP' ),
@@ -109,7 +114,7 @@ class Plugin_Settings extends Plugin {
             'value' => true )
           )
         )
-        ->set_default_value( array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff', 'image/svg', 'image/svgz' ) )
+        //->set_default_value( array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff', 'image/svg', 'image/svgz' ) )
         ->add_options( $this->get_formatted_mime_types() ),
       )
     );
@@ -146,7 +151,7 @@ class Plugin_Settings extends Plugin {
     *
     * @since 0.3.0
     */
-  public function plugin_settings_uninstall() {
+  public static function plugin_settings_uninstall() {
 
     foreach( $this->settings_containers as $container ) {
 

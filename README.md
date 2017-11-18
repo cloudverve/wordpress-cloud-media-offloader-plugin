@@ -43,9 +43,7 @@ Until sufficient testing has been completed, you may [download an installable ZI
 
 ### Automatic Updates
 
-Once I produce a release version, automatic updates will be available via WordPress. For now, you will have to update manually.
-
-I have disabled GitHub Updater support because I don't want to store the `/vendor` folder in the repo (plus other technical reasons). when this plugin reaches a reasonable level of stability, automatic updates will be supported.
+Once I produce a release version, automatic updates will be available via WordPress. For now, updates are supported via GitHub Updater.
 
 ## Known Compatibilities & Conflicts
 
@@ -64,8 +62,7 @@ If you encounter any other in/compatibilities, please [report them](https://gith
 
 #### Immediate
 
-* Bug: When uploading images via "Add Media" from post editor, resized images do not upload
-* Bug: Settings defaults do not work (I am waiting for a CF update to address this)
+* Bug: Settings defaults do not work
 * Significant testing in various environments
 
 #### Medium-Term
@@ -88,15 +85,7 @@ Release changes will be noted on the [Releases](https://github.com/dmhendricks/b
 
 #### Branch: `master`
 
-* Completely refactored code
-* Switched from direct API calls to a fork of [Backblaze B2 SDK for PHP](https://github.com/cwhite92/b2-sdk-php/)
-* Added option to delete local media after being uploaded to B2.
-* Added initial POT translation file
-* Added setting to register custom MIME types
-* Fixed unhandled exception triggered by invalid API credentials
-* Fixed image dimensions bug when inserting images into a post
-* Fixed exception when trying to delete file that does not exist
-* Added support for resized images
+* None
 
 ## Credits
 

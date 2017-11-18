@@ -2,6 +2,7 @@
   "name": "dmhendricks/backblaze-media-offloader",
   "type": "wordpress-plugin",
   "description": "A bloilerplate for WordPress plugins",
+  "version": "0.7.1",
   "keywords": ["wordpress", "plugin", "boilerplate", "carbonfields"],
   "homepage": "https://2lab.net",
   "license": "GPL-2.0",
@@ -33,7 +34,8 @@
   "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
-      "TwoLabNet\\BackblazeB2\\": "app/"
+      "TwoLabNet\\BackblazeB2\\": "app/",
+      "Carbon_Fields\\Datastore\\Datastore\\": "app/Datastores/"
     }
   },
   "scripts": {

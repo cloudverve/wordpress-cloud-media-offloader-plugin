@@ -67,7 +67,7 @@ class Plugin {
     }
 
     if( $this->verify_dependencies( 'carbon_fields' ) === true ) {
-      add_action( 'carbon_fields_loaded', array( $this, 'load_plugin' ));
+      add_action( 'carbon_fields_fields_registered', array( $this, 'load_plugin' ));
     }
 
   }
@@ -194,7 +194,7 @@ class Plugin {
     * @return string Prefixed string/field value
     * @since 0.2.0
     */
-  public function prefix( $field_name = null, $start = '' ) {
+  public static function prefix( $field_name = null, $start = '' ) {
     return $field_name !== null ? $start . self::$config->get( 'prefix' ) . $field_name : self::$config->get( 'prefix' );
   }
 
