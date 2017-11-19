@@ -7,11 +7,23 @@
 
 # Backblaze B2 Media Offloader Plugin for WordPress
 
-This is currently **under development** and may contain bugs. Test in a development environment first and use at your own risk.
+This is currently under development and may contain bugs. Test in a development environment first and use at your own risk.
 
 ### Download Plugin
 
 To try this plugin, use the installable WordPress ZIP file: [backblaze-media-offloader.zip](https://github.com/dmhendricks/backblaze-media-offloader/releases/download/0.7.1/backblaze-media-offloader.zip).
+
+## Contents
+
+- [Description](#description)
+- [Installation](#installation)
+   - [Requirements](#requirements)
+   - [Automatic Updates](#automatic-updates)
+- [Known Compatibilities & Conflicts](#known-compatibilities--conflicts)
+- [Goals](#goals)
+- [Change Log](#change-log)
+- [Credits](#credits)
+- [Screenshots](#screenshots)
 
 ## Description
 
@@ -30,14 +42,14 @@ One of the best ways that you can contribute is to help me make it better, eithe
 * **Testing!** If you try the plugin - please use the [installable ZIP](#installation), let me know what works and what doesn't. If you have an [issue](https://github.com/dmhendricks/backblaze-media-offloader/issues), it is helpful if you can describe (as much as you are aware of) your environment - install method, WordPress version, PHP version, operating system, and web server (Apache, Nginx, etc).
 * Translations (or [donations](https://paypal.me/danielhendricks) to create/maintain them)
 
-## Requirements
-
-* WordPress 4.0 or higher
-* PHP 5.6 or higher
-
-### Installation
+## Installation
 
 Download the [installable WordPress ZIP file](https://github.com/dmhendricks/backblaze-media-offloader/releases/download/0.7.1/backblaze-media-offloader.zip) and add via **Plugins** > **Add New** in WP Admin.
+
+### Requirements
+
+- WordPress 4.0 or higher
+- PHP 5.6 or higher
 
 ### Automatic Updates
 
@@ -105,6 +117,6 @@ Please support [humans.txt](http://humanstxt.org/). It's an initiative for knowi
 	Author URI: https://cwhite.me/
 	Location: Edinburgh, United Kingdom
 
-## Screenshot
+## Screenshots
 
 ![Settings Page](https://raw.githubusercontent.com/dmhendricks/backblaze-media-offloader/master/assets/screenshot-1.png "Settings Page")
