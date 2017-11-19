@@ -59,6 +59,7 @@ Automatic updates are currently supported via [GitHub Updater](https://github.co
 
 ### Known Compatibilities
 
+* [Smush Image Compression and Optimization](https://wordpress.org/plugins/wp-smushit/)
 * [Safe SVG](https://wordpress.org/plugins/safe-svg/)
 * [SVG Support](https://wordpress.org/plugins/svg-support/)
 * [WordPress SVG Plugin](https://github.com/Lewiscowles1986/WordPressSVGPlugin)
@@ -71,22 +72,22 @@ If you encounter any conflicts, please [report them](https://github.com/dmhendri
 
 #### Immediate
 
-* Create documentation
 * Add option to remove settings when plugin uninstalled
 * Significant testing in various environments
+* Improve documentation
 
 #### Medium-Term
 
+* Add hook on media upload
+* Fix occasional exceptions that occur when [Enable Media Replace](https://wordpress.org/plugins/enable-media-replace/) is used.
 * Add ability to store files in private buckets
-* Add ability to password-protect content, time-expiring URLs and relevant tracking/statistics
-* Add shortcodes & hooks?
 
 #### Long-Term
 
+* Add ability to password-protect content, time-expiring URLs and relevant tracking/statistics
 * Add one-click feature to migrate existing local media to B2
 * Look at options for supporting some popular WooCommerce digital media plugins.
 * Possibility of serving external CSS/JS from B2 bucket
-* Add support for [Enable Media Replace](https://wordpress.org/plugins/enable-media-replace/)
 * Possibility to browse B2 files from WP Admin
 
 ## Change Log
@@ -96,6 +97,7 @@ Release changes will be noted on the [Releases](https://github.com/dmhendricks/b
 #### Branch: `master`
 
 * Fixed bug: Default settings not enabled by default
+* Fixed several deprecation notices
 
 ## Credits
 
