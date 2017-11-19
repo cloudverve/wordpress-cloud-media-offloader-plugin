@@ -66,6 +66,8 @@ Automatic updates are currently supported via [GitHub Updater](https://github.co
 
 ### Conflicts
 
+* [Releases](https://github.com/dmhendricks/backblaze-media-offloader/releases) - This generally works, but occasionally and seemingly randomly throws an exception when uploading a replacement file. The file still uploads fine, however, there is a bug where an exception is sometimes thrown.
+
 If you encounter any conflicts, please [report them](https://github.com/dmhendricks/backblaze-media-offloader/issues).
 
 ## Goals
@@ -79,7 +81,6 @@ If you encounter any conflicts, please [report them](https://github.com/dmhendri
 #### Medium-Term
 
 * Add hook on media upload
-* Fix occasional exceptions that occur when [Enable Media Replace](https://wordpress.org/plugins/enable-media-replace/) is used.
 * Add ability to store files in private buckets
 
 #### Long-Term
