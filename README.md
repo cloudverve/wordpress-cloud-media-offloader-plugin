@@ -66,7 +66,7 @@ Automatic updates are currently supported via [GitHub Updater](https://github.co
 
 ### Conflicts
 
-* [Releases](https://github.com/dmhendricks/backblaze-media-offloader/releases) - This generally works, but occasionally and seemingly randomly throws an exception when uploading a replacement file. The file still uploads fine, however, there is a bug where an exception is sometimes thrown.
+* [Enable Media Replace](https://wordpress.org/plugins/enable-media-replace/) - This generally works, but occasionally and seemingly randomly throws an exception when uploading a replacement file. The file still uploads fine, however, there is a bug where an exception is sometimes thrown.
 
 If you encounter any conflicts, please [report them](https://github.com/dmhendricks/backblaze-media-offloader/issues).
 
