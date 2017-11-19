@@ -11,7 +11,7 @@ This is currently under development and may contain bugs. Test in a development 
 
 ### Download Plugin
 
-To try this plugin, use the installable WordPress ZIP file: [backblaze-media-offloader.zip](https://github.com/dmhendricks/backblaze-media-offloader/releases/download/0.7.1/backblaze-media-offloader.zip).
+Installable WordPress ZIP file: [backblaze-media-offloader.zip](https://github.com/dmhendricks/backblaze-media-offloader/releases/download/0.7.1/backblaze-media-offloader.zip).
 
 ## Contents
 
@@ -72,7 +72,7 @@ If you encounter any conflicts, please [report them](https://github.com/dmhendri
 #### Immediate
 
 * Create documentation
-* Bug: Settings defaults do not work (this is an issue with Carbon Fields)
+* Add option to remove settings when plugin uninstalled
 * Significant testing in various environments
 
 #### Medium-Term
@@ -95,7 +95,7 @@ Release changes will be noted on the [Releases](https://github.com/dmhendricks/b
 
 #### Branch: `master`
 
-* None since release
+* Fixed bug: Default settings not enabled by default
 
 ## Credits
 

@@ -52,14 +52,15 @@ class Plugin_Settings extends Plugin {
       ->set_page_parent('options-general.php')
       ->add_tab( __( 'General', self::$textdomain ), array(
         Field::make( 'checkbox', $this->prefix( 'enabled' ), __( 'Enable Plugin', self::$textdomain ) )
-          ->set_default_value( true )
+          ->set_default_value( 'yes' )
           ->help_text( __( 'Check to enable the plugin. Media Library items will be uploaded to the B2 bucket specified below.', self::$textdomain ) ),
         Field::make( 'checkbox', $this->prefix( 'rewrite_urls' ), __( 'Rewrite Media URLs', self::$textdomain ) )
-          ->set_default_value( true )
+          ->set_default_value( 'yes' )
           ->help_text( __( 'If enabled, Media Library URLs will be changed to serve from Backblaze. <em>It is <strong>highly likely</strong> that you\'ll want this checked unless you are using another plugin/method to rewrite URLs.</em>', self::$textdomain ) ),
         Field::make( 'checkbox', $this->prefix( 'remove_local_media' ), __( 'Remove Files From Server', self::$textdomain ) )
           ->help_text( __( 'If enabled, uploaded files will be deleted from your web host after they are uploaded to Backblaze B2.', self::$textdomain ) . '<br />' . __( '<strong>Note:</strong> This may cause incompatibilities with other plugins that rely on a local copy of uploaded media. If you deactivate this plugin, the media links will be broken.', self::$textdomain ) ),
         Field::make( 'checkbox', $this->prefix( 'add_media_library_document_type' ), __( 'Add "Document" to Media Library Filter Dropdown', self::$textdomain ) )
+          ->set_default_value( 'yes' )
           ->help_text( __( 'For convenience, adds a <em>Document</em> file type to the Media Library dropdown filter.', self::$textdomain ) ),
         /*
         Field::make( 'checkbox', $this->prefix( 'uninstall_remove_settings' ), __( 'Delete Plugin Settings On Uninstall', self::$textdomain ) )
@@ -102,7 +103,7 @@ class Plugin_Settings extends Plugin {
           ->set_header_template( '<% if (label) { %><%- _.upperCase(label) %><% } else { %>' . __( 'Add New', self::$textdomain ) . '<% } %>' ),
         Field::make( 'checkbox', $this->prefix( 'register_custom_mime_types' ), __( 'Register Custom MIME Types', self::$textdomain ) )
           ->help_text( __( 'Registers custom MIME types (if specified).', self::$textdomain ) )
-          ->set_default_value( true )
+          ->set_default_value( 'yes' )
           ->set_conditional_logic( array( array(
             'field' => $this->prefix( 'limit_mime_types' ),
             'value' => true )
@@ -114,7 +115,7 @@ class Plugin_Settings extends Plugin {
             'value' => true )
           )
         )
-        //->set_default_value( array( 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff', 'image/svg', 'image/svgz' ) )
+        //->set_default_value( array( 'application/zip', 'application/pdf', 'video/avi', 'video/x-flv', 'video/mov', 'video/mp4', 'video/webm', 'video/x-matroska' ) )
         ->add_options( $this->get_formatted_mime_types() ),
       )
     );
