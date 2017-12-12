@@ -163,7 +163,6 @@ class Fulfillable_Collection implements Fulfillable {
 	 * @return Fulfillable_Collection $this
 	 */
 	public function where( $condition_type, $comparison_operator = '=', $value = null, $fulfillable_comparison = 'AND' ) {
-		$args = func_get_args();
 		if ( is_array( $condition_type ) ) {
 			return $this->where_array( $condition_type, $fulfillable_comparison );
 		}
@@ -363,13 +362,13 @@ class Fulfillable_Collection implements Fulfillable {
 
 			// minor optimization - avoid unnecessary AND check if $fulfilled is currently false
 			// false && whatever is always false
-			if ( $fulfillable_comparison === 'AND' && $fulfilled ) {
+			if ( $fulfillable_comparison == 'AND' && $fulfilled ) {
 				$fulfilled = $fulfillable->is_fulfilled( $environment );
 			}
 
 			// minor optimization - avoid unnecessary OR check if $fulfilled is currently true
 			// true || whatever is always true
-			if ( $fulfillable_comparison === 'OR' && ! $fulfilled ) {
+			if ( $fulfillable_comparison == 'OR' && ! $fulfilled ) {
 				$fulfilled = $fulfillable->is_fulfilled( $environment );
 			}
 		}

@@ -2,7 +2,40 @@
  * The external dependencies.
  */
 import $ from 'jquery';
-import { take, cancel } from 'redux-saga/effects';
+import qs from 'qs';
+import { take, cancel, all, select } from 'redux-saga/effects';
+import { isArray, isUndefined } from 'lodash';
+
+/**
+ * The internal dependencies.
+ */
+import { getVisibleContainers } from 'containers/selectors';
+
+/**
+ * Return a default value for the type of which the passed entity is.
+ * Returns the passed entity if it cannot be handled.
+ *
+ * @param  {Function} cb
+ * @return {Function}
+ */
+export function getTypeDefaultValue(entity) {
+	const dictionary = {
+		'null': null,
+		'undefined': undefined,
+		'boolean': false,
+		'number': 0,
+		'string': '',
+		'array': [],
+		'object': {},
+		'function': function() {},
+	};
+
+	let type = isArray(entity) ? 'array' : typeof entity;
+
+	let typeDefault = ! isUndefined( dictionary[ type ] ) ? dictionary[ type ] : entity;
+
+	return typeDefault;
+}
 
 /**
  * Small helper to reduce code repetetion of `e.preventDefault`.
@@ -48,7 +81,7 @@ export function* cancelTasks(pattern, tasks, matcher) {
 		const action = yield take(pattern);
 
 		if (matcher(action)) {
-			yield tasks.map(task => cancel(task));
+			yield all(tasks.map(task => cancel(task)));
 
 			break;
 		}
@@ -85,7 +118,7 @@ export function patchTagBoxAPI(tagBox, method) {
  * @return {Number}
  */
 export function getSelectOptionLevel(option) {
-	let level = 1;
+	let level = 0;
 
 	if (option.className) {
 		const matches = option.className.match(/^level-(\d+)/);
@@ -111,6 +144,7 @@ export function getSelectOptionAncestors( option ) {
 	let level = getSelectOptionLevel($prev.get(0));
 	while (level > 0 && $prev.length > 0) {
 		if (getSelectOptionLevel($prev.get(0)) !== level) {
+			$prev = $prev.prev();
 			continue; // skip since this is a sibling/cousin, not an ancestor
 		}
 
@@ -124,3 +158,33 @@ export function getSelectOptionAncestors( option ) {
 	}
 	return ancestors;
 };
+
+export function* compactInput(form, container, fieldName) {
+	const containers = isUndefined( container ) ? yield select(getVisibleContainers) : [container];
+	fieldName = isUndefined( fieldName ) ? carbonFieldsConfig.compactInputKey : fieldName;
+
+	let $containerFieldsets = $();
+	for (let i = 0; i < containers.length; i++) {
+		let $containerFieldset = $(form).find(`fieldset.container-${containers[i].id}:first`);
+		$containerFieldsets = $containerFieldsets.add($containerFieldset);
+	}
+
+	// Append a hidden field containing the compacted input as JSON
+	let $input = $(form).find(`input[name="${fieldName}"]`);
+	if ($input.length === 0) {
+		$input = $(`<input type="hidden" name="${fieldName}" value="" />`);
+	}
+	$input.val(JSON.stringify(qs.parse($containerFieldsets.serialize())));
+	$(form).append($input);
+
+	// Remove all name attributes to not clog up the request with duplicate input vars
+	$containerFieldsets.find('input, select, textarea, button').each(function() {
+		$(this).data('carbonFieldsName', $(this).attr('name'));
+		$(this).removeAttr('name');
+	});
+	setTimeout(() => {
+		$containerFieldsets.find('input, select, textarea, button').each(function() {
+			$(this).attr('name', $(this).data('carbonFieldsName'));
+		});
+	}, 1);
+}

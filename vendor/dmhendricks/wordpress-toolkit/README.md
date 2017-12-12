@@ -45,4 +45,3 @@ Release changes are be noted on the [Releases](https://github.com/dmhendricks/wo
 #### Branch: `master`
 
 * Added [PluginTools](https://github.com/dmhendricks/wordpress-toolkit/wiki/PluginTools) class
-* Fixed PHP notices

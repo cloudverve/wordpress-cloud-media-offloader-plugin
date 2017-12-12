@@ -114,6 +114,10 @@ class Loader {
 		wp_enqueue_script( 'carbon-fields-core', \Carbon_Fields\URL . '/assets/dist/carbon.core' . $suffix . '.js', array( 'carbon-fields-vendor', 'quicktags', 'editor' ), \Carbon_Fields\VERSION );
 		wp_enqueue_script( 'carbon-fields-boot', \Carbon_Fields\URL . '/assets/dist/carbon.boot' . $suffix . '.js', array( 'carbon-fields-core' ), \Carbon_Fields\VERSION );
 
+		wp_localize_script( 'carbon-fields-vendor', 'carbonFieldsConfig', apply_filters( 'carbon_fields_config', array(
+			'compactInput' => \Carbon_Fields\COMPACT_INPUT,
+			'compactInputKey' => \Carbon_Fields\COMPACT_INPUT_KEY,
+		) ) );
 		wp_localize_script( 'carbon-fields-vendor', 'carbonFieldsL10n', apply_filters( 'carbon_fields_l10n', array(
 			'container' => array(
 				'pleaseFillTheRequiredFields' => __( 'Please fill out all required fields highlighted below.', 'carbon-fields' ),
@@ -133,6 +137,8 @@ class Loader {
 				'complexCloneButton' => _x( 'Clone', 'Complex field', 'carbon-fields' ),
 				'complexRemoveButton' => _x( 'Remove', 'Complex field', 'carbon-fields' ),
 				'complexCollapseExpandButton' => _x( 'Collapse/Expand', 'Complex field', 'carbon-fields' ),
+				'complexCollapseAllButton' => _x( 'Collapse All', 'Complex field groups', 'carbon-fields' ),
+				'complexExpandAllButton' => _x( 'Expand All', 'Complex field groups', 'carbon-fields' ),
 
 				'messageFormValidationFailed' => __( 'Please fill out all fields correctly. ', 'carbon-fields' ),
 				'messageRequiredField' => __( 'This field is required. ', 'carbon-fields' ),

@@ -3,14 +3,14 @@
  */
 import ReactDOM from 'react-dom';
 import { take, call, put, fork, select } from 'redux-saga/effects';
-import { isEmpty, mapValues, last } from 'lodash';
+import { isEmpty, mapValues, last, includes } from 'lodash';
 
 /**
  * The internal dependencies.
  */
 import { resetStore } from 'store/actions';
 import { normalizePreloadedState } from 'store/helpers';
-import { getSelectOptionLevel, getSelectOptionAncestors } from 'lib/helpers';
+import { getSelectOptionLevel, getSelectOptionAncestors, compactInput } from 'lib/helpers';
 
 import { ready } from 'lib/actions';
 import { createSelectboxChannel, createAjaxChannel, createSubmitChannel, createClickChannel } from 'lib/events';
@@ -18,7 +18,7 @@ import { createSelectboxChannel, createAjaxChannel, createSubmitChannel, createC
 import containerFactory from 'containers/factory';
 import { setContainerMeta, validateAllContainers, submitForm } from 'containers/actions';
 import { getContainers, getContainersByType } from 'containers/selectors';
-import { TYPE_TERM_META } from 'containers/constants';
+import { TYPE_TERM_META, ID_PREFIX } from 'containers/constants';
 
 /**
  * Keep in sync the `term_level` property.
@@ -71,7 +71,7 @@ export function* workerReset(store) {
 		const { settings, data } = yield take(channel);
 
 		// Don't reset when there is no registered containers or in case of error.
-		if (!settings.data.includes('carbon_panel') || data.querySelector('wp_error')) {
+		if (!includes(settings.data, ID_PREFIX) || data.querySelector('wp_error')) {
 			continue;
 		}
 
@@ -111,6 +111,9 @@ export function* workerFormSubmit(channelCreator, selector) {
 
 		yield put(submitForm(event));
 		yield put(validateAllContainers(event));
+		if (carbonFieldsConfig.compactInput) {
+			yield compactInput(event.target);
+		}
 	}
 }
 

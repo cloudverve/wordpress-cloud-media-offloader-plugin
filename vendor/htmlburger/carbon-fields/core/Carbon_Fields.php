@@ -208,6 +208,17 @@ final class Carbon_Fields {
 	}
 
 	/**
+	 * Throw exception if fields have not been registered yet
+	 */
+	public static function verify_fields_registered() {
+		$register_action = 'carbon_fields_register_fields';
+		$registered_action = 'carbon_fields_fields_registered';
+		if ( ! doing_action( $register_action ) && ! doing_action( $registered_action ) && did_action( $registered_action ) === 0 ) {
+			Incorrect_Syntax_Exception::raise( 'Attempted to access a field before the ' . $register_action . ' and ' . $registered_action . ' actions have fired yet.' );
+		}
+	}
+
+	/**
 	 * Resolve the public url of a directory inside WordPress
 	 *
 	 * @param  string $directory

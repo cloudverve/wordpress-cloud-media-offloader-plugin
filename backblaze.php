@@ -4,7 +4,7 @@
  * Plugin Name:       Backblaze B2 Media Offloader
  * Plugin URI:        https://github.com/dmhendricks/backblaze-media-offloader
  * Description:       A simple plugin that allows you to serve your WordPress Media Library files via the Backblaze B2 cloud storage service.
- * Version:           0.7.1
+ * Version:           0.7.2
  * Author:            Daniel M. Hendricks
  * Author URI:        https://www.danhendricks.com
  * License:           GPL-2.0

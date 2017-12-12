@@ -9,8 +9,9 @@ import { isEmpty, isNull, mapValues, defaultTo, last } from 'lodash';
  * The internal dependencies.
  */
 import { ready } from 'lib/actions';
-import { getSelectOptionLevel, getSelectOptionAncestors } from 'lib/helpers';
-import { createSelectboxChannel, createCheckableChannel, createSubmitChannel, createTextChangeChannel } from 'lib/events';
+import { getSelectOptionLevel, getSelectOptionAncestors, compactInput } from 'lib/helpers';
+
+import { createClickChannel, createSelectboxChannel, createCheckableChannel, createSubmitChannel, createTextChangeChannel } from 'lib/events';
 
 import { getContainersByType } from 'containers/selectors';
 import { validateAllContainers, submitForm, setContainerMeta } from 'containers/actions';
@@ -151,6 +152,22 @@ export function* workerSyncNonHierarchicalTerms(containers, taxonomy) {
 	}
 }
 
+let publishButtonUsed = false;
+
+/**
+ * Handle detect specific button used for form submission.
+ *
+ * @return {void}
+ */
+export function* workerFormSubmitButton() {
+	const channel = yield call(createClickChannel, '#publish[name="publish"]');
+
+	while (true) {
+		const { event } = yield take(channel);
+		publishButtonUsed = true;
+	}
+}
+
 /**
  * Handle the form submission.
  *
@@ -158,12 +175,23 @@ export function* workerSyncNonHierarchicalTerms(containers, taxonomy) {
  */
 export function* workerFormSubmit() {
 	const channel = yield call(createSubmitChannel, ':not(.comment-php) form#post');
+	const postStatusSelect = document.getElementById(`post_status`);
 
 	while (true) {
 		const { event } = yield take(channel);
 
 		yield put(submitForm(event));
+
+		if (!publishButtonUsed && postStatusSelect.value !== 'publish') {
+			continue; // do not validate while the user is saving draft (or pending etc.) versions of the post
+		}
+
+		publishButtonUsed = false;
+
 		yield put(validateAllContainers(event));
+		if (carbonFieldsConfig.compactInput) {
+			yield compactInput(event.target);
+		}
 	}
 }
 
@@ -190,5 +218,6 @@ export default function* foreman() {
 	yield fork(workerSyncPostFormat, containers);
 	yield fork(setupSyncTerms, containers, 'taxonomy-', workerSyncHierarchicalTerms);
 	yield fork(setupSyncTerms, containers, 'tagsdiv-', workerSyncNonHierarchicalTerms);
+	yield fork(workerFormSubmitButton);
 	yield fork(workerFormSubmit);
 }
