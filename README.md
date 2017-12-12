@@ -1,5 +1,6 @@
 [![Author](https://img.shields.io/badge/author-Daniel%20M.%20Hendricks-blue.svg?colorB=9900cc )](https://www.danhendricks.com)
 [![Latest Version](https://img.shields.io/github/release/dmhendricks/backblaze-media-offloader.svg)](https://github.com/dmhendricks/backblaze-media-offloader/releases)
+[![Packagist](https://img.shields.io/packagist/v/dmhendricks/backblaze-media-offloader.svg)](https://packagist.org/packages/dmhendricks/backblaze-media-offloader)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/danielhendricks)
 [![WP Engine](https://img.shields.io/badge/WP%20Engine-Compatible-orange.svg)](http://bit.ly/WPEnginePlans)
 [![GitHub License](https://img.shields.io/badge/license-GPLv2-yellow.svg)](https://raw.githubusercontent.com/dmhendricks/backblaze-media-offloader/master/LICENSE)
@@ -11,7 +12,7 @@ This is currently under development and may contain bugs. Test in a development 
 
 ### Download Plugin
 
-Installable WordPress ZIP file: [backblaze-media-offloader.zip](https://github.com/dmhendricks/backblaze-media-offloader/releases/download/0.7.1/backblaze-media-offloader.zip).
+Installable WordPress ZIP file: [backblaze-media-offloader.zip](https://github.com/dmhendricks/backblaze-media-offloader/releases/download/0.7.2/backblaze-media-offloader.zip).
 
 ## Contents
 
@@ -44,7 +45,7 @@ One of the best ways that you can contribute is to help me make it better, eithe
 
 ## Installation
 
-Download the [installable WordPress ZIP file](https://github.com/dmhendricks/backblaze-media-offloader/releases/download/0.7.1/backblaze-media-offloader.zip) and add via **Plugins** > **Add New** in WP Admin.
+Download the [installable WordPress ZIP file](https://github.com/dmhendricks/backblaze-media-offloader/releases/download/0.7.2/backblaze-media-offloader.zip) and add via **Plugins** > **Add New** in WP Admin.
 
 ### Requirements
 
@@ -97,8 +98,7 @@ Release changes will be noted on the [Releases](https://github.com/dmhendricks/b
 
 #### Branch: `master`
 
-* Fixed bug: Default settings not enabled by default
-* Fixed several deprecation notices
+* None
 
 ## Credits
 
