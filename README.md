@@ -1,10 +1,10 @@
 [![Author](https://img.shields.io/badge/author-Daniel%20M.%20Hendricks-blue.svg?colorB=9900cc )](https://www.danhendricks.com)
-[![Latest Version](https://img.shields.io/github/release/cloudverve/cloud-media-offloader.svg)](https://github.com/cloudverve/cloud-media-offloader/releases)
-[![Packagist](https://img.shields.io/packagist/v/cloudverve/cloud-media-offloader.svg)](https://packagist.org/packages/cloudverve/cloud-media-offloader)
+[![Latest Version](https://img.shields.io/github/release/cloudverve/wordpress-cloud-media-offloader-plugin.svg)](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases)
+[![Packagist](https://img.shields.io/packagist/v/cloudverve/wordpress-cloud-media-offloader-plugin.svg)](https://packagist.org/packages/cloudverve/wordpress-cloud-media-offloader-plugin)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/danielhendricks)
 [![WP Engine](https://img.shields.io/badge/WP%20Engine-Compatible-orange.svg)](http://bit.ly/WPEnginePlans)
-[![GitHub License](https://img.shields.io/badge/license-GPLv2-yellow.svg)](https://raw.githubusercontent.com/cloudverve/cloud-media-offloader/master/LICENSE)
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/cloudverve/cloud-media-offloader.svg?style=social)](https://twitter.com/danielhendricks)
+[![GitHub License](https://img.shields.io/badge/license-GPLv2-yellow.svg)](https://raw.githubusercontent.com/cloudverve/wordpress-cloud-media-offloader-plugin/master/LICENSE)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/cloudverve/wordpress-cloud-media-offloader-plugin.svg?style=social)](https://twitter.com/danielhendricks)
 
 # Cloud Media Offloader Plugin for WordPress
 
@@ -12,7 +12,7 @@ This is currently under development and may contain bugs. Test in a development 
 
 ### Download Plugin
 
-Installable WordPress ZIP file: [cloud-media-offloader.zip](https://github.com/cloudverve/cloud-media-offloader/releases/download/0.7.3/cloud-media-offloader.zip).
+Installable WordPress ZIP file: [wordpress-cloud-media-offloader-plugin.zip](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.3/wordpress-cloud-media-offloader-plugin.zip).
 
 ## Contents
 
@@ -35,13 +35,13 @@ This is a WordPress plugin that allows you to serve your WordPress Media Library
 One of the best ways that you can contribute is to help me make it better, either with code or with constructive feedback. Ways to help:
 
 * I am open to pull requests and welcome improvements.
-* [Feedback](https://github.com/cloudverve/cloud-media-offloader/issues) on how I can make it better.
-* **Testing!** If you try the plugin - please use the [installable ZIP](#installation), let me know what works and what doesn't. If you have an [issue](https://github.com/cloudverve/cloud-media-offloader/issues), it is helpful if you can describe (as much as you are aware of) your environment - install method, WordPress version, PHP version, operating system, and web server (Apache, Nginx, etc).
+* [Feedback](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/issues) on how I can make it better.
+* **Testing!** If you try the plugin - please use the [installable ZIP](#installation), let me know what works and what doesn't. If you have an [issue](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/issues), it is helpful if you can describe (as much as you are aware of) your environment - install method, WordPress version, PHP version, operating system, and web server (Apache, Nginx, etc).
 * Translations (or [donations](https://paypal.me/danielhendricks) to create/maintain them)
 
 ## Installation
 
-Download the [installable WordPress ZIP file](https://github.com/cloudverve/cloud-media-offloader/releases/download/0.7.3/cloud-media-offloader.zip) and add via **Plugins** > **Add New** in WP Admin.
+Download the [installable WordPress ZIP file](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.3/wordpress-cloud-media-offloader-plugin.zip) and add via **Plugins** > **Add New** in WP Admin.
 
 ### Requirements
 
@@ -50,7 +50,7 @@ Download the [installable WordPress ZIP file](https://github.com/cloudverve/clou
 
 ### Composer
 
-If you manage plugins with Composer, this plugin is on [Packagist](https://packagist.org/packages/cloudverve/cloud-media-offloader).
+If you manage plugins with Composer, this plugin is on [Packagist](https://packagist.org/packages/cloudverve/wordpress-cloud-media-offloader-plugin).
 
 ```
 composer require cloudverve/wordpress-cloud-media-offloader-plugin
@@ -69,7 +69,7 @@ composer require cloudverve/wordpress-cloud-media-offloader-plugin
 
 * [Enable Media Replace](https://wordpress.org/plugins/enable-media-replace/) - This generally works, but occasionally and seemingly randomly throws an exception when uploading a replacement file. The file still uploads fine, however, there is a bug where an exception is sometimes thrown.
 
-If you encounter any conflicts, please [report them](https://github.com/cloudverve/cloud-media-offloader/issues).
+If you encounter any conflicts, please [report them](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/issues).
 
 ## Goals
 
@@ -94,11 +94,11 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 
 ## Change Log
 
-Release changes will be noted on the [Releases](https://github.com/cloudverve/cloud-media-offloader/releases) page.
+Release changes will be noted on the [Releases](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases) page.
 
 #### Branch: `master`
 
-* Changed author label, renamed PHP namespaces, moved links to `dmhendricks/cloud-media-offloader`
+* Changed author label, renamed PHP namespaces, moved links to `dmhendricks/wordpress-cloud-media-offloader-plugin`
 * Removed GitHub Updater support in order to remove dependencies from repo
 
 ## Credits
@@ -123,6 +123,6 @@ Please support [humans.txt](http://humanstxt.org/). It's an initiative for knowi
 
 ## Screenshots
 
-![Settings Page](https://raw.githubusercontent.com/cloudverve/cloud-media-offloader/master/assets/screenshot-1.png "Settings Page")
+![Settings Page](https://raw.githubusercontent.com/cloudverve/wordpress-cloud-media-offloader-plugin/master/assets/screenshot-1.png "Settings Page")
 
-![Media Library Image Properties](https://raw.githubusercontent.com/cloudverve/cloud-media-offloader/master/assets/screenshot-2.png "Media Library Image Properties")
+![Media Library Image Properties](https://raw.githubusercontent.com/cloudverve/wordpress-cloud-media-offloader-plugin/master/assets/screenshot-2.png "Media Library Image Properties")

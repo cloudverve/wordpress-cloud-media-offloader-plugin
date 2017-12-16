@@ -32,6 +32,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/cloudverve/cloud-media-offloader.git"
+    "url": "git://github.com/cloudverve/wordpress-cloud-media-offloader-plugin.git"
   }
 }

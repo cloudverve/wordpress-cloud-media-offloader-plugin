@@ -1,7 +1,7 @@
 === Cloud Media Offloader ===
 Contributors: hendridm,cloudverve
 Tags: cloud,media,uploads,offload,block,storage
-Plugin URI: https://github.com/cloudverve/cloud-media-offloader
+Plugin URI: https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin
 Donate link: https://paypal.me/danielhendricks
 Requires at least: 4.0
 Tested up to: 4.9.1
@@ -38,7 +38,7 @@ A. No, it will only act on newly uploaded media. You can, however, upload them y
 1. Settings Page
 
 == Changelog ==
-Please see the GitHub [Releases](https://github.com/cloudverve/cloud-media-offloader/releases) page.
+Please see the GitHub [Releases](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases) page.
 
 == Upgrade Notice ==
 The code has been completely refactored, a new B2 API is being used and some deprecation notices were fixed.
