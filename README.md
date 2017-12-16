@@ -19,7 +19,6 @@ Installable WordPress ZIP file: [cloud-media-offloader.zip](https://github.com/c
 - [Description](#description)
 - [Installation](#installation)
    - [Requirements](#requirements)
-   - [Automatic Updates](#automatic-updates)
 - [Known Compatibilities & Conflicts](#known-compatibilities--conflicts)
 - [Goals](#goals)
 - [Change Log](#change-log)
