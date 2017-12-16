@@ -57,6 +57,7 @@ package-lock.json
 *.codekit
 **.codekit-cache/*
 
-# NPM #
-#######
+# Development #
+###############
 node_modules
+/vendor
