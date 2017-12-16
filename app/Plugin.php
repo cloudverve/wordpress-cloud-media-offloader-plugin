@@ -1,5 +1,5 @@
 <?php
-namespace TwoLabNet\BackblazeB2;
+namespace CloudVerve\MediaOffloader;
 use WordPress_ToolKit\ObjectCache;
 use WordPress_ToolKit\ConfigRegistry;
 use WordPress_ToolKit\PluginTools;

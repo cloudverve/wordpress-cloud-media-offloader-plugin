@@ -1,5 +1,5 @@
 <?php
-namespace TwoLabNet\BackblazeB2;
+namespace CloudVerve\MediaOffloader;
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
 use ChrisWhite\B2\Exceptions;
@@ -193,7 +193,7 @@ class Core extends Plugin {
       update_option( $this->prefix( 'credentials_check' ), !is_null( $credentials_check ) );
     }
 
-    $settings_page = get_admin_url( null, 'options-general.php?page=crb_carbon_fields_container_backblaze_b2.php#!general' );
+    $settings_page = get_admin_url( null, 'options-general.php?page=crb_carbon_fields_container_media_offloader.php#!general' );
     $settings_notice = __( 'Please check your {|access credentials|}.', self::$textdomain );
     $settings_parts = preg_split('/[{}]/', $settings_notice, null, PREG_SPLIT_NO_EMPTY);
 

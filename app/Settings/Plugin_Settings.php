@@ -1,7 +1,7 @@
 <?php
-namespace TwoLabNet\BackblazeB2\Settings;
-use TwoLabNet\BackblazeB2\Plugin;
-use TwoLabNet\BackblazeB2\Helpers;
+namespace CloudVerve\MediaOffloader\Settings;
+use CloudVerve\MediaOffloader\Plugin;
+use CloudVerve\MediaOffloader\Helpers;
 use WordPress_ToolKit\ConfigRegistry;
 use Carbon_Fields\Datastore\Datastore\Serialized_Theme_Options_Datastore;
 use Carbon_Fields\Container;
@@ -13,8 +13,6 @@ use Carbon_Fields\Field;
   * @since 0.1.0
   */
 class Plugin_Settings extends Plugin {
-
-  // https://raw.githubusercontent.com/dmhendricks/WordPressSVGPlugin/master/wp-content/plugins/lc-wp-svg/index.php
 
   protected $settings_containers;
 
@@ -68,7 +66,7 @@ class Plugin_Settings extends Plugin {
         */
         Field::make( 'separator', $this->prefix( 'separator_general_credentials' ), __( 'Access Credentials', self::$textdomain ) ),
         Field::make( 'html', $this->prefix( 'html_general_credentials' ) )
-          ->set_html( __( 'You can find these values by logging into your <a href="https://www.backblaze.com/b2/cloud-storage.html#af9kre" target="_blank">Backblaze</a> account, clicking <strong>Buckets</strong>, then clicking the <strong>Show Account ID and Application Key</strong> link.', self::$textdomain ) ),
+          ->set_html( __( 'You can find these values by logging into your <a href="https://www.backblaze.com/b2/cloud-storage.html#af9kre" target="_blank">Backblaze</a> account, clicking <strong>Buckets</strong>, then clicking the <strong>Show Account ID and Application Key</strong> link.<br />After modifying your credentials, you must <strong>Save Changes</strong> to update bucket list.', self::$textdomain ) ),
         Field::make( 'text', $this->prefix( 'account_id' ), __( 'Account ID', self::$textdomain ) ),
         Field::make( 'text', $this->prefix( 'application_key' ), __('Application Key', self::$textdomain ) )
           ->set_attribute( 'type', 'password' ),

@@ -62,7 +62,7 @@ var jsTasks = [
 
 /* Define strings to replace using 'gelp rename', defined in the config section of package.json */
 var renameStrings = [
-  [ 'dmhendricks\/wordpress-base-plugin', pkg.config.username + '/' + pkg.name ], // Git/Composer identifier
+  [ 'cloudverve\/wordpress-base-plugin', pkg.config.username + '/' + pkg.name ], // Git/Composer identifier
 	[ 'wordpress-base-plugin', pkg.name ], // Plugin slug
 	[ 'VendorName\\PluginName', pkg.config.php_namespace ], // PHP namespace for your plugin
   [ 'VendorName\\\\PluginName', pkg.config.php_namespace.replace(/\\/g, '\\\\') ], // Rename Composer namespace

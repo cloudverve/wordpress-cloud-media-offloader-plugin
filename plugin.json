@@ -1,14 +1,14 @@
 {
-  "prefix": "b2mo_",
-  "short_name": "Backblaze B2",
+  "prefix": "cmo_",
+  "short_name": "Media Offloader",
   "environment_constant": "WP_ENV",
   "object_cache": {
-    "group": "backblaze_media_offloader",
+    "group": "cloud_media_offloader",
     "expire_hours": 72
   },
   "dependencies": {
-    "php": "5.6",
-    "carbon_fields": "2.1.0"
+    "php": "5.6.4",
+    "carbon_fields": "2.0"
   },
   "encrypt_method": "AES-128-ECB"
 }

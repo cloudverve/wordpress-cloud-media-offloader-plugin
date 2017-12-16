@@ -1,10 +1,10 @@
 {
-  "name": "backblaze-media-offloader",
+  "name": "cloud-media-offloader",
   "author": "Daniel M. Hendricks",
   "license": "GPL-2.0",
   "config": {
-    "username": "dmhendricks",
-    "php_namespace": "TwoLabNet\\BackblazeB2",
+    "username": "cloudverve",
+    "php_namespace": "CloudVerve\\MediaOffloader",
     "javascript_object": "BB2MO_NS"
   },
   "scripts": {
@@ -32,6 +32,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/dmhendricks/backblaze-media-offloader.git"
+    "url": "git://github.com/cloudverve/cloud-media-offloader.git"
   }
 }

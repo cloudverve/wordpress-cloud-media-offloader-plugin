@@ -1,5 +1,5 @@
 <?php
-namespace TwoLabNet\BackblazeB2;
+namespace CloudVerve\MediaOffloader;
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
 use ChrisWhite\B2\Client;

@@ -1,20 +1,20 @@
 <?php
 /**
  * @wordpress-plugin
- * Plugin Name:       Backblaze B2 Media Offloader
- * Plugin URI:        https://github.com/dmhendricks/backblaze-media-offloader
- * Description:       A simple plugin that allows you to serve your WordPress Media Library files via the Backblaze B2 cloud storage service.
- * Version:           0.7.2
+ * Plugin Name:       Cloud Media Offloader
+ * Plugin URI:        https://github.com/cloudverve/cloud-media-offloader
+ * Description:       Serve your WordPress Media Library files from the Backblaze B2 cloud storage service.
+ * Version:           0.7.3
  * Author:            CloudVerve, LLC
- * Author URI:        https://www.danhendricks.com
+ * Author URI:        https://www.cloudverve.com
  * License:           GPL-2.0
  * License URI:       https://opensource.org/licenses/GPL-2.0
- * Text Domain: 			backblaze-media-offloader
+ * Text Domain: 			cloud-media-offloader
  * Domain Path: 			languages
- * GitHub Plugin URI: dmhendricks/backblaze-media-offloader
+ * GitHub Plugin URI: cloudverve/cloud-media-offloader
  */
 
-/*	Copyright 2018	  Daniel M. Hendricks (https://www.danhendricks.com/)
+/*	Copyright 2018	  CloudVerve, LLC (https://www.cloudverve.com/)
 
 		This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -37,4 +37,4 @@ require( __DIR__ . '/vendor/autoload.php' );
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 // Initialize plugin
-new \TwoLabNet\BackblazeB2\Plugin();
+new \CloudVerve\MediaOffloader\Plugin();
