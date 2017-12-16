@@ -12,7 +12,7 @@ This is currently under development and may contain bugs. Test in a development 
 
 ### Download Plugin
 
-Installable WordPress ZIP file: [wordpress-cloud-media-offloader-plugin.zip](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.3/wordpress-cloud-media-offloader-plugin.zip).
+Installable WordPress ZIP file: [cloud-media-offloader.zip](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.3/cloud-media-offloader.zip).
 
 ## Contents
 
@@ -41,7 +41,7 @@ One of the best ways that you can contribute is to help me make it better, eithe
 
 ## Installation
 
-Download the [installable WordPress ZIP file](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.3/wordpress-cloud-media-offloader-plugin.zip) and add via **Plugins** > **Add New** in WP Admin.
+Download the [installable WordPress ZIP file](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.3/cloud-media-offloader.zip) and add via **Plugins** > **Add New** in WP Admin.
 
 ### Requirements
 
