@@ -98,8 +98,7 @@ Release changes will be noted on the [Releases](https://github.com/cloudverve/wo
 
 #### Branch: `master`
 
-* Changed author label, renamed PHP namespaces, moved links to `dmhendricks/wordpress-cloud-media-offloader-plugin`
-* Removed GitHub Updater support in order to remove dependencies from repo
+* None
 
 ## Credits
 
