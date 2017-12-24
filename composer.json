@@ -25,7 +25,6 @@
     "htmlburger/carbon-fields": "2.1.1",
     "composer/installers": "^1.4.0"
   },
-  "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
       "CloudVerve\\MediaOffloader\\": "app/",
