@@ -2,7 +2,7 @@
   "name": "cloudverve/wordpress-cloud-media-offloader-plugin",
   "type": "wordpress-plugin",
   "description": "A plugin for WordPress that allows you to serve media files from the Backblaze B2 service.",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "keywords": ["wordpress", "plugin", "cloud", "media", "offload", "block", "storage"],
   "homepage": "https://www.cloudverve.com",
   "license": "GPL-2.0",
