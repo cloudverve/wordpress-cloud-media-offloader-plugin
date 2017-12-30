@@ -97,7 +97,7 @@ Release changes will be noted on the [Releases](https://github.com/cloudverve/wo
 
 #### Branch: `master`
 
-* None
+* Added `wordpress-toolkit` dependency check
 
 ## Credits
 
