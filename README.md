@@ -98,7 +98,8 @@ Release changes will be noted on the [Releases](https://github.com/cloudverve/wo
 #### Branch: `master`
 
 * Added `wordpress-toolkit` dependency check
-* Added Composer autoloader checked for issue [#6](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/issues/6)
+* Added Composer autoloader check for issue [#6](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/issues/6)
+* Changed Composer license field to conform to current [SPDX](https://spdx.org/licenses/) identifiers
 
 ## Credits
 
