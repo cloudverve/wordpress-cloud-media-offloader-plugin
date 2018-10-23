@@ -1,8 +1,8 @@
-# Copyright (C) 2017 true
-# This file is distributed under the same license as the true package.
+# Copyright (C) 2018 cloud-media-offloader
+# This file is distributed under the same license as the cloud-media-offloader package.
 msgid ""
 msgstr ""
-"Project-Id-Version: true\n"
+"Project-Id-Version: cloud-media-offloader\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,168 +13,171 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../app/Core.php:197
+#: ../app/Core.php:195
 msgid "Please check your {|access credentials|}."
 msgstr ""
 
-#: ../app/Core.php:210
+#: ../app/Core.php:208
 msgid "Unable to connect to the Backblaze B2 API."
 msgstr ""
 
-#: ../app/Core.php:223, ../app/Core.php:223
+#: ../app/Core.php:221, ../app/Core.php:221
 msgid "Document"
 msgid_plural "Documents <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../app/Core.php:223
+#: ../app/Core.php:221
 msgid "Manage Documents"
 msgstr ""
 
-#: ../app/Plugin.php:126
-msgid "This plugin is not supported on versions of PHP below"
+#: ../app/Plugin.php:105
+msgid "<strong>%s</strong>: One or more dependencies failed to load"
 msgstr ""
 
-#: ../app/Plugin.php:134
-msgid "An unknown error occurred while trying to load the Carbon Fields framework."
+#: ../app/Plugin.php:105, ../app/Plugin.php:111
 msgstr ""
 
-#: ../app/Plugin.php:136
-msgid "An outdated version of Carbon Fields has been detected:"
+#: ../app/Plugin.php:117
+msgid "WordPress ToolKit not loaded."
 msgstr ""
 
-#: ../app/Plugin.php:136
-msgid "required"
+#: ../app/Plugin.php:119
+msgid "An outdated version of WordPress ToolKit has been detected: %s (&gt;= %s required)."
 msgstr ""
 
-#: ../app/Plugin.php:136
-msgid "deactivated"
+#: ../app/Plugin.php:127
+msgid "The <a href=\"%s\" target=\"_blank\">Carbon Fields</a> framework is not loaded."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:83, ../app/Settings/Plugin_Settings.php:96
+#: ../app/Plugin.php:129
+msgid "An outdated version of Carbon Fields has been detected: %s (&gt;= %s required)."
+msgstr ""
+
+#: ../app/Settings/Settings_Page.php:75, ../app/Settings/Settings_Page.php:88
 msgid "MIME Types"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:85
+#: ../app/Settings/Settings_Page.php:77
 msgid "If checked, uploads to Backblaze B2 are limited to specific MIME types."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:84
+#: ../app/Settings/Settings_Page.php:76
 msgid "Limit to Specific MIME Types"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:101
+#: ../app/Settings/Settings_Page.php:93
 msgid "Add New"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:96, ../app/Settings/Plugin_Settings.php:91
+#: ../app/Settings/Settings_Page.php:88, ../app/Settings/Settings_Page.php:83
 msgid "MIME Type"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:94
+#: ../app/Settings/Settings_Page.php:86
 msgid "Add extra MIME types that are not listed below."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:94
+#: ../app/Settings/Settings_Page.php:86
 msgid "Examples"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:90, ../app/Settings/Plugin_Settings.php:92
+#: ../app/Settings/Settings_Page.php:82, ../app/Settings/Settings_Page.php:84
 msgid "Example:"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:89
+#: ../app/Settings/Settings_Page.php:81
 msgid "Extension/Label"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:86
+#: ../app/Settings/Settings_Page.php:78
 msgid "Custom MIME Types"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:103
+#: ../app/Settings/Settings_Page.php:95
 msgid "Registers custom MIME types (if specified)."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:102
+#: ../app/Settings/Settings_Page.php:94
 msgid "Register Custom MIME Types"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:110
+#: ../app/Settings/Settings_Page.php:102
 msgid "Built-in MIME Types"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:51
+#: ../app/Settings/Settings_Page.php:43
 msgid "General"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:54
+#: ../app/Settings/Settings_Page.php:46
 msgid "Check to enable the plugin. Media Library items will be uploaded to the B2 bucket specified below."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:52
-msgid "Enable Plugin"
+#: ../app/Settings/Settings_Page.php:44
+msgid "Enable Media Offloading"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:57
+#: ../app/Settings/Settings_Page.php:49
 msgid "If enabled, Media Library URLs will be changed to serve from Backblaze. <em>It is <strong>highly likely</strong> that you'll want this checked unless you are using another plugin/method to rewrite URLs.</em>"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:55
+#: ../app/Settings/Settings_Page.php:47
 msgid "Rewrite Media URLs"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:59
+#: ../app/Settings/Settings_Page.php:51
 msgid "If enabled, uploaded files will be deleted from your web host after they are uploaded to Backblaze B2."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:59
-msgid "<strong>Note:</strong> This may cause incompatibilities with other plugins that rely on a local copy of uploaded media. If you deactivate this plugin, the media links will be broken."
+#: ../app/Settings/Settings_Page.php:51
+msgid "<strong>Caution:</strong> This may cause incompatibilities with other plugins that rely on a local copy of uploaded media. If you deactivate this plugin, the media links will be broken."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:58
+#: ../app/Settings/Settings_Page.php:50
 msgid "Remove Files From Server"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:62
+#: ../app/Settings/Settings_Page.php:54
 msgid "For convenience, adds a <em>Document</em> file type to the Media Library dropdown filter."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:60
+#: ../app/Settings/Settings_Page.php:52
 msgid "Add \"Document\" to Media Library Filter Dropdown"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:67
+#: ../app/Settings/Settings_Page.php:59
 msgid "Access Credentials"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:69
+#: ../app/Settings/Settings_Page.php:61
 msgid "You can find these values by logging into your <a href=\"https://www.backblaze.com/b2/cloud-storage.html#af9kre\" target=\"_blank\">Backblaze</a> account, clicking <strong>Buckets</strong>, then clicking the <strong>Show Account ID and Application Key</strong> link.<br />After modifying your credentials, you must <strong>Save Changes</strong> to update bucket list."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:70
+#: ../app/Settings/Settings_Page.php:62
 msgid "Account ID"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:71
+#: ../app/Settings/Settings_Page.php:63
 msgid "Application Key"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:73
+#: ../app/Settings/Settings_Page.php:65
 msgid "Bucket & Path"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:76
+#: ../app/Settings/Settings_Page.php:68
 msgid "If you see <em>no options</em>, log into your Backblaze B2 account and make that you have at least one bucket created and that it is marked <strong>Public</strong>."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:74
+#: ../app/Settings/Settings_Page.php:66
 msgid "Bucket List"
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:78
+#: ../app/Settings/Settings_Page.php:70
 msgid "Optional. The folder path that you want files uploaded to. Leave blank for the root of the bucket."
 msgstr ""
 
-#: ../app/Settings/Plugin_Settings.php:77
+#: ../app/Settings/Settings_Page.php:69
 msgid "Path"
 msgstr ""

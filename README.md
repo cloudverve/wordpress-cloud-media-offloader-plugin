@@ -1,6 +1,6 @@
 [![Author](https://img.shields.io/badge/author-Daniel%20M.%20Hendricks-blue.svg?colorB=9900cc&style=flat-square)](https://www.danhendricks.com/?utm_source=github.com&utm_medium=campaign&utm_content=button&utm_campaign=cloudverve%2Fwordpress-cloud-media-offloader-plugin)
 [![Latest Version](https://img.shields.io/github/release/cloudverve/wordpress-cloud-media-offloader-plugin.svg?style=flat-square)](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases)
-[![GitHub License](https://img.shields.io/badge/license-GPLv2-yellow.svg?style=flat-square)](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/blob/master/LICENSE)
+[![GitHub License](https://img.shields.io/badge/license-GPLv2-yellow.svg?style=flat-square)](https://raw.githubusercontent.com/cloudverve/wordpress-cloud-media-offloader-plugin/master/LICENSE)
 [![Composer Downloads](https://img.shields.io/packagist/dt/cloudverve/wordpress-cloud-media-offloader-plugin.svg?style=flat-square&label=packagist)](https://packagist.org/packages/cloudverve/wordpress-cloud-media-offloader-plugin)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square)](https://paypal.me/danielhendricks)
 [![Flywheel](https://img.shields.io/badge/style-Flywheel-green.svg?style=flat-square&label=get%20hosted&colorB=AE2A21)](https://share.getf.ly/e25g6k?utm_source=github.com&utm_medium=campaign&utm_content=button&utm_campaign=cloudverve%2Fwordpress-cloud-media-offloader-plugin)
@@ -21,6 +21,8 @@ Installable WordPress ZIP file: [cloud-media-offloader.zip](https://github.com/c
    - [Requirements](#requirements)
 - [Known Compatibilities & Conflicts](#known-compatibilities--conflicts)
 - [Goals](#goals)
+- [Change Log](#change-log)
+- [Credits](#credits)
 - [Screenshots](#screenshots)
 
 ## Description
@@ -73,7 +75,6 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 #### Immediate
 
 * Significantly refactor/cleanup code
-* Merge B2 SDK updates
 * Significant testing in various environments
 * Improve documentation
 
@@ -93,6 +94,6 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 
 ## Screenshots
 
-![Settings Page](https://f001.backblazeb2.com/file/hendricks/projects/github/cloudverve/wordpress-cloud-media-offloader-plugin/screenshot-1.png "Settings Page")
+![Settings Page](https://raw.githubusercontent.com/cloudverve/wordpress-cloud-media-offloader-plugin/master/assets/screenshot-1.png "Settings Page")
 
-![Media Library Image Properties](https://f001.backblazeb2.com/file/hendricks/projects/github/cloudverve/wordpress-cloud-media-offloader-plugin/screenshot-2.png "Media Library Image Properties")
+![Media Library Image Properties](https://raw.githubusercontent.com/cloudverve/wordpress-cloud-media-offloader-plugin/master/assets/screenshot-2.png "Media Library Image Properties")

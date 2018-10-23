@@ -1,8 +1,6 @@
 <?php
 namespace CloudVerve\MediaOffloader;
-use Carbon_Fields\Container;
-use Carbon_Fields\Field;
-use ChrisWhite\B2\Exceptions;
+use CloudVerve\MediaOffloader\Services\B2;
 
 class Core extends Plugin {
 
@@ -12,14 +10,14 @@ class Core extends Plugin {
     $this->check_api_credentials();
 
     // Rewrite uploaded file URLs
-    if( $this->get_plugin_option( 'rewrite_urls' ) ) {
+    if( $this->get_carbon_plugin_option( 'rewrite_urls' ) ) {
       add_filter( 'wp_get_attachment_url', array( $this, 'rewrite_attachment_url' ), 10, 2 );
     }
 
-    if( $this->get_plugin_option( 'enabled' ) ) {
+    if( $this->get_carbon_plugin_option( 'enabled' ) ) {
 
       // Add 'Document' file type to Media Library filter dropdown
-      if( $this->get_plugin_option( 'add_media_library_document_type' ) ) {
+      if( $this->get_carbon_plugin_option( 'add_media_library_document_type' ) ) {
         add_filter( 'post_mime_types', array( $this, 'post_mime_types_filter' ) );
       }
 
@@ -47,7 +45,7 @@ class Core extends Plugin {
     */
   public function add_attachment_filter( $attachment_id ) {
 
-    $bucket_id = $this->get_plugin_option( 'bucket_id' );
+    $bucket_id = $this->get_carbon_plugin_option( 'bucket_id' );
     $bucket_name = Helpers::get_bucket_by_id( $bucket_id, 'name' );
     $file = Helpers::get_attachment_info( $attachment_id );
     $mime_list = Helpers::get_mime_list();
@@ -56,14 +54,14 @@ class Core extends Plugin {
 
     if( !$bucket_name || !$file || !$valid_mime ) return;
 
-    if( !self::$client ) self::$client = Helpers::auth();
+    if( !self::$client ) self::$client = B2::auth();
 
     // Copy uploaded file to B2 bucket
     $upload = $this->upload_file_to_bucket( $file, $bucket_id );
 
     // Store image dimensions
     $file_type = $this->get_upload_filetype( $file['filepath'] );
-    if( $file_type == 'image' && $this->get_plugin_option( 'remove_local_media' ) ) {
+    if( $file_type == 'image' && $this->get_carbon_plugin_option( 'remove_local_media' ) ) {
       $image_size = getimagesize( $file['filepath'] );
       if( isset( $image_size[0] ) && $image_size[0] ) update_post_meta( $attachment_id, self::prefix( 'dimensions' ), array( $image_size[0], $image_size[1] ) );
     }
@@ -75,7 +73,7 @@ class Core extends Plugin {
     update_post_meta( $attachment_id, self::prefix( 'external_url' ), $url );
 
     // Delete original file
-    if( $upload && $file_type != 'image' && $this->get_plugin_option( 'remove_local_media' ) ) {
+    if( $upload && $file_type != 'image' && $this->get_carbon_plugin_option( 'remove_local_media' ) ) {
       unlink( $this->get_wordpress_root( $upload->getName() ) );
     }
 
@@ -92,14 +90,14 @@ class Core extends Plugin {
 
     if( isset( $metadata['sizes'] ) ) {
 
-      $bucket_id = $this->get_plugin_option( 'bucket_id' );
+      $bucket_id = $this->get_carbon_plugin_option( 'bucket_id' );
       $file = Helpers::get_attachment_info( $attachment_id );
 
       foreach( $metadata['sizes'] as $size => $meta ) {
 
         $upload = $this->upload_file_to_bucket( $file, $bucket_id, $meta['file'] );
 
-        if( $upload && $this->get_plugin_option( 'remove_local_media' ) ) {
+        if( $upload && $this->get_carbon_plugin_option( 'remove_local_media' ) ) {
           unlink( $this->get_wordpress_root( $upload->getName() ) );
         }
 
@@ -108,7 +106,7 @@ class Core extends Plugin {
     }
 
     // Remove original file
-    if( $this->get_plugin_option( 'remove_local_media' ) ) {
+    if( $this->get_carbon_plugin_option( 'remove_local_media' ) ) {
       unlink( $file['filepath'] );
     }
 
@@ -130,7 +128,7 @@ class Core extends Plugin {
       return;
     }
 
-    $bucket_id = $this->get_plugin_option( 'bucket_id' );
+    $bucket_id = $this->get_carbon_plugin_option( 'bucket_id' );
     $bucket_name = Helpers::get_bucket_by_id( $bucket_id, 'name' );
     $file = Helpers::get_attachment_info( $attachment_id );
     if( !$bucket_name || !$file ) return;
@@ -189,7 +187,7 @@ class Core extends Plugin {
     if( $credentials_check ) {
       return;
     } else {
-      $credentials_check = Helpers::auth();
+      $credentials_check = B2::auth();
       update_option( $this->prefix( 'credentials_check' ), !is_null( $credentials_check ) );
     }
 
@@ -197,7 +195,7 @@ class Core extends Plugin {
     $settings_notice = __( 'Please check your {|access credentials|}.', self::$textdomain );
     $settings_parts = preg_split('/[{}]/', $settings_notice, null, PREG_SPLIT_NO_EMPTY);
 
-    if( count( $settings_notice > 1 ) ) {
+    if( count( $settings_parts ) > 1 ) {
 
       $settings_notice = '';
       foreach( $settings_parts as $part ) {

@@ -2,7 +2,7 @@
 namespace CloudVerve\MediaOffloader\Settings;
 use CloudVerve\MediaOffloader\Plugin;
 use CloudVerve\MediaOffloader\Helpers;
-use WordPress_ToolKit\ConfigRegistry;
+use CloudVerve\MediaOffloader\Services\B2;
 use Carbon_Fields\Datastore\Datastore\Serialized_Theme_Options_Datastore;
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
@@ -12,14 +12,11 @@ use Carbon_Fields\Field;
   *
   * @since 0.1.0
   */
-class Plugin_Settings extends Plugin {
+class Settings_Page extends Plugin {
 
-  protected $settings_containers;
+  protected $settings_containers = [];
 
   public function __construct() {
-
-    // Initialize array that will hold Carbon Fields Container objects
-    $this->settings_containers = array();
 
     // Flush the cache when settings are saved
     add_action( 'carbon_fields_theme_options_container_saved', array( $this, 'options_saved_hook' ) );
@@ -27,13 +24,8 @@ class Plugin_Settings extends Plugin {
     // Create tabbed plugin options page (Settings > Plugin Name)
     $this->create_tabbed_options_page();
 
-    // Register uninstall hook to delete settings (registered as static method due to WP requirements)
-    if( $this->get_plugin_option( 'uninstall_remove_settings' ) ) {
-      register_uninstall_hook( self::$config->get( 'plugin/identifier' ), 'self::plugin_settings_uninstall' );
-    }
-
     // Register custom MIME types
-    if( $this->get_plugin_option( 'register_custom_mime_types' ) && $this->get_plugin_option( 'custom_mime_types' ) ) {
+    if( $this->get_carbon_plugin_option( 'register_custom_mime_types' ) && $this->get_carbon_plugin_option( 'custom_mime_types' ) ) {
       add_filter( 'upload_mimes', array( $this, 'register_custom_mimes_types' ) );
     }
 
@@ -49,19 +41,19 @@ class Plugin_Settings extends Plugin {
     $container = Container::make( 'theme_options', self::$config->get( 'short_name' ) )
       ->set_page_parent('options-general.php')
       ->add_tab( __( 'General', self::$textdomain ), array(
-        Field::make( 'checkbox', $this->prefix( 'enabled' ), __( 'Enable Plugin', self::$textdomain ) )
+        Field::make( 'checkbox', $this->prefix( 'enabled' ), __( 'Enable Media Offloading', self::$textdomain ) )
           ->set_default_value( 'yes' )
           ->help_text( __( 'Check to enable the plugin. Media Library items will be uploaded to the B2 bucket specified below.', self::$textdomain ) ),
         Field::make( 'checkbox', $this->prefix( 'rewrite_urls' ), __( 'Rewrite Media URLs', self::$textdomain ) )
           ->set_default_value( 'yes' )
           ->help_text( __( 'If enabled, Media Library URLs will be changed to serve from Backblaze. <em>It is <strong>highly likely</strong> that you\'ll want this checked unless you are using another plugin/method to rewrite URLs.</em>', self::$textdomain ) ),
         Field::make( 'checkbox', $this->prefix( 'remove_local_media' ), __( 'Remove Files From Server', self::$textdomain ) )
-          ->help_text( __( 'If enabled, uploaded files will be deleted from your web host after they are uploaded to Backblaze B2.', self::$textdomain ) . '<br />' . __( '<strong>Note:</strong> This may cause incompatibilities with other plugins that rely on a local copy of uploaded media. If you deactivate this plugin, the media links will be broken.', self::$textdomain ) ),
+          ->help_text( __( 'If enabled, uploaded files will be deleted from your web host after they are uploaded to Backblaze B2.', self::$textdomain ) . '<br />' . __( '<strong>Caution:</strong> This may cause incompatibilities with other plugins that rely on a local copy of uploaded media. If you deactivate this plugin, the media links will be broken.', self::$textdomain ) ),
         Field::make( 'checkbox', $this->prefix( 'add_media_library_document_type' ), __( 'Add "Document" to Media Library Filter Dropdown', self::$textdomain ) )
           ->set_default_value( 'yes' )
           ->help_text( __( 'For convenience, adds a <em>Document</em> file type to the Media Library dropdown filter.', self::$textdomain ) ),
         /*
-        Field::make( 'checkbox', $this->prefix( 'uninstall_remove_settings' ), __( 'Delete Plugin Settings On Uninstall', self::$textdomain ) )
+        Field::make( 'checkbox', $this->prefix( 'uninstall_remove_settings' ), __( 'Remove Plugin Settings On Uninstall', self::$textdomain ) )
           ->help_text( __( 'Settings will only be deleted if you remove the plugin from Installed Plugins. They will not be removed by simply deactivating the plugin.', self::$textdomain ) ),
         */
         Field::make( 'separator', $this->prefix( 'separator_general_credentials' ), __( 'Access Credentials', self::$textdomain ) ),
@@ -72,7 +64,7 @@ class Plugin_Settings extends Plugin {
           ->set_attribute( 'type', 'password' ),
         Field::make( 'separator', $this->prefix( 'separator_general_bucket_path' ), __( 'Bucket & Path', self::$textdomain ) ),
         Field::make( 'select', $this->prefix( 'bucket_id' ), __( 'Bucket List', self::$textdomain ))
-          ->add_options( Helpers::get_bucket_list( true ) )
+          ->add_options( B2::get_bucket_list( true ) )
           ->help_text( __( 'If you see <em>no options</em>, log into your Backblaze B2 account and make that you have at least one bucket created and that it is marked <strong>Public</strong>.', self::$textdomain ) ),
         Field::make( 'text', $this->prefix( 'path' ), __( 'Path', self::$textdomain ) )
           ->help_text( __( 'Optional. The folder path that you want files uploaded to. Leave blank for the root of the bucket.', self::$textdomain ) )
@@ -113,7 +105,7 @@ class Plugin_Settings extends Plugin {
             'value' => true )
           )
         )
-        //->set_default_value( array( 'application/zip', 'application/pdf', 'video/avi', 'video/x-flv', 'video/mov', 'video/mp4', 'video/webm', 'video/x-matroska' ) )
+        ->set_default_value( [ 'application/zip', 'application/pdf', 'video/avi', 'video/x-flv', 'video/mov', 'video/mp4', 'video/webm' ] )
         ->add_options( $this->get_formatted_mime_types() ),
       )
     );
@@ -145,24 +137,6 @@ class Plugin_Settings extends Plugin {
   }
 
   /**
-    * Plugin uninstall hook callback. Removes Carbon Fields settings on
-    *    plugin removal
-    *
-    * @since 0.3.0
-    */
-  public static function plugin_settings_uninstall() {
-
-    foreach( $this->settings_containers as $container ) {
-
-      foreach ( $container->get_fields() as $field ) {
-        $field->delete();
-      }
-
-    }
-
-  }
-
-  /**
     * Flush the WordPress object cache when settings are saved.
     *
     * @since 0.3.0
@@ -181,7 +155,7 @@ class Plugin_Settings extends Plugin {
     */
   public function register_custom_mimes_types( $mimes ) {
 
-    $custom_types = $this->get_plugin_option( 'custom_mime_types' );
+    $custom_types = $this->get_carbon_plugin_option( 'custom_mime_types' );
 
     foreach( $custom_types as $mime ) {
       $mimes[ $mime['label'] ] = $mime['mime'];

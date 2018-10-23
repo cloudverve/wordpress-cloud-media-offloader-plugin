@@ -2,44 +2,63 @@
 namespace CloudVerve\MediaOffloader;
 use WordPress_ToolKit\ObjectCache;
 use WordPress_ToolKit\ConfigRegistry;
-use WordPress_ToolKit\PluginTools;
 use WordPress_ToolKit\Helpers\ArrayHelper;
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
-use Config;
 
-class Plugin {
+class Plugin extends \WordPress_ToolKit\ToolKit {
 
+  private static $instance;
   public static $textdomain;
   public static $config;
   public static $client;
-  protected static $cache;
 
-  function __construct() {
+  public static function instance() {
 
-    // Get plugin properties and meta data
-    $plugin_obj = new PluginTools();
-    $plugin_data = $plugin_obj->get_current_plugin_data( ARRAY_A );
+    if ( !isset( self::$instance ) && !( self::$instance instanceof Plugin ) ) {
 
-    self::$config = new ConfigRegistry( $plugin_data['path'] . 'plugin.json' );
-    self::$config = self::$config->merge( new ConfigRegistry( [ 'plugin' => $plugin_data ] ) );
-    self::$textdomain = self::$config->get( 'plugin/meta/TextDomain' ) ?: self::$config->get( 'plugin/slug' );
+      self::$instance = new Plugin;
 
-    // Define plugin version constant
-    if ( !defined( __NAMESPACE__ . '\VERSION' ) ) define( __NAMESPACE__ . '\VERSION', self::$config->get( 'plugin/meta/Version' ) );
+      // Load plugin configuration
+      self::$config = self::$instance->init( dirname( __DIR__ ), trailingslashit( dirname( __DIR__ ) ) . 'plugin.json' );
+      self::$config->merge( new ConfigRegistry( [ 'plugin' => self::$instance->get_current_plugin_meta( ARRAY_A ) ] ) );
 
-    // Do not load on the frontend
-    if( !is_admin() ) return;
+      // Set Text Domain
+      self::$textdomain = self::$config->get( 'plugin/meta/TextDomain' ) ?: self::$config->get( 'plugin/slug' );
 
-    // Initialize ObjectCache
-    self::$cache = new ObjectCache( self::$config );
+      // Define plugin version
+      if ( !defined( __NAMESPACE__ . '\VERSION' ) ) define( __NAMESPACE__ . '\VERSION', self::$config->get( 'plugin/meta/Version' ) );
 
-    // Load Localization
-    load_plugin_textdomain( self::$textdomain, false, self::$config->get( 'plugin/slug' ) . '/languages' );
+      // Load dependecies and load plugin logic
+      register_activation_hook( self::$config->get( 'plugin/identifier' ), array( self::$instance, 'activate' ) );
+      add_action( 'plugins_loaded', array( self::$instance, 'load_dependencies' ) );
 
-    // Verify dependecies and load plugin logic
-    register_activation_hook( self::$config->get( 'plugin/identifier' ), array( $this, 'activate' ) );
-    add_action( 'plugins_loaded', array( $this, 'init' ) );
+    }
+
+    return self::$instance;
+
+  }
+
+  /**
+    * Load plugin classes - Modify as needed, remove features that you don't need.
+    *
+    * @since 0.2.0
+    */
+  public function load_plugin() {
+
+    if( !$this->verify_dependencies() ) {
+      deactivate_plugins( self::$config->get( 'plugin/identifier' ) );
+      return;
+    }
+
+    // Add admin settings page using Carbon Fields framework
+    new Settings\Settings_Page();
+
+    // Load shortcodes
+    //new Shortcodes\Shortcode_Loader();
+
+    // Perform core plugin logic
+    new Core();
 
   }
 
@@ -50,8 +69,7 @@ class Plugin {
     */
   public function activate() {
 
-    $dependency_check = $this->verify_dependencies( true, array( 'activate' => true, 'echo' => false ) );
-    if( $dependency_check !== true ) die( $dependency_check );
+    $this->verify_dependencies( true );
 
   }
 
@@ -60,32 +78,13 @@ class Plugin {
     *
     * @since 0.2.0
     */
-  public function init() {
+  public function load_dependencies() {
 
     if( class_exists( 'Carbon_Fields\\Carbon_Fields' ) ) {
       add_action( 'after_setup_theme', array( 'Carbon_Fields\\Carbon_Fields', 'boot' ) );
     }
 
-    if( $this->verify_dependencies( 'carbon_fields' ) === true ) {
-      add_action( 'carbon_fields_fields_registered', array( $this, 'load_plugin' ));
-    }
-
-  }
-
-  /**
-    * Load plugin classes
-    *
-    * @since 0.2.0
-    */
-  public function load_plugin() {
-
-    if( !$this->verify_dependencies( 'carbon_fields' ) ) return;
-
-    // Add admin settings page using Carbon Fields framework
-    new Settings\Plugin_Settings();
-
-    // Perform core plugin logic
-    new Core();
+    add_action( 'carbon_fields_fields_registered', array( $this, 'load_plugin' ));
 
   }
 
@@ -93,79 +92,55 @@ class Plugin {
     * Function to verify dependencies, such as if an outdated version of Carbon
     *    Fields is detected.
     *
-    * Normally, we wouldn't be so persistant about checking for dependencies and
-    *    I would just pass it off to TGMPA, however, if they have an ancient version
-    *    of Carbon Fields loaded (via plugin or dependency), it causes problems.
-    *
-    * @param string|array|bool $deps A string (single) or array of deps to check. `true`
-    *    checks all defined dependencies.
-    * @param array $args An array of arguments.
-    * @return bool|string Result of dependency check. Returns bool if $args['echo']
-    *    is false, string if true.
+    * @param bool $die If true, plugin execution is halted with die(), useful for
+    *    outputting error(s) in during activate()
+    * @return bool
     * @since 0.2.0
     */
-  private function verify_dependencies( $deps = true, $args = array() ) {
+  private function verify_dependencies( $die = false ) {
 
-    if( is_bool( $deps ) && $deps ) $deps = self::$config->get( 'dependencies' );
-    if( !is_array( $deps ) ) $deps = array( $deps => self::$config->get( 'dependencies/' . $deps ) );
-
-    $args = ArrayHelper::set_default_atts( array(
-      'echo' => true,
-      'activate' => true
-    ), $args);
-
-    $notices = array();
-
-    foreach( $deps as $dep => $version ) {
-
-      switch( $dep ) {
-
-        case 'php':
-
-          if( version_compare( phpversion(), $version, '<' ) ) {
-            $notices[] = __( 'This plugin is not supported on versions of PHP below', self::$textdomain ) . ' ' . self::$config->get( 'dependencies/php' ) . '.' ;
-          }
-          break;
-
-        case 'wordpress-toolkit':
-
-          $wordpress_toolkit_version = defined( '\WordPress_ToolKit\VERSION' ) ? \WordPress_ToolKit\VERSION : null;
-
-          if( !$wordpress_toolkit_version || version_compare( $wordpress_toolkit_version, $version, '<' ) ) {
-            $notices[] = sprintf( __( 'Unable to activate %s. An outdated version of WordPress ToolKit has been detected: %s (&gt;= %s required)', self::$textdomain ), self::$config->get( 'plugin/meta/Name' ), $wordpress_toolkit_version, $version );
-          }
-          break;
-
-        case 'carbon_fields':
-
-          //if( defined('\\Carbon_Fields\\VERSION') || ( defined('\\Carbon_Fields\\VERSION') && version_compare( \Carbon_Fields\VERSION, $version, '<' ) ) ) {
-          if( !$args['activate'] && !defined('\\Carbon_Fields\\VERSION') ) {
-            $notices[] = __( 'An unknown error occurred while trying to load the Carbon Fields framework.', self::$textdomain );
-          } else if ( defined('\\Carbon_Fields\\VERSION') && version_compare( \Carbon_Fields\VERSION, $version, '<' ) ) {
-            $notices[] = __( 'An outdated version of Carbon Fields has been detected:', self::$textdomain ) . ' ' . \Carbon_Fields\VERSION . ' (&gt;= ' . self::$config->get( 'dependencies/carbon_fields' ) . ' ' . __( 'required', self::$textdomain ) . ').' . ' <strong>' . self::$config->get( 'plugin/meta/Name' ) . '</strong> ' . __( 'deactivated', self::$textdomain ) . '.' ;
-          }
-          break;
-
-        }
-
-    }
-
-    if( $notices ) {
-
-      deactivate_plugins( self::$config->get( 'plugin/identifier' ) );
-
-      $notices = '<ul><li>' . implode( "</li>\n<li>", $notices ) . '</li></ul>';
-
-      if( $args['echo'] ) {
-        Helpers::show_notice($notices, 'error', false);
-        return false;
+    // Check if underDEV_Requirements class is loaded
+    if( !class_exists( 'underDEV_Requirements' ) ) {
+      if( $die ) {
+        die( sprintf( __( '<strong>%s</strong>: One or more dependencies failed to load', self::$textdomain ), __( self::$config->get( 'plugin/meta/Name' ) ) ) );
       } else {
-        return $notices;
+        return false;
       }
-
     }
 
-    return !$notices;
+    $requirements = new \underDEV_Requirements( __( self::$config->get( 'plugin/meta/Name' ), self::$textdomain ), self::$config->get( 'dependencies' ) );
+
+    // Check for WordPress Toolkit
+    $requirements->add_check( 'wordpress-toolkit', function( $val, $res ) {
+      $wordpress_toolkit_version = defined( '\WordPress_ToolKit\VERSION' ) ? \WordPress_ToolKit\VERSION : null;
+      if( !$wordpress_toolkit_version ) {
+        $res->add_error( __( 'WordPress ToolKit not loaded.', self::$textdomain ) );
+      } else if( version_compare( $wordpress_toolkit_version, self::$config->get( 'dependencies/wordpress-toolkit' ), '<' ) ) {
+        $res->add_error( sprintf( __( 'An outdated version of WordPress ToolKit has been detected: %s (&gt;= %s required).', self::$textdomain ), $wordpress_toolkit_version, self::$config->get( 'dependencies/wordpress-toolkit' ) ) );
+      }
+    });
+
+    // Check for Carbon Fields
+    $requirements->add_check( 'carbon_fields', function( $val, $res ) {
+      $cf_version = defined('\\Carbon_Fields\\VERSION') ? current( explode( '-', \Carbon_Fields\VERSION ) ) : null;
+      if( !$cf_version ) {
+        $res->add_error( sprintf( __( 'The <a href="%s" target="_blank">Carbon Fields</a> framework is not loaded.', self::$textdomain ), 'https://carbonfields.net/release-archive/' ) );
+      } else if( version_compare( $cf_version, self::$config->get( 'dependencies/carbon_fields' ), '<' ) ) {
+        $res->add_error( sprintf( __( 'An outdated version of Carbon Fields has been detected: %s (&gt;= %s required).', self::$textdomain ), $cf_version, self::$config->get( 'dependencies/carbon_fields' ) ) );
+      }
+    });
+
+    // Display errors if requirements not met
+    if( !$requirements->satisfied() ) {
+      if( $die ) {
+        die( $requirements->notice() );
+      } else {
+        add_action( 'admin_notices', array( $requirements, 'notice' ) );
+        return false;
+      }
+    }
+
+    return true;
 
   }
 
@@ -175,12 +150,14 @@ class Plugin {
     *   cache flushed appropriately.
     *
     * @param string $key The name of the option key
+    * @param bool $cache Whether or not to attempt to get cached value
     * @return mixed The value of specified Carbon Fields option key
     * @link https://carbonfields.net/docs/containers-usage/ Carbon Fields containers
     * @since 0.2.0
     *
     */
-  public static function get_plugin_option( $key, $cache = true ) {
+  public static function get_carbon_plugin_option( $key, $cache = true ) {
+
     $key = self::prefix( $key );
 
     if( $cache ) {
@@ -196,49 +173,36 @@ class Plugin {
   }
 
   /**
-    * A wrapper for the plugin's data fiala prefix as defined in $config
+    * Get Carbon Fields network container option (if multisite enabled)
     *
-    * @param string|null $field_name The string/field to prefix
-    * @param string $start Optional string to prefix field with
-    * @return string Prefixed string/field value
-    * @since 0.2.0
-    */
-  public static function prefix( $field_name = null, $start = '' ) {
-    return $field_name !== null ? $start . self::$config->get( 'prefix' ) . $field_name : self::$config->get( 'prefix' );
-  }
-
-  /**
-    * Returns true if WP_ENV is anything other than 'development' or 'staging'.
-    *   Useful for determining whether or not to enqueue a minified or non-
-    *   minified script (which can be useful for debugging via browser).
+    * @param string $key The name of the option key
+    * @param string $container The name of the Carbon Fields network container
+    * @param bool $cache Whether or not to attempt to get cached value
+    * @param int $site_id The network site ID to use - default: SITE_ID_CURRENT_SITE
+    * @return mixed The value of specified Carbon Fields option key
+    * @link https://carbonfields.net/docs/containers-usage/ Carbon Fields containers
+    * @since 0.5.0
     *
-    * @return bool
-    * @since 0.1.0
     */
-  public function is_production() {
-    $env = @constant( self::$config->get( 'environment_constant' ) ) ?: 'production';
-    return ( !in_array( $env, array('development', 'staging') ) );
-  }
+  public static function get_carbon_network_option( $key, $cache = true, $site_id = null ) {
 
-  /**
-    * Returns true if request is via Ajax.
-    *
-    * @return bool
-    * @since 0.1.0
-    */
-  public function is_ajax() {
-    return defined('DOING_AJAX') && DOING_AJAX;
-  }
+    if( !$site_id ) {
+      if( !defined( 'SITE_ID_CURRENT_SITE' ) ) return null;
+      $site_id = SITE_ID_CURRENT_SITE;
+    }
 
-  /**
-    * Returns WordPress root directory.
-    *
-    * @return string Path to WordPress root directory
-    * @since 0.7.0
-    */
-  public function get_wordpress_root( $filename = '' ) {
-    return trailingslashit( implode( DIRECTORY_SEPARATOR, array_slice( explode( DIRECTORY_SEPARATOR, self::$config->get( 'plugin/path' ) ), 0, -4 ) ) ) . $filename;
-  }
+    $key = self::prefix( $key );
 
+    if( $cache ) {
+      // Attempt to get value from cache, else fetch value from database
+      return self::$cache->get_object( $key, function() use ( &$site_id, &$key ) {
+        return carbon_get_network_option( $site_id, $key );
+      }, null, [ 'network_global' => true ] );
+    } else {
+      // Return uncached value
+      return carbon_get_network_option( $site_id, $key );
+    }
+
+  }
 
 }

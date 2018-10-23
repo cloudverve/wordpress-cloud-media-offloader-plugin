@@ -1,192 +1,170 @@
 <?php
 namespace CloudVerve\MediaOffloader;
+use WordPress_ToolKit\Helpers\ArrayHelper;
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
-use ChrisWhite\B2\Client;
-use ChrisWhite\B2\Bucket;
-use ChrisWhite\B2\Exceptions;
 
 class Helpers extends Plugin {
 
   /**
     * Display a notice/message in WP Admin
     *
-    * @param string $msg The message to display.
-    * @param string $type The type of notice. Valid values:
-    *    error, warning, success, info
-    * @param bool $is_dismissible Specify whether or not the user may dismiss
-    *    the notice.
+    * @param string $msg The message to display
+    * @param string $args Configuration options
     * @since 2.0.0
     */
-  public static function show_notice( $msg, $type = 'error', $is_dismissible = false ) {
+  public static function show_notice( $msg, $args = array() ) {
 
-    add_action( 'admin_notices', function() use (&$msg, &$type, &$is_dismissible) {
+    $args = ArrayHelper::set_default_atts( array(
+      'type' => 'success', // 'error', 'warning', 'success', 'info'
+      'dismissible' => true, // notice is dismissible
+      'scope' => true, // 'admin', 'network', true (both)
+      'class' => null, // additional CSS classes to add to notice
+      'id' => null // container element ID
+    ), $args);
 
-      $class = 'notice notice-' . $type . ( $is_dismissible ? ' is-dismissible' : '' );
-      printf( '<div class="%1$s"><p>%2$s</p></div>', $class, $msg );
+    // Merge CSS classes
+    if( !is_array( $args['class'] ) ) $args['class'] = explode( ' ', $args['class'] );
+    $classes = array_merge([
+      'notice',
+      'notice-' . $args['type']
+    ], $args['class'] );
+    if( $args['dismissible'] ) $classes[] = 'is-dismissible';
+    $classes = implode( ' ', array_filter( $classes ) );
 
-    });
+    // Set ID string, if specified
+    $element_id = $args['id'] ? ' id="' . $args['id'] . '"' : '';
 
-  }
+    // Display message in WP Admin
+    if( $args['scope'] === true || $args['scope'] == 'admin' ) {
+      add_action( 'admin_notices', function() use ( &$classes, &$element_id, &$msg ) {
+        printf( '<div class="%1$s"%2$s><p>%3$s</p></div>', $classes, $element_id, $msg );
+      });
+    }
 
-  /**
-    * Authenticate to Backblaze API and create client object
-    *
-    * @return object ChrisWhite\B2\Client object
-    * @since 0.7.0
-    */
-  public static function auth() {
-
-    $account_id = self::$cache->get_object( self::prefix( 'account_id' ), function() {
-      return get_option( self::prefix( 'account_id', '_' ) );
-    });
-    $application_key = self::$cache->get_object( self::prefix( 'application_key' ), function() {
-      return get_option( self::prefix( 'application_key', '_' ) );
-    });
-
-    if( !$account_id || !$application_key ) return null;
-
-    try {
-      $client = new Client( $account_id, $application_key );
-      return $client;
-    } catch ( \ChrisWhite\B2\Exceptions\B2Exception $e ) {
-      return null;
+    // Display message in Network Admin
+    if( $args['scope'] === true || $args['scope'] == 'network' ) {
+      add_action( 'network_admin_notices', function() use ( &$classes, &$element_id, &$msg ) {
+        printf( '<div class="%1$s"%2$s><p>%3$s</p></div>', $classes, $element_id, $msg );
+      });
     }
 
   }
 
   /**
-    * Fetch a list of available B2 buckets
+    * Merges two arrays, eliminating duplicates
     *
-    * @param bool|null $associative If true, return associative array. If false,
-    *    return multidimensional. If null, both types are returned.
-    * @return array List of B2 buckets
-    * @since 0.7.0
-    */
-  public static function get_bucket_list( $public = null, $associative = true ) {
-
-    // Determine type of buckets to retrieve
-    $bucket_scope = null;
-    if( is_bool( $public ) ) {
-      $bucket_scope = $public ? 'allPublic' : 'allPrivate';
-    }
-
-    // Get Account ID and Application Key from Settings
-    $account_id = self::$cache->get_object( self::prefix( 'account_id' ), function() {
-      return get_option( self::prefix( 'account_id', '_' ) );
-    });
-    $application_key = self::$cache->get_object( self::prefix( 'application_key' ), function() {
-      return get_option( self::prefix( 'application_key', '_' ) );
-    });
-
-    if( !$account_id || !$application_key ) return array();
-
-    // Fetch bucket list from object cache, if enabled, else load from database
-    $buckets = self::$cache->get_object( self::prefix( 'b2_bucket_list' ), function() use ( &$account_id, &$application_key ) {
-      try {
-        self::$client = self::auth();
-        if( !self::$client ) return array();
-        return self::$client->listBuckets();
-      } catch( B2Exception $e ) {
-        self::show_notice( $e->getMessage(), 'error', true );
-      }
-    });
-
-    if( !$buckets ) return array();
-
-    // Build result array
-    $result = array();
-    foreach( $buckets as $bucket ) {
-
-      if( !$bucket_scope || $bucket_scope == $bucket->getType() ) {
-
-        if( $associative ) {
-
-          $result[ $bucket->getId() ] = $bucket->getName();
-
-        } else {
-
-          $result[] = array(
-            'ID' => $bucket->getId(),
-            'name' => $bucket->getName(),
-            'public' => $bucket->getType() == 'allPublic'
-          );
-
-        }
-
-      }
-
-    }
-
-    return $result;
-
-  }
-
-  /**
-    * Retrieves bucket info by ID
+    * array_merge_recursive_distinct does not change the datatypes of the values in the arrays.
+    * Matching keys' values in the second array overwrite those in the first array, as is the
+    * case with array_merge().
     *
-    * @param string $bucket_id The ID of the bucket
-    * @return string The bucket info, including ID, name and scope
-    * @since 0.7.0
-    */
-  public static function get_bucket_by_id( $bucket_id, $field = null ) {
-
-    $buckets = self::get_bucket_list( null, false );
-    foreach( $buckets as $bucket ) {
-      if( $bucket['ID'] == $bucket_id ) return $field ? $bucket[$field] : $bucket;
-    }
-    return null;
-
-  }
-
-  /**
-    * Retrieves file and path info
-    *
-    * @param int Attachment ID
-    * @return array File and path info of attachment
-    * @since 0.7.0
-    */
-  public static function get_attachment_info( $attachment_id ) {
-
-    $uploads = wp_upload_dir();
-    $filepath = get_attached_file( $attachment_id );
-    $remote_path = untrailingslashit( self::get_plugin_option( 'path' ) );
-
-    return array(
-      'ID' => $attachment_id,
-      'filepath' => $filepath,
-      'filename' => basename( $filepath ),
-      'url' => wp_get_attachment_url( $attachment_id ),
-      'subdir' => trim( $uploads['subdir'], DIRECTORY_SEPARATOR ),
-      'destpath' => $remote_path . untrailingslashit( $uploads['subdir'] ),
-      'destfile' => $remote_path . trailingslashit( $uploads['subdir'] ) . basename( $filepath ),
-      'mime_type' => get_post_mime_type( $attachment_id )
-    );
-
-  }
-
-  /**
-    * Retrieves a list of MIME types to process from the Settings page
-    *
+    * @param array $array1
+    * @param array $array2
     * @return array
-    * @since 0.7.0
+    * @author Daniel <daniel (at) danielsmedegaardbuus (dot) dk>
+    * @author Gabriel Sobrinho <gabriel (dot) sobrinho (at) gmail (dot) com>
+    * @see http://php.net/manual/en/function.array-merge-recursive.php#92195 Source
     */
-  public static function get_mime_list() {
+  private function array_merge_recursive_distinct( array &$array1, array &$array2 ) {
 
-    if( !self::get_plugin_option( 'limit_mime_types' ) ) {
-      return false;
+    $merged = $array1;
+
+    foreach ( $array2 as $key => &$value )
+    {
+      if ( is_array ( $value ) && isset ( $merged [$key] ) && is_array ( $merged [$key] ) ) {
+        $merged[$key] = self::array_merge_recursive_distinct ( $merged[$key], $value );
+      } else {
+        $merged[$key] = $value;
+      }
     }
 
-    $mime_types = self::get_plugin_option( 'mime_types' ) ?: array();
-    $custom_mimes = self::get_plugin_option( 'custom_mime_types' ) ?: array();
-    if( !$mime_types ) $mime_types = array();
+    return $merged;
 
-    foreach( $custom_mimes as $type ) {
-      $mime_types[] = $type['mime'];
-    }
+  }
 
-    return $mime_types;
+  /**
+    * Get the slug of the current page/post
+    *
+    * Return the slug of the current page/post.
+    *   Example: http://mysite.com/sample-page/test-page would return: test-page
+    *
+    * @param int $post_id (optional) Specify the post ID to retrieve parent slug for,
+    *   else $post global is used instead
+    * @return string The slug of the specified/current post
+    */
+  public static function get_page_slug( $post_id = null ) {
+      global $post;
 
+      $_slug = $post_id ? get_post( $post_id )->post_name : $post->post_name;
+
+      if( is_front_page() ) {
+          $_slug = 'front';
+      } else if( is_search() ) {
+          $_slug = 'search';
+      } else if( is_archive() ) {
+          $_slug = 'archive';
+      } else if( is_single() ) {
+          $_slug = 'single';
+      }
+
+      return $_slug;
+  }
+
+  /**
+    * Get the slug of the parent post (if any)
+    *
+    * Return the slug of the parent page/post.
+    *   Example: http://mysite.com/sample-page/test-page would return: sample-page
+    *
+    * @param bool $include_self_as_parent_if_root (optional) Should we return the parent
+    *   slug if the post *is* the parent? This can be useful if you want to apply
+    *   style/logic to child pages as well as the parent
+    * @param int $post_id (optional) Specify the post ID to retrieve parent slug for,
+    *   else $post global is used instead
+    * @return string The parent slug of the specified post, if availaable
+    */
+  public static function get_parent_slug( $include_self_as_parent_if_root = false, $post_id = null ) {
+      global $post;
+      $post_id = $post_id ? $post_id : @$post->ID;
+
+      if ( is_page() ) {
+          if( get_post( $post_id )->post_parent ) {
+              $parent = @end( get_post_ancestors( $post_id ) ) ;
+          } else {
+              $parent = $post->ID;
+          }
+          $post_data = get_post( $parent, ARRAY_A );
+          if( $include_self_as_parent_if_root || $post_data['post_name'] != self::get_page_slug( $post_id ) ) return $post_data['post_name'];
+      }
+      return array();
+  }
+
+  /**
+    * Returns the categories of the current post
+    *
+    * Returns the categories of the current post, either as labels or as slugs.
+    *
+    * @param bool $as_slugs (optional) Returns array of category slugs rather than
+    *   category labels
+    * @param int $post_id (optional) Specify the post ID to retrieve categories for,
+    *   else $post global is used instead
+    * @return array
+    */
+  public static function get_post_categories($as_slugs = false, $post_id = null) {
+      global $post;
+      $return = array();
+
+      $post_id = $post_id ? $post_id : @$post->ID;
+      if( !$post_id ) return $return;
+
+      $categories = get_the_category( $post_id );
+      if( !$categories ) return $return;
+
+      foreach( $categories as $cat ) {
+        $return[] = $as_slugs ? $cat->slug : $cat->name;
+      }
+
+      return $return;
   }
 
   /**
@@ -205,7 +183,7 @@ class Helpers extends Plugin {
     * @return string
     * @since 0.1.0
     */
-  public function get_script_version( $script, $return_minified = false, $script_version = null ) {
+  public static function get_script_version( $script, $return_minified = false, $script_version = null ) {
     $version = $script_version ?: self::$config->get( 'plugin/meta/Version' );
     if( self::is_production() ) return $version;
 
@@ -232,9 +210,9 @@ class Helpers extends Plugin {
     * @return string The URL or path to minified or regular $script.
     * @since 0.1.0
     */
-  public function get_script_path( $script, $return_minified = true, $return_url = false ) {
+  public static function get_script_path( $script, $return_minified = true, $return_url = false ) {
     $script = trim( $script, '/' );
-    if( $return_minified && strpos( $script, '.' ) && $this->is_production() ) {
+    if( $return_minified && strpos( $script, '.' ) && self::is_production() ) {
       $script_parts = explode( '.', $script );
       $script_extension = end( $script_parts );
       array_pop( $script_parts );
@@ -251,7 +229,7 @@ class Helpers extends Plugin {
     * @param bool
     * @since 0.1.0
     */
-  public function get_script_url( $script, $return_minified = false ) {
+  public static function get_script_url( $script, $return_minified = false ) {
     return self::get_script_path( $script, $return_minified, true );
   }
 
