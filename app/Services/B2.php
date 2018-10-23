@@ -130,7 +130,7 @@ class B2 extends Plugin {
 
     $uploads = wp_upload_dir();
     $filepath = get_attached_file( $attachment_id );
-    $remote_path = untrailingslashit( self::get_plugin_option( 'path' ) );
+    $remote_path = untrailingslashit( self::get_carbon_plugin_option( 'path' ) );
 
     return array(
       'ID' => $attachment_id,
@@ -153,12 +153,12 @@ class B2 extends Plugin {
     */
   public static function get_mime_list() {
 
-    if( !self::get_plugin_option( 'limit_mime_types' ) ) {
+    if( !self::get_carbon_plugin_option( 'limit_mime_types' ) ) {
       return false;
     }
 
-    $mime_types = self::get_plugin_option( 'mime_types' ) ?: array();
-    $custom_mimes = self::get_plugin_option( 'custom_mime_types' ) ?: array();
+    $mime_types = self::get_carbon_plugin_option( 'mime_types' ) ?: array();
+    $custom_mimes = self::get_carbon_plugin_option( 'custom_mime_types' ) ?: array();
     if( !$mime_types ) $mime_types = array();
 
     foreach( $custom_mimes as $type ) {

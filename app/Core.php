@@ -46,9 +46,9 @@ class Core extends Plugin {
   public function add_attachment_filter( $attachment_id ) {
 
     $bucket_id = $this->get_carbon_plugin_option( 'bucket_id' );
-    $bucket_name = Helpers::get_bucket_by_id( $bucket_id, 'name' );
-    $file = Helpers::get_attachment_info( $attachment_id );
-    $mime_list = Helpers::get_mime_list();
+    $bucket_name = B2::get_bucket_by_id( $bucket_id, 'name' );
+    $file = B2::get_attachment_info( $attachment_id );
+    $mime_list = B2::get_mime_list();
     $valid_mime = !$mime_list || in_array( $file['mime_type'], $mime_list );
     $upload = null;
 
@@ -91,7 +91,7 @@ class Core extends Plugin {
     if( isset( $metadata['sizes'] ) ) {
 
       $bucket_id = $this->get_carbon_plugin_option( 'bucket_id' );
-      $file = Helpers::get_attachment_info( $attachment_id );
+      $file = B2::get_attachment_info( $attachment_id );
 
       foreach( $metadata['sizes'] as $size => $meta ) {
 
@@ -129,11 +129,11 @@ class Core extends Plugin {
     }
 
     $bucket_id = $this->get_carbon_plugin_option( 'bucket_id' );
-    $bucket_name = Helpers::get_bucket_by_id( $bucket_id, 'name' );
-    $file = Helpers::get_attachment_info( $attachment_id );
+    $bucket_name = B2::get_bucket_by_id( $bucket_id, 'name' );
+    $file = B2::get_attachment_info( $attachment_id );
     if( !$bucket_name || !$file ) return;
 
-    if( !self::$client ) self::$client = Helpers::auth();
+    if( !self::$client ) self::$client = B2::auth();
 
     // Delete file from B2 bucket
     $this->delete_file_from_bucket( $file, $bucket_name );
