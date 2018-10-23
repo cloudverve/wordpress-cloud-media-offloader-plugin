@@ -120,6 +120,24 @@ class B2 extends Plugin {
   }
 
   /**
+    * Retrieves bucket info by name
+    *
+    * @param string $bucket_name The name of the bucket
+    * @return string The bucket info, including ID, name and scope
+    * @since 0.8.0
+    */
+  public static function get_bucket_by_name( $bucket_name, $field = null ) {
+
+    $buckets = self::get_bucket_list( null, false );
+    foreach( $buckets as $bucket ) {
+      if( $bucket['name'] == $bucket_name ) return $field ? $bucket[$field] : $bucket;
+    }
+    return null;
+
+  }
+
+
+  /**
     * Retrieves file and path info
     *
     * @param int Attachment ID
