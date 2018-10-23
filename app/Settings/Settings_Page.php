@@ -49,9 +49,9 @@ class Settings_Page extends Plugin {
           ->help_text( __( 'If enabled, Media Library URLs will be changed to serve from Backblaze. <em>It is <strong>highly likely</strong> that you\'ll want this checked unless you are using another plugin/method to rewrite URLs.</em>', self::$textdomain ) ),
         Field::make( 'checkbox', $this->prefix( 'remove_local_media' ), __( 'Remove Files From Server', self::$textdomain ) )
           ->help_text( __( 'If enabled, uploaded files will be deleted from your web host after they are uploaded to Backblaze B2.', self::$textdomain ) . '<br />' . __( '<strong>Caution:</strong> This may cause incompatibilities with other plugins that rely on a local copy of uploaded media. If you deactivate this plugin, the media links will be broken.', self::$textdomain ) ),
-        Field::make( 'checkbox', $this->prefix( 'add_media_library_document_type' ), __( 'Add "Document" to Media Library Filter Dropdown', self::$textdomain ) )
+        Field::make( 'checkbox', $this->prefix( 'add_media_library_document_type' ), __( 'Add "Documents/Archives" to Media Library Filter Dropdown', self::$textdomain ) )
           ->set_default_value( 'yes' )
-          ->help_text( __( 'For convenience, adds a <em>Document</em> file type to the Media Library dropdown filter.', self::$textdomain ) ),
+          ->help_text( __( 'For convenience, adds a <em>Documents/Archives</em> file type to the Media Library dropdown filter.', self::$textdomain ) ),
         /*
         Field::make( 'checkbox', $this->prefix( 'uninstall_remove_settings' ), __( 'Remove Plugin Settings On Uninstall', self::$textdomain ) )
           ->help_text( __( 'Settings will only be deleted if you remove the plugin from Installed Plugins. They will not be removed by simply deactivating the plugin.', self::$textdomain ) ),

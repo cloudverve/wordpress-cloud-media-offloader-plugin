@@ -16,7 +16,7 @@ class Core extends Plugin {
 
     if( $this->get_carbon_plugin_option( 'enabled' ) ) {
 
-      // Add 'Document' file type to Media Library filter dropdown
+      // Add 'Documents/Archives' file type to Media Library filter dropdown
       if( $this->get_carbon_plugin_option( 'add_media_library_document_type' ) ) {
         add_filter( 'post_mime_types', array( $this, 'post_mime_types_filter' ) );
       }
@@ -211,14 +211,14 @@ class Core extends Plugin {
   }
 
   /**
-    * Adds 'Document' file type to Media Library filter dropdown
+    * Adds 'Documents/Archives' file type to Media Library filter dropdown
     * @param array $post_mime_types
     * @return array
     * @since 0.7.0
     */
   public function post_mime_types_filter( $post_mime_types ) {
 
-    $post_mime_types['application'] = array( __( 'Document', self::$textdomain ), __( 'Manage Documents', self::$textdomain ), _n_noop( 'Document', 'Documents <span class="count">(%s)</span>' ) );
+    $post_mime_types['application'] = array( __( 'Documents/Archives', self::$textdomain ), __( 'Manage Documents/Archives', self::$textdomain ), _n_noop( 'Document/Archivee', 'Documents/Archives <span class="count">(%s)</span>' ) );
     return $post_mime_types;
 
   }
