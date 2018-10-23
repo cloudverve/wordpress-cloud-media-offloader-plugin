@@ -1,9 +1,9 @@
-[![Author](https://img.shields.io/badge/author-Daniel%20M.%20Hendricks-blue.svg?colorB=9900cc )](https://www.danhendricks.com)
-[![Latest Version](https://img.shields.io/github/release/cloudverve/wordpress-cloud-media-offloader-plugin.svg)](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases)
-[![Packagist](https://img.shields.io/packagist/v/cloudverve/wordpress-cloud-media-offloader-plugin.svg)](https://packagist.org/packages/cloudverve/wordpress-cloud-media-offloader-plugin)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/danielhendricks)
-[![WP Engine](https://img.shields.io/badge/WP%20Engine-Compatible-orange.svg)](http://bit.ly/WPEnginePlans)
-[![GitHub License](https://img.shields.io/badge/license-GPLv2-yellow.svg)](https://raw.githubusercontent.com/cloudverve/wordpress-cloud-media-offloader-plugin/master/LICENSE)
+[![Author](https://img.shields.io/badge/author-Daniel%20M.%20Hendricks-blue.svg?colorB=9900cc&style=flat-square)](https://www.danhendricks.com/?utm_source=github.com&utm_medium=campaign&utm_content=button&utm_campaign=cloudverve%2Fwordpress-cloud-media-offloader-plugin)
+[![Latest Version](https://img.shields.io/github/release/cloudverve/wordpress-cloud-media-offloader-plugin.svg?style=flat-square)](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases)
+[![GitHub License](https://img.shields.io/badge/license-GPLv2-yellow.svg?style=flat-square)](https://raw.githubusercontent.com/cloudverve/wordpress-cloud-media-offloader-plugin/master/LICENSE)
+[![Composer Downloads](https://img.shields.io/packagist/dt/cloudverve/wordpress-cloud-media-offloader-plugin.svg?style=flat-square&label=packagist)](https://packagist.org/packages/cloudverve/wordpress-cloud-media-offloader-plugin)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square)](https://paypal.me/danielhendricks)
+[![Flywheel](https://img.shields.io/badge/style-Flywheel-green.svg?style=flat-square&label=get%20hosted&colorB=AE2A21)](https://share.getf.ly/e25g6k?utm_source=github.com&utm_medium=campaign&utm_content=button&utm_campaign=cloudverve%2Fwordpress-cloud-media-offloader-plugin)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/cloudverve/wordpress-cloud-media-offloader-plugin.svg?style=social)](https://twitter.com/danielhendricks)
 
 # Cloud Media Offloader Plugin for WordPress
@@ -12,7 +12,7 @@ This is currently under development and may contain bugs. Test in a development 
 
 ### Download Plugin
 
-Installable WordPress ZIP file: [cloud-media-offloader.zip](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.4/cloud-media-offloader.zip).
+Installable WordPress ZIP file: [cloud-media-offloader.zip](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.3/cloud-media-offloader.zip).
 
 ## Contents
 
@@ -21,8 +21,6 @@ Installable WordPress ZIP file: [cloud-media-offloader.zip](https://github.com/c
    - [Requirements](#requirements)
 - [Known Compatibilities & Conflicts](#known-compatibilities--conflicts)
 - [Goals](#goals)
-- [Change Log](#change-log)
-- [Credits](#credits)
 - [Screenshots](#screenshots)
 
 ## Description
@@ -40,18 +38,18 @@ One of the best ways that you can contribute is to help me make it better, eithe
 
 ## Installation
 
-Download the [installable WordPress ZIP file](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.4/cloud-media-offloader.zip) and add via **Plugins** > **Add New** in WP Admin.
+Download the [installable WordPress ZIP file](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.3/cloud-media-offloader.zip) and add via **Plugins** > **Add New** in WP Admin.
 
 ### Requirements
 
-- WordPress 4.0 or higher
+- WordPress 4.7 or higher
 - PHP 5.6 or higher
 
 ### Composer
 
 If you manage plugins with Composer, this plugin is on [Packagist](https://packagist.org/packages/cloudverve/wordpress-cloud-media-offloader-plugin).
 
-```
+```bash
 composer require cloudverve/wordpress-cloud-media-offloader-plugin
 ```
 
@@ -74,6 +72,8 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 
 #### Immediate
 
+* Significantly refactor/cleanup code
+* Merge B2 SDK updates
 * Significant testing in various environments
 * Improve documentation
 
@@ -90,36 +90,6 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 * Look at options for supporting some popular WooCommerce digital media plugins.
 * Possibility of serving external CSS/JS from B2 bucket
 * Possibility to browse B2 files from WP Admin
-
-## Change Log
-
-Release changes will be noted on the [Releases](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases) page.
-
-#### Branch: `master`
-
-* Added `wordpress-toolkit` dependency check
-* Added Composer autoloader check for issue [#6](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/issues/6)
-* Changed Composer license field to conform to current [SPDX](https://spdx.org/licenses/) identifiers
-
-## Credits
-
-Please support [humans.txt](http://humanstxt.org/). It's an initiative for knowing the people behind the web. It's an unobtrusive text file that contains information about the different people who have contributed to building the web site/project.
-
-**Carbon Fields**
-
-	URL: http://carbonfields.net/
-	Author: htmlBurger.com
-	Twitter: @htmlburger
-	Author URI: https://htmlburger.com/
-	Location: London, England
-
-**Backblaze B2 PHP SDK**
-
-	URL: https://github.com/cwhite92/b2-sdk-php/
-	Author: Chris White
-	Twitter: @cwhite_92
-	Author URI: https://cwhite.me/
-	Location: Edinburgh, United Kingdom
 
 ## Screenshots
 
