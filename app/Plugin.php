@@ -55,7 +55,7 @@ class Plugin extends \WordPress_ToolKit\ToolKit {
     new Settings\Settings_Page();
 
     // Load shortcodes
-    //new Shortcodes\Shortcode_Loader();
+    new Shortcodes\Shortcode_Loader();
 
     // Perform core plugin logic
     new Core();

@@ -13,18 +13,12 @@ class Shortcode_Loader extends Plugin {
   public function __construct() {
 
     $this->shortcodes = array(
-      Hello_Shortcode::class,
-      CurrentYear_Shortcode::class
+      B2_Link_Shortcode::class
     );
 
     foreach( $this->shortcodes as $shortcodeClass ) {
 
-      $shortcode = new $shortcodeClass();
-      if( $shortcode instanceof ShortcodeInterface ) {
-        new $shortcode();
-      } else {
-        // Log or show error notices
-      }
+      new $shortcodeClass();
 
     }
 

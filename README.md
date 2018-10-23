@@ -72,22 +72,24 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 
 #### Immediate
 
+- [ ] Fix "Remove Files from Server" Errors
 - [ ] Significantly refactor/cleanup code
 - [x] Merge B2 SDK updates
 - [ ] Significant testing in various environments
 - [ ] Improve documentation
+- [ ] Add support for private buckets to `[b2_link]` shortcode
 
 #### Medium-Term
 
 - Add hook on media upload
 - Add ability to store files in private buckets
 - Add support for other object storage services
+- Add WooCommerce support
 
 #### Long-Term
 
 - Add ability to password-protect content, time-expiring URLs and relevant tracking/statistics
 - Add one-click feature to migrate existing local media to B2
-- Look at options for supporting some popular WooCommerce digital media plugins.
 - Possibility of serving external CSS/JS from B2 bucket
 - Possibility to browse B2 files from WP Admin
 

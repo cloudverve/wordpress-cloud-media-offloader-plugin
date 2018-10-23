@@ -21,15 +21,19 @@ msgstr ""
 msgid "Unable to connect to the Backblaze B2 API."
 msgstr ""
 
-#: ../app/Core.php:221, ../app/Core.php:221
-msgid "Document"
-msgid_plural "Documents <span class=\"count\">(%s)</span>"
-msgstr[0] ""
-msgstr[1] ""
+#: ../app/Core.php:221
+msgid "Documents/Archives"
+msgstr ""
 
 #: ../app/Core.php:221
-msgid "Manage Documents"
+msgid "Manage Documents/Archives"
 msgstr ""
+
+#: ../app/Core.php:221
+msgid "Document/Archivee"
+msgid_plural "Documents/Archives <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../app/Plugin.php:105
 msgid "<strong>%s</strong>: One or more dependencies failed to load"
@@ -139,11 +143,11 @@ msgid "Remove Files From Server"
 msgstr ""
 
 #: ../app/Settings/Settings_Page.php:54
-msgid "For convenience, adds a <em>Document</em> file type to the Media Library dropdown filter."
+msgid "For convenience, adds a <em>Documents/Archives</em> file type to the Media Library dropdown filter."
 msgstr ""
 
 #: ../app/Settings/Settings_Page.php:52
-msgid "Add \"Document\" to Media Library Filter Dropdown"
+msgid "Add \"Documents/Archives\" to Media Library Filter Dropdown"
 msgstr ""
 
 #: ../app/Settings/Settings_Page.php:59
@@ -180,4 +184,12 @@ msgstr ""
 
 #: ../app/Settings/Settings_Page.php:69
 msgid "Path"
+msgstr ""
+
+#: ../app/Shortcodes/B2_Link_Shortcode.php:36
+msgid "Invalid bucket"
+msgstr ""
+
+#: ../app/Shortcodes/B2_Link_Shortcode.php:42
+msgid "Object not found"
 msgstr ""
