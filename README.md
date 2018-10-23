@@ -12,7 +12,7 @@ This is currently under development and contains bugs. Test in a development env
 
 ### Download Plugin
 
-Installable WordPress ZIP file: [cloud-media-offloader.zip](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.3/cloud-media-offloader.zip).
+Installable WordPress ZIP file (beta): [cloud-media-offloader.zip](https://f001.backblazeb2.com/file/hendricks/projects/github/cloudverve/wordpress-cloud-media-offloader-plugin/cloud-media-offloader.zip).
 
 ## Contents
 
@@ -38,7 +38,7 @@ One of the best ways that you can contribute is to help me make it better, eithe
 
 ## Installation
 
-Download the [installable WordPress ZIP file](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.3/cloud-media-offloader.zip) and add via **Plugins** > **Add New** in WP Admin.
+Download the [installable WordPress ZIP file](https://f001.backblazeb2.com/file/hendricks/projects/github/cloudverve/wordpress-cloud-media-offloader-plugin/cloud-media-offloader.zip) (beta) and add via **Plugins** > **Add New** in WP Admin.
 
 ### Requirements
 
@@ -77,7 +77,7 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 - [x] Merge B2 SDK updates
 - [ ] Significant testing in various environments
 - [ ] Improve documentation
-- [ ] Add support for private buckets to `[b2_link]` shortcode
+- [ ] Add support for private buckets to [`[b2_link]`](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/wiki/Documentation#shortcodes) shortcode
 
 #### Medium-Term
 
