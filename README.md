@@ -8,7 +8,7 @@
 
 # Cloud Media Offloader Plugin for WordPress
 
-This is currently under development and may contain bugs. Test in a development environment first and use at your own risk.
+This is currently under development and contains bugs. Test in a development environment first and use at your own risk.
 
 ### Download Plugin
 
@@ -72,24 +72,24 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 
 #### Immediate
 
-* Significantly refactor/cleanup code
-* Merge B2 SDK updates
-* Significant testing in various environments
-* Improve documentation
+- [ ] Significantly refactor/cleanup code
+- [x] Merge B2 SDK updates
+- [ ] Significant testing in various environments
+- [ ] Improve documentation
 
 #### Medium-Term
 
-* Add hook on media upload
-* Add ability to store files in private buckets
-* Add support for other object storage services
+- Add hook on media upload
+- Add ability to store files in private buckets
+- Add support for other object storage services
 
 #### Long-Term
 
-* Add ability to password-protect content, time-expiring URLs and relevant tracking/statistics
-* Add one-click feature to migrate existing local media to B2
-* Look at options for supporting some popular WooCommerce digital media plugins.
-* Possibility of serving external CSS/JS from B2 bucket
-* Possibility to browse B2 files from WP Admin
+- Add ability to password-protect content, time-expiring URLs and relevant tracking/statistics
+- Add one-click feature to migrate existing local media to B2
+- Look at options for supporting some popular WooCommerce digital media plugins.
+- Possibility of serving external CSS/JS from B2 bucket
+- Possibility to browse B2 files from WP Admin
 
 ## Screenshots
 
