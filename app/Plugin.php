@@ -29,7 +29,7 @@ class Plugin extends \WordPress_ToolKit\ToolKit {
       // Define plugin version
       if ( !defined( __NAMESPACE__ . '\VERSION' ) ) define( __NAMESPACE__ . '\VERSION', self::$config->get( 'plugin/meta/Version' ) );
 
-      // Load dependecies and load plugin logic
+      // Load dependecies and plugin logic
       register_activation_hook( self::$config->get( 'plugin/identifier' ), array( self::$instance, 'activate' ) );
       add_action( 'plugins_loaded', array( self::$instance, 'load_dependencies' ) );
 
@@ -69,7 +69,7 @@ class Plugin extends \WordPress_ToolKit\ToolKit {
     */
   public function activate() {
 
-    $this->verify_dependencies( true );
+    $this->verify_dependencies( true, true );
 
   }
 
@@ -97,7 +97,7 @@ class Plugin extends \WordPress_ToolKit\ToolKit {
     * @return bool
     * @since 0.2.0
     */
-  private function verify_dependencies( $die = false ) {
+  private function verify_dependencies( $die = false, $activate = false ) {
 
     // Check if underDEV_Requirements class is loaded
     if( !class_exists( 'underDEV_Requirements' ) ) {
@@ -121,7 +121,8 @@ class Plugin extends \WordPress_ToolKit\ToolKit {
     });
 
     // Check for Carbon Fields
-    $requirements->add_check( 'carbon_fields', function( $val, $res ) {
+    $requirements->add_check( 'carbon_fields', function( $val, $res ) use ( &$activate ) {
+      if( $activate ) return;
       $cf_version = defined('\\Carbon_Fields\\VERSION') ? current( explode( '-', \Carbon_Fields\VERSION ) ) : null;
       if( !$cf_version ) {
         $res->add_error( sprintf( __( 'The <a href="%s" target="_blank">Carbon Fields</a> framework is not loaded.', self::$textdomain ), 'https://carbonfields.net/release-archive/' ) );
