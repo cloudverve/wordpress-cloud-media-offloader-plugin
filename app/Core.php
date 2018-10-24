@@ -4,10 +4,15 @@ use CloudVerve\MediaOffloader\Services\B2;
 
 class Core extends Plugin {
 
+  private $mime_list;
+
   function __construct() {
 
     // Check API credentials
     $this->check_api_credentials();
+
+    // Get settings and get variables
+    $this->mime_list = B2::get_mime_list();
 
     // Rewrite uploaded file URLs
     if( $this->get_carbon_plugin_option( 'rewrite_urls' ) ) {
@@ -48,8 +53,7 @@ class Core extends Plugin {
     $bucket_id = $this->get_carbon_plugin_option( 'bucket_id' );
     $bucket_name = B2::get_bucket_by_id( $bucket_id, 'name' );
     $file = B2::get_attachment_info( $attachment_id );
-    $mime_list = B2::get_mime_list();
-    $valid_mime = !$mime_list || in_array( $file['mime_type'], $mime_list );
+    $valid_mime = !$this->mime_list || in_array( $file['mime_type'], $this->mime_list );
     $upload = null;
 
     if( !$bucket_name || !$file || !$valid_mime ) return;
@@ -73,7 +77,7 @@ class Core extends Plugin {
     update_post_meta( $attachment_id, self::prefix( 'external_url' ), $url );
 
     // Delete original file
-    if( $upload && $file_type != 'image' && $this->get_carbon_plugin_option( 'remove_local_media' ) ) {
+    if( $upload && $valid_mime && $file_type != 'image' && $this->get_carbon_plugin_option( 'remove_local_media' ) ) {
       unlink( $this->get_wordpress_root( $upload->getName() ) );
     }
 
@@ -93,11 +97,14 @@ class Core extends Plugin {
       $bucket_id = $this->get_carbon_plugin_option( 'bucket_id' );
       $file = B2::get_attachment_info( $attachment_id );
 
+      $active_mime = !$this->mime_list || in_array( $file['mime_type'], $this->mime_list );
+
+      // Removed resized images
       foreach( $metadata['sizes'] as $size => $meta ) {
 
         $upload = $this->upload_file_to_bucket( $file, $bucket_id, $meta['file'] );
 
-        if( $upload && $this->get_carbon_plugin_option( 'remove_local_media' ) ) {
+        if( $upload && $active_mime && $this->get_carbon_plugin_option( 'remove_local_media' ) ) {
           unlink( $this->get_wordpress_root( $upload->getName() ) );
         }
 
@@ -106,7 +113,7 @@ class Core extends Plugin {
     }
 
     // Remove original file
-    if( $this->get_carbon_plugin_option( 'remove_local_media' ) ) {
+    if( $active_mime && $this->get_carbon_plugin_option( 'remove_local_media' ) ) {
       unlink( $file['filepath'] );
     }
 
