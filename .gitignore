@@ -57,7 +57,10 @@ package-lock.json
 *.codekit
 **.codekit-cache/*
 
+# B2 SDK Cache #
+################
+vendor/dmhendricks/b2-sdk-php/src/Cache
+
 # Development #
 ###############
 node_modules
-/vendor

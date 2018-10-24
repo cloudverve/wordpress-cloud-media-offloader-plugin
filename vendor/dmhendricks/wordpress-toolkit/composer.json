@@ -1,0 +1,27 @@
+{
+  "name": "dmhendricks/wordpress-toolkit",
+  "description": "A collection of helper classes and functions for WordPress plugins and themes.",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://github.com/dmhendricks/wordpress-toolkit",
+  "authors": [
+    {
+      "name": "Daniel M. Hendricks",
+      "homepage": "https://danhendricks.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/dmhendricks/wordpress-toolkit",
+    "wiki": "https://github.com/dmhendricks/wordpress-toolkit/wiki",
+    "issues": "https://github.com/dmhendricks/wordpress-toolkit/issues"
+  },
+  "require": {
+    "php": ">=5.6.4",
+    "vlucas/phpdotenv": "^2.5.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "WordPress_ToolKit\\": "core/"
+    }
+  }
+}

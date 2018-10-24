@@ -1,0 +1,13 @@
+{
+  "toolkit-version": "0.4.1",
+  "prefix": "wptk",
+  "object_cache": {
+    "group": "wordpress_toolkit_cache_group",
+    "expire": 86400
+  },
+  "encrypt": {
+    "method": "AES-128-ECB"
+  },
+  "js_object": "js_object",
+  "dynamic_scripts_directory": "dynamic"
+}
