@@ -77,7 +77,7 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 - [x] Merge B2 SDK updates
 - [ ] Significant testing in various environments
 - [ ] Improve documentation
-- [ ] Add support for private buckets to [`[b2_link]`](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/wiki/Documentation#shortcodes) shortcode
+- [ ] Add support for private buckets to [`[b2_link]`](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/wiki/Shortcodes) shortcode
 
 #### Medium-Term
 
