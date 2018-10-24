@@ -8,11 +8,11 @@
 
 # Cloud Media Offloader Plugin for WordPress
 
-This is currently under development and may contain bugs. Test in a development environment first and use at your own risk.
+This is currently under development and contains bugs. Test in a development environment first and use at your own risk.
 
 ### Download Plugin
 
-Installable WordPress ZIP file: [cloud-media-offloader.zip](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.3/cloud-media-offloader.zip).
+Installable WordPress ZIP file (beta): [cloud-media-offloader.zip](https://f001.backblazeb2.com/file/hendricks/projects/github/cloudverve/wordpress-cloud-media-offloader-plugin/cloud-media-offloader.zip).
 
 ## Contents
 
@@ -38,7 +38,7 @@ One of the best ways that you can contribute is to help me make it better, eithe
 
 ## Installation
 
-Download the [installable WordPress ZIP file](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.3/cloud-media-offloader.zip) and add via **Plugins** > **Add New** in WP Admin.
+Download the [installable WordPress ZIP file](https://f001.backblazeb2.com/file/hendricks/projects/github/cloudverve/wordpress-cloud-media-offloader-plugin/cloud-media-offloader.zip) (beta) and add via **Plugins** > **Add New** in WP Admin.
 
 ### Requirements
 
@@ -72,24 +72,26 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 
 #### Immediate
 
-* Significantly refactor/cleanup code
-* Merge B2 SDK updates
-* Significant testing in various environments
-* Improve documentation
+- [ ] Fix "Remove Files from Server" Errors
+- [ ] Significantly refactor/cleanup code
+- [x] Merge B2 SDK updates
+- [ ] Significant testing in various environments
+- [ ] Improve documentation
+- [ ] Add support for private buckets to [`[b2_link]`](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/wiki/Documentation#shortcodes) shortcode
 
 #### Medium-Term
 
-* Add hook on media upload
-* Add ability to store files in private buckets
-* Add support for other object storage services
+- Add hook on media upload
+- Add ability to store files in private buckets
+- Add support for other object storage services
+- Add WooCommerce support
 
 #### Long-Term
 
-* Add ability to password-protect content, time-expiring URLs and relevant tracking/statistics
-* Add one-click feature to migrate existing local media to B2
-* Look at options for supporting some popular WooCommerce digital media plugins.
-* Possibility of serving external CSS/JS from B2 bucket
-* Possibility to browse B2 files from WP Admin
+- Add ability to password-protect content, time-expiring URLs and relevant tracking/statistics
+- Add one-click feature to migrate existing local media to B2
+- Possibility of serving external CSS/JS from B2 bucket
+- Possibility to browse B2 files from WP Admin
 
 ## Screenshots
 
