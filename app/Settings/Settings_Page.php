@@ -29,6 +29,11 @@ class Settings_Page extends Plugin {
       add_filter( 'upload_mimes', array( $this, 'register_custom_mimes_types' ) );
     }
 
+    // Inject custom style
+    if( isset( $_GET['page'] ) && strpos( $_GET['page'], 'crb_carbon_fields_container' ) !== false ) {
+      add_action( 'admin_enqueue_scripts', array( $this, 'inject_custom_css' ) );
+    }
+
   }
 
   /**
@@ -52,23 +57,23 @@ class Settings_Page extends Plugin {
         Field::make( 'checkbox', $this->prefix( 'add_media_library_document_type' ), __( 'Add "Documents/Archives" to Media Library Filter Dropdown', self::$textdomain ) )
           ->set_default_value( 'yes' )
           ->help_text( __( 'For convenience, adds a <em>Documents/Archives</em> file type to the Media Library dropdown filter.', self::$textdomain ) ),
-        /*
-        Field::make( 'checkbox', $this->prefix( 'uninstall_remove_settings' ), __( 'Remove Plugin Settings On Uninstall', self::$textdomain ) )
-          ->help_text( __( 'Settings will only be deleted if you remove the plugin from Installed Plugins. They will not be removed by simply deactivating the plugin.', self::$textdomain ) ),
-        */
         Field::make( 'separator', $this->prefix( 'separator_general_credentials' ), __( 'Access Credentials', self::$textdomain ) ),
         Field::make( 'html', $this->prefix( 'html_general_credentials' ) )
           ->set_html( __( 'You can find these values by logging into your <a href="https://www.backblaze.com/b2/cloud-storage.html#af9kre" target="_blank">Backblaze</a> account, clicking <strong>Buckets</strong>, then clicking the <strong>Show Account ID and Application Key</strong> link.<br />After modifying your credentials, you must <strong>Save Changes</strong> to update bucket list.', self::$textdomain ) ),
-        Field::make( 'text', $this->prefix( 'account_id' ), __( 'Account ID', self::$textdomain ) ),
+        Field::make( 'text', $this->prefix( 'account_id' ), __( 'Account ID', self::$textdomain ) )
+          ->set_classes( 'cmo-field-length-small' ),
         Field::make( 'text', $this->prefix( 'application_key' ), __('Application Key', self::$textdomain ) )
+          ->set_classes( 'cmo-field-length-small' )
           ->set_attribute( 'type', 'password' ),
         Field::make( 'separator', $this->prefix( 'separator_general_bucket_path' ), __( 'Bucket & Path', self::$textdomain ) ),
         Field::make( 'select', $this->prefix( 'bucket_id' ), __( 'Bucket List', self::$textdomain ))
           ->add_options( B2::get_bucket_list( true ) )
+          ->set_classes( 'cmo-field-length-small' )
           ->help_text( __( 'If you see <em>no options</em>, log into your Backblaze B2 account and make that you have at least one bucket created and that it is marked <strong>Public</strong>.', self::$textdomain ) ),
         Field::make( 'text', $this->prefix( 'path' ), __( 'Path', self::$textdomain ) )
           ->help_text( __( 'Optional. The folder path that you want files uploaded to. Leave blank for the root of the bucket.', self::$textdomain ) )
           ->set_attribute( 'placeholder', 'wp-content/uploads/' )
+          ->set_classes( 'cmo-field-length-medium' )
           ->set_default_value( 'wp-content/uploads/' )
         )
       )
@@ -111,7 +116,7 @@ class Settings_Page extends Plugin {
     );
 
     // Store container and fields for register_uninstall_hook
-    $this->settings_containers[] = $container;
+    //$this->settings_containers[] = $container;
 
   }
 
@@ -162,6 +167,21 @@ class Settings_Page extends Plugin {
     }
 
     return $mimes;
+
+  }
+
+  /**
+   * Inject CSS into page head
+   *
+   * @return void
+   * @since 0.8.0
+   */
+  public function inject_custom_css() {
+
+    $style = "div.cmo-field-length-small select, div.cmo-field-length-small input { max-width: 325px; } div.cmo-field-length-medium input { max-width: 500px; }";
+
+    wp_enqueue_style( 'admin-bar' );
+    wp_add_inline_style( 'admin-bar', $style );
 
   }
 
