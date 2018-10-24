@@ -74,10 +74,11 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 - [x] Merge B2 SDK updates
 - [ ] Test in various environments
 - [ ] Improve documentation
-- [ ] Add support for private buckets to [`[b2_link]`](https://github.com/clouadverve/wordpress-cloud-media-offloader-plugin/wiki/Shortcodes) shortcode
+- [ ] Add object caching
 
 #### Medium-Term
 
+- Add support for private buckets to [`[b2_link]`](https://github.com/clouadverve/wordpress-cloud-media-offloader-plugin/wiki/Shortcodes) shortcode
 - Add hook on media upload
 - Add ability to store files in private buckets
 - Add support for other object storage services
