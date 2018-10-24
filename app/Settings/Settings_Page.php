@@ -149,7 +149,7 @@ class Settings_Page extends Plugin {
   public function options_saved_hook() {
 
     delete_option( $this->prefix( 'credentials_check' ) );
-    self::$cache->flush();
+    self::$cache->flush_group();
 
   }
 
