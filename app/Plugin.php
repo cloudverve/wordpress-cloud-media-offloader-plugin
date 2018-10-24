@@ -206,14 +206,4 @@ class Plugin extends \WordPress_ToolKit\ToolKit {
 
   }
 
-  /**
-    * Returns WordPress root directory.
-    *
-    * @return string Path to WordPress root directory
-    * @since 0.7.0
-    */
-  public function get_wordpress_root( $filename = '' ) {
-    return trailingslashit( implode( DIRECTORY_SEPARATOR, array_slice( explode( DIRECTORY_SEPARATOR, self::$config->get( 'plugin/path' ) ), 0, -4 ) ) ) . $filename;
-  }
-
 }

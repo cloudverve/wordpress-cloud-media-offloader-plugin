@@ -78,7 +78,7 @@ class Core extends Plugin {
 
     // Delete original file
     if( $upload && $valid_mime && $file_type != 'image' && $this->get_carbon_plugin_option( 'remove_local_media' ) ) {
-      unlink( $this->get_wordpress_root( $upload->getName() ) );
+      unlink( ABSPATH . $upload->getName() );
     }
 
   }
@@ -105,7 +105,7 @@ class Core extends Plugin {
         $upload = $this->upload_file_to_bucket( $file, $bucket_id, $meta['file'] );
 
         if( $upload && $active_mime && $this->get_carbon_plugin_option( 'remove_local_media' ) ) {
-          unlink( $this->get_wordpress_root( $upload->getName() ) );
+          unlink( ABSPATH . $upload->getName() );
         }
 
       }
