@@ -187,15 +187,13 @@ class Core extends Plugin {
     */
   public function check_api_credentials() {
 
-    $credentials_check = self::$cache->get_object( self::prefix( 'credentials_check' ), function() {
-      return get_option( $this->prefix( 'credentials_check' ) );
-    });
+    $credentials_check = get_transient( $this->prefix( 'credentials_check', '_' ) );
 
     if( $credentials_check ) {
       return;
     } else {
       $credentials_check = B2::auth();
-      update_option( $this->prefix( 'credentials_check' ), !is_null( $credentials_check ) );
+      set_transient( $this->prefix( 'credentials_check', '_' ), !is_null( $credentials_check ), DAY_IN_SECONDS );
     }
 
     $settings_page = get_admin_url( null, 'options-general.php?page=crb_carbon_fields_container_media_offloader.php#!general' );

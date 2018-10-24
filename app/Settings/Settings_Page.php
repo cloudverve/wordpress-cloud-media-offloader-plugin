@@ -14,7 +14,7 @@ use Carbon_Fields\Field;
   */
 class Settings_Page extends Plugin {
 
-  protected $settings_containers = [];
+  protected $settings_fields;
 
   public function __construct() {
 
@@ -57,6 +57,8 @@ class Settings_Page extends Plugin {
         Field::make( 'checkbox', $this->prefix( 'add_media_library_document_type' ), __( 'Add "Documents/Archives" to Media Library Filter Dropdown', self::$textdomain ) )
           ->set_default_value( 'yes' )
           ->help_text( __( 'For convenience, adds a <em>Documents/Archives</em> file type to the Media Library dropdown filter.', self::$textdomain ) ),
+        Field::make( 'checkbox', $this->prefix( 'uninstall_remove_settings' ), __( 'Remove Plugin Settings On Uninstall', self::$textdomain ) )
+          ->help_text( __( 'Settings will only be deleted if you remove the plugin from Installed Plugins. They will not be removed by simply deactivating the plugin.', self::$textdomain ) ),
         Field::make( 'separator', $this->prefix( 'separator_general_credentials' ), __( 'Access Credentials', self::$textdomain ) ),
         Field::make( 'html', $this->prefix( 'html_general_credentials' ) )
           ->set_html( __( 'You can find these values by logging into your <a href="https://www.backblaze.com/b2/cloud-storage.html#af9kre" target="_blank">Backblaze</a> account, clicking <strong>Buckets</strong>, then clicking the <strong>Show Account ID and Application Key</strong> link.<br />After modifying your credentials, you must <strong>Save Changes</strong> to update bucket list.', self::$textdomain ) ),
@@ -115,8 +117,7 @@ class Settings_Page extends Plugin {
       )
     );
 
-    // Store container and fields for register_uninstall_hook
-    //$this->settings_containers[] = $container;
+    $this->settings_fields = $container->get_fields();
 
   }
 
@@ -148,7 +149,8 @@ class Settings_Page extends Plugin {
     */
   public function options_saved_hook() {
 
-    delete_option( $this->prefix( 'credentials_check' ) );
+    set_transient( $this->prefix( 'settings_fields', '_' ), $this->get_container_fields() );
+    delete_transient( $this->prefix( 'credentials_check', '_' ) );
     self::$cache->flush_group();
 
   }
@@ -167,6 +169,22 @@ class Settings_Page extends Plugin {
     }
 
     return $mimes;
+
+  }
+
+  /**
+   * Get settings container fields
+   *
+   * @return array List of fields
+   * @since 0.8.0
+   */
+  private function get_container_fields() {
+
+    $fields = [];
+    foreach( $this->settings_fields as $field ) {
+      $fields[] = $field->get_name();
+    }
+    return $fields;
 
   }
 
