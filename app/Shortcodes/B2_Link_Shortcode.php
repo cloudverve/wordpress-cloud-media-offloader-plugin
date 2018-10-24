@@ -28,18 +28,22 @@ class B2_Link_Shortcode extends Plugin
   public function b2_link_shortcode( $atts, $content = null ) {
     $atts = shortcode_atts( [
       'bucket' => null,
-      'object' => null
+      'object' => null,
+      'silent' => false
     ], $atts, 'b2_link' );
+
+    // Validate inputs
+    $atts['silent'] = filter_var( $atts['silent'], FILTER_VALIDATE_BOOLEAN );
 
     // Get bucket object
     $bucket = $atts['bucket'] ? B2::get_bucket_by_name( $atts['bucket'] ) : B2::get_bucket_by_id( $this->get_carbon_plugin_option( 'bucket_id' ) );
-    if( empty( $atts['object'] ) || !$bucket ) return __( 'Invalid bucket', self::$textdomain );
+    if( empty( $atts['object'] ) || !$bucket ) return $atts['silent'] ? '' : __( 'Invalid bucket', self::$textdomain );
 
     // Get file object
     try {
       $file_object = self::$client->getFile( [ 'BucketName' => $bucket['name'], 'FileName' => $atts['object'] ] );
     } catch ( \ChrisWhite\B2\Exceptions\NotFoundException $e ) {
-      return __( 'Object not found', self::$textdomain );
+      return $atts['silent'] ? '' : __( 'Object not found', self::$textdomain );
     }
 
     // Get object URL
