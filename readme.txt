@@ -4,7 +4,7 @@ Tags: cloud,media,uploads,offload,block,storage
 Plugin URI: https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin
 Donate link: https://paypal.me/danielhendricks
 Requires at least: 4.7
-Requires PHP: 5.6
+Requires PHP: 7.0
 Tested up to: 5.0
 Stable tag: 0.7.4
 License: GPL-2.0

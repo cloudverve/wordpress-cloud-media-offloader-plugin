@@ -41,7 +41,7 @@ Download the [installable WordPress ZIP file](https://github.com/cloudverve/word
 ### Requirements
 
 - WordPress 4.7 or higher
-- PHP 5.6 or higher
+- PHP 7.0 or higher
 
 ### Composer
 
@@ -62,7 +62,7 @@ composer require cloudverve/wordpress-cloud-media-offloader-plugin
 
 ### Conflicts
 
-* [Enable Media Replace](https://wordpress.org/plugins/enable-media-replace/) - This generally works, but occasionally and seemingly randomly throws an exception when uploading a replacement file. The file still uploads fine, however, there is a bug where an exception is sometimes thrown.
+* [Enable Media Replace](https://wordpress.org/plugins/enable-media-replace/) - Does not work when _Remove Files From Server_ is enabled.
 
 If you encounter any conflicts, please [report them](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/issues).
 
@@ -73,16 +73,16 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 - [x] Fix "Remove Files from Server" Errors
 - [x] Merge B2 SDK updates
 - [ ] Test in various environments
-- [ ] Improve documentation
-- [ ] Add object caching
+- [x] Add object caching
+- [ ] Fix uninstall.php
+- [ ] Bug: When _Enabled_ checkbox is unticked, URLs are still rewritten
 
 #### Medium-Term
 
-- Add support for private buckets to [`[b2_link]`](https://github.com/clouadverve/wordpress-cloud-media-offloader-plugin/wiki/Shortcodes) shortcode
+- Private buckets support
 - Add hook on media upload
-- Add ability to store files in private buckets
-- Add support for other object storage services
-- Add WooCommerce support
+- Support for other object storage services
+- WooCommerce support
 
 #### Long-Term
 
