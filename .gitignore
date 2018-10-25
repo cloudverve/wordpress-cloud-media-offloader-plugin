@@ -64,3 +64,4 @@ vendor/dmhendricks/b2-sdk-php/src/Cache
 # Development #
 ###############
 node_modules
+vendor/
