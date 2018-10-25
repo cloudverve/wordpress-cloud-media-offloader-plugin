@@ -1,5 +1,6 @@
 <?php
 namespace CloudVerve\MediaOffloader;
+use CloudVerve\MediaOffloader\Services\B2;
 use WordPress_ToolKit\ObjectCache;
 use WordPress_ToolKit\ConfigRegistry;
 use WordPress_ToolKit\Helpers\ArrayHelper;
@@ -219,6 +220,45 @@ class Plugin extends \WordPress_ToolKit\ToolKit {
 
     $prefix = $before . self::$config->get( 'prefix' ) . $after;
     return $field_name !== null ? $prefix . $field_name : $prefix;
+
+  }
+
+  /**
+    * Check if provided B2 credentials are valid. Store valid result in database,
+    *    (cached, where availavle) so we don't hammer the B2 API. This value is
+    *    reset every time settings are saved.
+    * @since 0.7.0
+    */
+  public function check_api_credentials( $show_notice = false ) {
+
+    $credentials_check = get_transient( $this->prefix( 'credentials_check', '_' ) );
+
+    if( $credentials_check ) {
+      return true;
+    } else {
+      $credentials_check = B2::auth();
+    }
+    set_transient( $this->prefix( 'credentials_check', '_' ), !is_null( $credentials_check ), HOUR_IN_SECONDS );
+
+    $settings_page = get_admin_url( null, 'options-general.php?page=crb_carbon_fields_container_media_offloader.php#!general' );
+    $settings_notice = __( 'Please check your {|access credentials|}.', self::$textdomain );
+    $settings_parts = preg_split('/[{}]/', $settings_notice, null, PREG_SPLIT_NO_EMPTY);
+
+    if( count( $settings_parts ) > 1 ) {
+
+      $settings_notice = '';
+      foreach( $settings_parts as $part ) {
+        $settings_notice .= strstr( $part, '|' ) ? '<a href="' . $settings_page . '">' . trim( $part, '|' ) . '</a>' : $part;
+      }
+
+    }
+
+    if( $credentials_check ) {
+      return true;
+    } else {
+      if( $show_notice ) Helpers::show_notice( '<strong>' . self::$config->get('plugin/meta/Name') . '</strong>: ' . __( 'Unable to connect to the Backblaze B2 API.', self::$textdomain ) . ' ' . $settings_notice, 'error', false );
+      return false;
+    }
 
   }
 

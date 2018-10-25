@@ -9,7 +9,7 @@ class Core extends Plugin {
   function __construct() {
 
     // Check API credentials
-    $this->check_api_credentials();
+    if( !$this->check_api_credentials( true ) ) return;
 
     // Get settings and get variables
     $this->mime_list = B2::get_mime_list();
@@ -175,42 +175,6 @@ class Core extends Plugin {
       return current( $attachment_meta[ $this->prefix( 'external_url' ) ] );
     } else {
       return $url;
-    }
-
-  }
-
-  /**
-    * Check if provided B2 credentials are valid. Store valid result in database,
-    *    (cached, where availavle) so we don't hammer the B2 API. This value is
-    *    reset every time settings are saved.
-    * @since 0.7.0
-    */
-  public function check_api_credentials() {
-
-    $credentials_check = get_transient( $this->prefix( 'credentials_check', '_' ) );
-
-    if( $credentials_check ) {
-      return;
-    } else {
-      $credentials_check = B2::auth();
-      set_transient( $this->prefix( 'credentials_check', '_' ), !is_null( $credentials_check ), DAY_IN_SECONDS );
-    }
-
-    $settings_page = get_admin_url( null, 'options-general.php?page=crb_carbon_fields_container_media_offloader.php#!general' );
-    $settings_notice = __( 'Please check your {|access credentials|}.', self::$textdomain );
-    $settings_parts = preg_split('/[{}]/', $settings_notice, null, PREG_SPLIT_NO_EMPTY);
-
-    if( count( $settings_parts ) > 1 ) {
-
-      $settings_notice = '';
-      foreach( $settings_parts as $part ) {
-        $settings_notice .= strstr( $part, '|' ) ? '<a href="' . $settings_page . '">' . trim( $part, '|' ) . '</a>' : $part;
-      }
-
-    }
-
-    if( !$credentials_check ) {
-      Helpers::show_notice( '<strong>' . self::$config->get('plugin/meta/Name') . '</strong>: ' . __( 'Unable to connect to the Backblaze B2 API.', self::$textdomain ) . ' ' . $settings_notice, 'error', false );
     }
 
   }
