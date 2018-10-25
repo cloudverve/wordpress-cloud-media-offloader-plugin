@@ -3,7 +3,8 @@
   "short_name": "Media Offloader",
   "object_cache": {
     "group": "cloud_media_offloader",
-    "expire": 86400
+    "expire": 86400,
+    "service_expire": 60
   },
   "dependencies": {
     "php": "5.6",

@@ -45,60 +45,66 @@ class B2 extends Plugin {
     */
   public static function get_bucket_list( $public = null, $associative = true ) {
 
-    // Determine type of buckets to retrieve
-    $bucket_scope = null;
-    if( is_bool( $public ) ) {
-      $bucket_scope = $public ? 'allPublic' : 'allPrivate';
-    }
+    $cache_key = self::prefix( 'bucket_list' ) . ( $public ? '_' . 'public' : '' ) . '_' . var_export( $associative, true );
 
-    // Get Account ID and Application Key from Settings
-    $account_id = self::$cache->get_object( self::prefix( 'account_id' ), function() {
-      return get_option( self::prefix( 'account_id', '_' ) );
-    });
-    $application_key = self::$cache->get_object( self::prefix( 'application_key' ), function() {
-      return get_option( self::prefix( 'application_key', '_' ) );
-    });
+    return self::$cache->get_object( $cache_key, function() use ( &$public, &$associative ) {
 
-    if( !$account_id || !$application_key ) return array();
-
-    // Fetch bucket list from object cache, if enabled, else load from database
-    $buckets = self::$cache->get_object( self::prefix( 'b2_bucket_list' ), function() use ( &$account_id, &$application_key ) {
-      try {
-        self::$client = self::auth();
-        if( !self::$client ) return array();
-        return self::$client->listBuckets();
-      } catch( B2Exception $e ) {
-        self::show_notice( $e->getMessage(), 'error', true );
+      // Determine type of buckets to retrieve
+      $bucket_scope = null;
+      if( is_bool( $public ) ) {
+        $bucket_scope = $public ? 'allPublic' : 'allPrivate';
       }
-    });
 
-    if( !$buckets ) return array();
+      // Get Account ID and Application Key from Settings
+      $account_id = self::$cache->get_object( self::prefix( 'account_id' ), function() {
+        return get_option( self::prefix( 'account_id', '_' ) );
+      });
+      $application_key = self::$cache->get_object( self::prefix( 'application_key' ), function() {
+        return get_option( self::prefix( 'application_key', '_' ) );
+      });
 
-    // Build result array
-    $result = array();
-    foreach( $buckets as $bucket ) {
+      if( !$account_id || !$application_key ) return array();
 
-      if( !$bucket_scope || $bucket_scope == $bucket->getType() ) {
+      // Fetch bucket list from object cache, if enabled, else load from database
+      $buckets = self::$cache->get_object( self::prefix( 'b2_bucket_list' ), function() use ( &$account_id, &$application_key ) {
+        try {
+          self::$client = self::auth();
+          if( !self::$client ) return array();
+          return self::$client->listBuckets();
+        } catch( B2Exception $e ) {
+          self::show_notice( $e->getMessage(), 'error', true );
+        }
+      });
 
-        if( $associative ) {
+      if( !$buckets ) return array();
 
-          $result[ $bucket->getId() ] = $bucket->getName();
+      // Build result array
+      $result = array();
+      foreach( $buckets as $bucket ) {
 
-        } else {
+        if( !$bucket_scope || $bucket_scope == $bucket->getType() ) {
 
-          $result[] = array(
-            'ID' => $bucket->getId(),
-            'name' => $bucket->getName(),
-            'public' => $bucket->getType() == 'allPublic'
-          );
+          if( $associative ) {
+
+            $result[ $bucket->getId() ] = $bucket->getName();
+
+          } else {
+
+            $result[] = array(
+              'ID' => $bucket->getId(),
+              'name' => $bucket->getName(),
+              'public' => $bucket->getType() == 'allPublic'
+            );
+
+          }
 
         }
 
       }
 
-    }
+      return $result;
 
-    return $result;
+    }, [ 'expire' => self::$config->get( 'object_cache/service_expire' ) ]);
 
   }
 
@@ -111,11 +117,17 @@ class B2 extends Plugin {
     */
   public static function get_bucket_by_id( $bucket_id, $field = null ) {
 
-    $buckets = self::get_bucket_list( null, false );
-    foreach( $buckets as $bucket ) {
-      if( $bucket['ID'] == $bucket_id ) return $field ? $bucket[$field] : $bucket;
-    }
-    return null;
+    $cache_key = self::prefix( 'bucket_id-' . $bucket_id ) . ( $field ? '_' . $field : '' );
+
+    return self::$cache->get_object( $cache_key, function() use ( &$bucket_id, &$field ) {
+
+      $buckets = self::get_bucket_list( null, false );
+      foreach( $buckets as $bucket ) {
+        if( $bucket['ID'] == $bucket_id ) return $field ? $bucket[$field] : $bucket;
+      }
+      return null;
+
+    }, [ 'expire' => self::$config->get( 'object_cache/service_expire' ) ]);
 
   }
 
@@ -128,14 +140,19 @@ class B2 extends Plugin {
     */
   public static function get_bucket_by_name( $bucket_name, $field = null ) {
 
-    $buckets = self::get_bucket_list( null, false );
-    foreach( $buckets as $bucket ) {
-      if( $bucket['name'] == $bucket_name ) return $field ? $bucket[$field] : $bucket;
-    }
-    return null;
+    $cache_key = self::prefix( 'bucket-' . $bucket_name ) . ( $field ? '_' . $field : '' );
+
+    return self::$cache->get_object( $cache_key, function() use ( &$bucket_name, &$field ) {
+
+      $buckets = self::get_bucket_list( null, false );
+      foreach( $buckets as $bucket ) {
+        if( $bucket['name'] == $bucket_name ) return $field ? $bucket[$field] : $bucket;
+      }
+      return null;
+
+    }, [ 'expire' => self::$config->get( 'object_cache/service_expire' ) ]);
 
   }
-
 
   /**
     * Retrieves file and path info
