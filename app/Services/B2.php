@@ -69,8 +69,9 @@ class B2 extends Plugin {
       $buckets = self::$cache->get_object( self::prefix( 'b2_bucket_list' ), function() use ( &$account_id, &$application_key ) {
         try {
           self::$client = self::auth();
-          if( !self::$client ) return array();
-          return self::$client->listBuckets();
+          if( !self::$client ) return [];
+          $bucket_list = self::$client->listBuckets();
+          return $bucket_list;
         } catch( B2Exception $e ) {
           self::show_notice( $e->getMessage(), 'error', true );
         }
@@ -201,6 +202,31 @@ class B2 extends Plugin {
     }
 
     return $mime_types;
+
+  }
+
+  /**
+    * Download a public or private file
+    * @param string $object_path The object path of the file
+    * @param string $bucket The bucket to retrieve the file from
+    * @return void
+    * @since 0.8.0
+    */
+  public static function download_file( $object_path, $bucket_name = null ) {
+
+    if( !$bucket_name ) $bucket_name = self::get_bucket_by_id( self::get_carbon_plugin_option( 'bucket_id' ), 'name' );
+
+    $file = self::$client->getFile( [ 'BucketName' => $bucket_name, 'FileName' => $object_path ] );
+    $file_contents = self::$client->download( [ 'FileId' => $file->getId() ] );
+
+    header( 'Content-Type: ' . $file->getType() );
+    header( 'Content-Disposition: attachment; filename="' . basename( $file->getName() ) . '"' );
+    header( 'Content-Transfer-Encoding: binary' );
+    header( 'Connection: Keep-Alive' );
+    header( 'Cache-Control: no-cache, no-store, must-revalidate' );
+    header( 'Content-Length: ' . $file->getSize() );
+    echo $file_contents;
+    exit;
 
   }
 
