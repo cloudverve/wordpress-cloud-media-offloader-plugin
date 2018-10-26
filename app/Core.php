@@ -71,7 +71,12 @@ class Core extends Plugin {
     }
 
     // Get upload filename
-    $url = self::$client->getDownloadUrl( [ 'BucketName' => $bucket_name, 'FileName' => $file['destfile'] ] );
+    $custom_url = rtrim( trim( $this->get_carbon_plugin_option( 'custom_url' ) ), '/' );
+    if( $this->get_carbon_plugin_option( 'enable_custom_url' ) && trim( $custom_url ) ) {
+      $url = sprintf( '%s/file/%s/%s', $custom_url, $bucket_name, $file['destfile'] );
+    } else {
+      $url = self::$client->getDownloadUrl( [ 'BucketName' => $bucket_name, 'FileName' => $file['destfile'] ] );
+    }
 
     // Set upload name
     update_post_meta( $attachment_id, self::prefix( 'external_url' ), $url );

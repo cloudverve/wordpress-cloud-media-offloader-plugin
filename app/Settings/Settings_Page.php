@@ -2,7 +2,7 @@
 namespace CloudVerve\MediaOffloader\Settings;
 use CloudVerve\MediaOffloader\Plugin;
 use CloudVerve\MediaOffloader\Helpers;
-use CloudVerve\MediaOffloader\Services\B2;
+use CloudVerve\MediaOffloader\Provider\B2;
 use Carbon_Fields\Datastore\Datastore\Serialized_Theme_Options_Datastore;
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
@@ -71,7 +71,6 @@ class Settings_Page extends Plugin {
       Field::make( 'text', $this->prefix( 'account_id' ), __( 'Account ID', self::$textdomain ) )
         ->set_classes( 'cmo-field-length-small' ),
       Field::make( 'text', $this->prefix( 'application_key' ), __( 'Master Application Key', self::$textdomain ) )
-        ->help_text( __( 'These values can be found by clicking the <em>Show Account ID and Application Key</em> link at the top of the bucket list page in the B2 control panel.', self::$textdomain ) )
         ->set_classes( 'cmo-field-length-small' )
         ->set_attribute( 'type', 'password' ),
       Field::make( 'separator', $this->prefix( 'separator_general_bucket_path' ), __( 'Bucket & Path', self::$textdomain ) )
@@ -93,6 +92,17 @@ class Settings_Page extends Plugin {
         ->set_attribute( 'placeholder', 'wp-content/uploads/' )
         ->set_classes( 'cmo-field-length-medium' )
         ->set_default_value( 'wp-content/uploads/' )
+    ]);
+
+    $general_fields = array_merge( $general_fields, [
+      Field::make( 'checkbox', $this->prefix( 'enable_custom_url' ), __( 'Enable Custom URL', self::$textdomain ) )
+        ->help_text( sprintf( __( 'Allows you to provide a custom URL/alias to replace the standard endpoint link. Useful when using a CDN in front of B2, such as <a href="%s" target="_blank">Cloudflare</a> (<a href="%s" target="_blank">setup instructions</a>).', self::$textdomain ), 'https://www.backblaze.com/blog/backblaze-and-cloudflare-partner-to-provide-free-data-transfer/#af9kre', 'https://help.backblaze.com/hc/en-us/articles/217666928-Using-Backblaze-B2-with-the-Cloudflare-CDN#af9kre' ) ),
+      Field::make( 'text', $this->prefix( 'custom_url' ), __( 'Custom URL/Alias', self::$textdomain ) )
+        ->set_attribute( 'placeholder', __( 'Example:', self::$textdomain ) . ' ' . $this->get_root_domain( 'cdn' ) )
+        ->set_conditional_logic([[
+          'field' => $this->prefix( 'enable_custom_url' ),
+          'value' => true
+        ]])
     ]);
 
     $container = Container::make( 'theme_options', self::$config->get( 'short_name' ) )
@@ -220,6 +230,24 @@ class Settings_Page extends Plugin {
 
     wp_enqueue_style( 'admin-bar' );
     wp_add_inline_style( 'admin-bar', $style );
+
+  }
+
+  /**
+   * Gets root domain of current site
+   *
+   * @param string $prepend Sub-domain to prepend
+   * @return string
+   * @since 0.8.1
+   */
+  private function get_root_domain( $prepend = '', $include_scheme = true ) {
+
+    $site_url = site_url();
+    $domain = ltrim( parse_url( $site_url, PHP_URL_HOST ), 'www.' );
+    $scheme = parse_url( $site_url, PHP_URL_SCHEME );
+    if( $prepend ) $domain = $prepend . '.' . $domain;
+    if( $include_scheme ) $domain = $scheme . '://' . $domain . '/';
+    return $domain;
 
   }
 

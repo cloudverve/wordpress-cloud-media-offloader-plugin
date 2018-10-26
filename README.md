@@ -25,6 +25,13 @@ This is currently under development and contains bugs. Test in a development env
 
 This is a WordPress plugin that allows you to serve your WordPress Media Library files via the [Backblaze B2](https://www.backblaze.com/b2/cloud-storage.html#af9kre) cloud storage service.
 
+### Features
+
+- Limit offloading by MIME types
+- Option to remove files from origin server
+- [Shortcode](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/wiki/Shortcodes) to create hyperlinks
+- :new: CloudFlare support ([more info](https://www.backblaze.com/blog/backblaze-and-cloudflare-partner-to-provide-free-data-transfer/))
+
 ### Contributing
 
 One of the best ways that you can contribute is to help me make it better, either with code or with constructive feedback. Ways to help:

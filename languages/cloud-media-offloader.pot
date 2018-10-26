@@ -13,15 +13,15 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../app/Core.php:190
+#: ../app/Core.php:195
 msgid "Documents/Archives"
 msgstr ""
 
-#: ../app/Core.php:190
+#: ../app/Core.php:195
 msgid "Manage Documents/Archives"
 msgstr ""
 
-#: ../app/Core.php:190
+#: ../app/Core.php:195
 msgid "Document/Archivee"
 msgid_plural "Documents/Archives <span class=\"count\">(%s)</span>"
 msgstr[0] ""
@@ -123,7 +123,7 @@ msgid "Account ID"
 msgstr ""
 
 #: ../app/Settings/Settings_Page.php:73
-msgid "Application Key"
+msgid "Master Application Key"
 msgstr ""
 
 #: ../app/Settings/Settings_Page.php:76
@@ -150,59 +150,71 @@ msgstr ""
 msgid "Path"
 msgstr ""
 
-#: ../app/Settings/Settings_Page.php:101, ../app/Settings/Settings_Page.php:114
-msgid "MIME Types"
+#: ../app/Settings/Settings_Page.php:99
+msgid "Allows you to provide a custom URL/alias to replace the standard endpoint link. Useful when using a CDN in front of B2, such as <a href=\"%s\" target=\"_blank\">CloudFlare</a>."
 msgstr ""
 
-#: ../app/Settings/Settings_Page.php:103
-msgid "If checked, uploads to Backblaze B2 are limited to specific MIME types."
+#: ../app/Settings/Settings_Page.php:98
+msgid "Enable Custom URL"
 msgstr ""
 
-#: ../app/Settings/Settings_Page.php:102
-msgid "Limit to Specific MIME Types"
-msgstr ""
-
-#: ../app/Settings/Settings_Page.php:119
-msgid "Add New"
-msgstr ""
-
-#: ../app/Settings/Settings_Page.php:114, ../app/Settings/Settings_Page.php:109
-msgid "MIME Type"
-msgstr ""
-
-#: ../app/Settings/Settings_Page.php:112
-msgid "Add extra MIME types that are not listed below."
-msgstr ""
-
-#: ../app/Settings/Settings_Page.php:112
-msgid "Examples"
-msgstr ""
-
-#: ../app/Settings/Settings_Page.php:108, ../app/Settings/Settings_Page.php:110
+#: ../app/Settings/Settings_Page.php:101, ../app/Settings/Settings_Page.php:119, ../app/Settings/Settings_Page.php:121
 msgid "Example:"
 msgstr ""
 
-#: ../app/Settings/Settings_Page.php:107
+#: ../app/Settings/Settings_Page.php:100
+msgid "Custom URL/Alias"
+msgstr ""
+
+#: ../app/Settings/Settings_Page.php:112, ../app/Settings/Settings_Page.php:125
+msgid "MIME Types"
+msgstr ""
+
+#: ../app/Settings/Settings_Page.php:114
+msgid "If checked, uploads to Backblaze B2 are limited to specific MIME types."
+msgstr ""
+
+#: ../app/Settings/Settings_Page.php:113
+msgid "Limit to Specific MIME Types"
+msgstr ""
+
+#: ../app/Settings/Settings_Page.php:130
+msgid "Add New"
+msgstr ""
+
+#: ../app/Settings/Settings_Page.php:125, ../app/Settings/Settings_Page.php:120
+msgid "MIME Type"
+msgstr ""
+
+#: ../app/Settings/Settings_Page.php:123
+msgid "Add extra MIME types that are not listed below."
+msgstr ""
+
+#: ../app/Settings/Settings_Page.php:123
+msgid "Examples"
+msgstr ""
+
+#: ../app/Settings/Settings_Page.php:118
 msgid "Extension/Label"
 msgstr ""
 
-#: ../app/Settings/Settings_Page.php:104
+#: ../app/Settings/Settings_Page.php:115
 msgid "Custom MIME Types"
 msgstr ""
 
-#: ../app/Settings/Settings_Page.php:121
+#: ../app/Settings/Settings_Page.php:132
 msgid "Registers custom MIME types (if specified)."
 msgstr ""
 
-#: ../app/Settings/Settings_Page.php:120
+#: ../app/Settings/Settings_Page.php:131
 msgid "Register Custom MIME Types"
 msgstr ""
 
-#: ../app/Settings/Settings_Page.php:128
+#: ../app/Settings/Settings_Page.php:139
 msgid "Built-in MIME Types"
 msgstr ""
 
-#: ../app/Settings/Settings_Page.php:99
+#: ../app/Settings/Settings_Page.php:110
 msgid "General"
 msgstr ""
 
