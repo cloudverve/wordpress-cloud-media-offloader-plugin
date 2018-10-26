@@ -1,19 +1,23 @@
 <?php
 if( !defined( 'WP_UNINSTALL_PLUGIN' ) ) die();
 
-$cmo_uninstall_settings = json_decode( file_get_contents( 'plugin.json' ) );
-$cmo_uninstall_prefix = '_' . $cmo_uninstall_settings->prefix . '_';
+// Load plugin settings
+$__uninstall_settings = json_decode( trim( file_get_contents( trailingslashit( __DIR__ ) . 'plugin.json' ) ) );
+$__uninstall_prefix = '_' . $__uninstall_settings->prefix . '_';
 
-if( get_option( $cmo_uninstall_prefix . 'uninstall_remove_settings' ) ) {
+// Check if Remove Settings on Uninstall is enabled
+if( get_option( $__uninstall_prefix . 'uninstall_remove_settings' ) ) {
 
-  $cmo_settings_fields = get_transient( $cmo_uninstall_prefix . 'settings_fields' );
+  $__settings_fields = get_option( $__uninstall_prefix . 'settings_fields' );
 
-  foreach( $cmo_settings_fields as $_key ) {
+  // Delete settings from database
+  foreach( $__settings_fields as $_key ) {
     delete_option( $_key );
   }
 
-  delete_transient( $cmo_uninstall_prefix . 'settings_fields' );
+  delete_option( $__uninstall_prefix . 'settings_fields' );
 
 }
 
-delete_transient( $cmo_uninstall_prefix . 'credentials_check' );
+// Remove credentials cheeck transient
+delete_transient( $__uninstall_prefix . 'credentials_check' );

@@ -74,7 +74,7 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 - [x] Merge B2 SDK updates
 - [ ] Test in various environments
 - [x] Add object caching
-- [ ] Fix uninstall.php
+- [x] Add uninstall.php
 - [ ] Bug: When _Enabled_ checkbox is unticked, URLs are still rewritten
 
 #### Medium-Term

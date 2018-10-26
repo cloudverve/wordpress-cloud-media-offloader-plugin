@@ -169,7 +169,7 @@ class Settings_Page extends Plugin {
   public function options_saved_hook() {
 
     delete_transient( $this->prefix( 'credentials_check', '_' ) );
-    set_transient( $this->prefix( 'settings_fields', '_' ), $this->get_container_fields() );
+    update_option( $this->prefix( 'settings_fields', '_' ), $this->get_container_fields() );
     self::$cache->flush_group();
 
   }
