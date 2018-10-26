@@ -13,7 +13,7 @@ class Shortcode_Loader extends Plugin {
   public function __construct() {
 
     $this->shortcodes = array(
-      B2_Link_Shortcode::class
+      B2_Object_Shortcode::class
     );
 
     foreach( $this->shortcodes as $shortcodeClass ) {

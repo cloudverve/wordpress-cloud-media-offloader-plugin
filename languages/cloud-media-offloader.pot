@@ -151,7 +151,7 @@ msgid "Path"
 msgstr ""
 
 #: ../app/Settings/Settings_Page.php:99
-msgid "Allows you to provide a custom URL/alias to replace the standard endpoint link. Useful when using a CDN in front of B2, such as <a href=\"%s\" target=\"_blank\">CloudFlare</a>."
+msgid "Allows you to provide a custom URL/alias to replace the standard endpoint link. Useful when using a CDN in front of B2, such as <a href=\"%s\" target=\"_blank\">Cloudflare</a> (<a href=\"%s\" target=\"_blank\">setup instructions</a>)."
 msgstr ""
 
 #: ../app/Settings/Settings_Page.php:98
@@ -218,10 +218,10 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: ../app/Shortcodes/B2_Link_Shortcode.php:40
+#: ../app/Shortcodes/B2_Object_Shortcode.php:47
 msgid "Invalid bucket"
 msgstr ""
 
-#: ../app/Shortcodes/B2_Link_Shortcode.php:46
+#: ../app/Shortcodes/B2_Object_Shortcode.php:53
 msgid "Object not found"
 msgstr ""
