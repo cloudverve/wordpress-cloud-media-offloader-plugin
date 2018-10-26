@@ -11,7 +11,7 @@ class B2_Object_Shortcode extends Plugin
 
     if( !self::$client ) self::$client = B2::auth();
 
-    // Usage example: [b2_object bucket="my-bucket" object="wp-conteent/uploads/example.pdf"]Example File[/b2_object]
+    // Usage example: [b2_object bucket="my-bucket" path="wp-conteent/uploads/example.pdf"]Example File[/b2_object]
     if ( ! shortcode_exists( 'b2_object' ) ) {
         add_shortcode( 'b2_object', array( $this, 'b2_object_shortcode' ) );
     }
@@ -28,7 +28,7 @@ class B2_Object_Shortcode extends Plugin
   public function b2_object_shortcode( $atts, $content = null ) {
     $atts = shortcode_atts( [
       'bucket' => null,
-      'object' => null,
+      'path' => null,
       'silent' => false,
       'output' => null, // image, link, url
       'title' => null
@@ -44,11 +44,11 @@ class B2_Object_Shortcode extends Plugin
 
     // Get bucket object
     $bucket = $atts['bucket'] ? B2::get_bucket_by_name( $atts['bucket'] ) : B2::get_bucket_by_id( $this->get_carbon_plugin_option( 'bucket_id' ) );
-    if( empty( $atts['object'] ) || !$bucket ) return $atts['silent'] ? '' : __( 'Invalid bucket', self::$textdomain );
+    if( empty( $atts['path'] ) || !$bucket ) return $atts['silent'] ? '' : __( 'Invalid bucket', self::$textdomain );
 
     // Get file object
     try {
-      $file_object = self::$client->getFile( [ 'BucketName' => $bucket['name'], 'FileName' => $atts['object'] ] );
+      $file_object = self::$client->getFile( [ 'BucketName' => $bucket['name'], 'FileName' => $atts['path'] ] );
     } catch ( \ChrisWhite\B2\Exceptions\NotFoundException $e ) {
       return $atts['silent'] ? '' : __( 'Object not found', self::$textdomain );
     }
@@ -56,9 +56,9 @@ class B2_Object_Shortcode extends Plugin
     // Get object URL
     $custom_url = rtrim( trim( $this->get_carbon_plugin_option( 'custom_url' ) ), '/' );
     if( $this->get_carbon_plugin_option( 'enable_custom_url' ) && trim( $custom_url ) ) {
-      $url = sprintf( '%s/file/%s/%s', $custom_url, $bucket['name'], $atts['object'] );
+      $url = sprintf( '%s/file/%s/%s', $custom_url, $bucket['name'], $atts['path'] );
     } else {
-      $url = self::$client->getDownloadUrl( [ 'BucketName' => $bucket['name'], 'FileName' => $atts['object'] ] );
+      $url = self::$client->getDownloadUrl( [ 'BucketName' => $bucket['name'], 'FileName' => $atts['path'] ] );
     }
 
     // Create hyperlink

@@ -29,7 +29,7 @@ This is a WordPress plugin that allows you to serve your WordPress Media Library
 
 - Limit offloading by MIME types
 - Option to remove files from origin server
-- [Shortcode](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/wiki/Shortcodes) to create hyperlinks
+- [Shortcode](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/wiki/Shortcodes) to create hyperlinks and output image tags
 - :new: CloudFlare support ([more info](https://www.backblaze.com/blog/backblaze-and-cloudflare-partner-to-provide-free-data-transfer/))
 
 ### Contributing
