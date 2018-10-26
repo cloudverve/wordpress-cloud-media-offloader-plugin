@@ -9,7 +9,7 @@ class Core extends Plugin {
   function __construct() {
 
     // Check API credentials and exit if offloading is disabled in settings
-    if( !$this->get_carbon_plugin_option( 'enabled' ) || !$this->check_api_credentials( true ) ) return;
+    if( !$this->get_carbon_plugin_option( 'enabled' ) || !parent::check_api_credentials( true ) ) return;
 
     // Get settings and get variables
     $this->mime_list = B2::get_mime_list();
@@ -282,16 +282,17 @@ class Core extends Plugin {
 
     $target = $file['destfile'];
     if( $resized_image ) {
-      $target = $file['destpath'] . '/' . $resized_image;
+      $resized_image = parse_url( $resized_image, PHP_URL_PATH );
+      $target = $file['destpath'] . $resized_image;
     }
+    $args = [ 'BucketName' => $bucket_name, 'FileName' => $target ];
+
+    if( !self::$client->fileExists( $args ) ) return;
 
     try {
-      $delete = self::$client->deleteFile([
-        'BucketName' => $bucket_name,
-        'FileName' => $target
-      ]);
+      $delete = self::$client->deleteFile( $args );
     } catch ( \ChrisWhite\B2\Exceptions\NotFoundException $e ) {
-      return null;
+      return;
     }
 
   }
