@@ -6,7 +6,7 @@ Donate link: https://paypal.me/danielhendricks
 Requires at least: 4.7
 Requires PHP: 7.0
 Tested up to: 5.0
-Stable tag: 0.7.4
+Stable tag: 0.8.0
 License: GPL-2.0
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

@@ -10,7 +10,7 @@
 
 This is currently under development and contains bugs. Test in a development environment first and use at your own risk.
 
-#### :fast_forward: Download Installable ZIP: [cloud-media-offloader.zip](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.5/cloud-media-offloader.zip)
+#### :fast_forward: Download Installable ZIP: [cloud-media-offloader.zip](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.8.0/cloud-media-offloader.zip)
 
 ## Contents
 
@@ -18,7 +18,7 @@ This is currently under development and contains bugs. Test in a development env
 - [Installation](#installation)
    - [Requirements](#requirements)
 - [Known Compatibilities & Conflicts](#known-compatibilities--conflicts)
-- [Goals](#goals)
+- [Goals](#future-goals)
 - [Screenshots](#screenshots)
 
 ## Description
@@ -36,7 +36,7 @@ One of the best ways that you can contribute is to help me make it better, eithe
 
 ## Installation
 
-Download the [installable WordPress ZIP file](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.7.5/cloud-media-offloader.zip) and install via **Plugins** > **Add New** in WP Admin.
+Download the [installable WordPress ZIP file](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.8.0/cloud-media-offloader.zip) and install via **Plugins** > **Add New** in WP Admin.
 
 ### Requirements
 
@@ -66,29 +66,18 @@ composer require cloudverve/wordpress-cloud-media-offloader-plugin
 
 If you encounter any conflicts, please [report them](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/issues).
 
-## Goals
-
-#### Immediate
-
-- [x] Fix "Remove Files from Server" Errors
-- [x] Merge B2 SDK updates
-- [ ] Test in various environments
-- [x] Add object caching
-- [x] Add uninstall.php
-
-#### Medium-Term
+## Future Goals
 
 - Private buckets support
 - Add hook on media upload
 - Support for other object storage services
 - WooCommerce support
 
-#### Long-Term
+### Long-Term
 
 - Add ability to password-protect content, time-expiring URLs and relevant tracking/statistics
 - Add one-click feature to migrate existing local media to B2
 - Possibility of serving external CSS/JS from B2 bucket
-- Possibility to browse B2 files from WP Admin
 
 ## Screenshots
 
