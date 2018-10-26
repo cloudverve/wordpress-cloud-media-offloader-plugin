@@ -1,6 +1,6 @@
 <?php
 namespace CloudVerve\MediaOffloader;
-use CloudVerve\MediaOffloader\Services\B2;
+use CloudVerve\MediaOffloader\Provider\B2;
 
 class Core extends Plugin {
 

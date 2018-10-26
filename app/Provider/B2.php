@@ -1,5 +1,5 @@
 <?php
-namespace CloudVerve\MediaOffloader\Services;
+namespace CloudVerve\MediaOffloader\Provider;
 use CloudVerve\MediaOffloader\Plugin;
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;

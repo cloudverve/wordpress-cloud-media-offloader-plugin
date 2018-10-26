@@ -1,7 +1,7 @@
 <?php
 namespace CloudVerve\MediaOffloader\Shortcodes;
 use CloudVerve\MediaOffloader\Plugin;
-use CloudVerve\MediaOffloader\Services\B2;
+use CloudVerve\MediaOffloader\Provider\B2;
 use ChrisWhite\B2\Exceptions;
 
 class B2_Link_Shortcode extends Plugin
