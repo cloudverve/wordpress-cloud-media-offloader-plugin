@@ -201,11 +201,16 @@ class Core extends Plugin {
   private function get_upload_filetype( $path ) {
 
     $file_type = wp_check_filetype( $path );
+    $result = null;
     if( isset( $file_type['type'] ) && strstr( $file_type['type'], '/' ) ) {
-      return current( explode( '/', $file_type['type'] ) );
-    } else {
-      return null;
+      $result = current( explode( '/', $file_type['type'] ) );
+
+      if( $result == 'image' && strpos( $file_type['type'], 'svg' ) !== false ) {
+        $result = end( explode( '/', $file_type['type'] ) );
+      }
     }
+
+    return $result;
 
   }
 
