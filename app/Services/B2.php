@@ -205,29 +205,4 @@ class B2 extends Plugin {
 
   }
 
-  /**
-    * Download a public or private file
-    * @param string $object_path The object path of the file
-    * @param string $bucket The bucket to retrieve the file from
-    * @return void
-    * @since 0.8.0
-    */
-  public static function download_file( $object_path, $bucket_name = null ) {
-
-    if( !$bucket_name ) $bucket_name = self::get_bucket_by_id( self::get_carbon_plugin_option( 'bucket_id' ), 'name' );
-
-    $file = self::$client->getFile( [ 'BucketName' => $bucket_name, 'FileName' => $object_path ] );
-    $file_contents = self::$client->download( [ 'FileId' => $file->getId() ] );
-
-    header( 'Content-Type: ' . $file->getType() );
-    header( 'Content-Disposition: attachment; filename="' . basename( $file->getName() ) . '"' );
-    header( 'Content-Transfer-Encoding: binary' );
-    header( 'Connection: Keep-Alive' );
-    header( 'Cache-Control: no-cache, no-store, must-revalidate' );
-    header( 'Content-Length: ' . $file->getSize() );
-    echo $file_contents;
-    exit;
-
-  }
-
 }

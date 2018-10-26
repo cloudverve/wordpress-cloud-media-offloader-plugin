@@ -75,7 +75,6 @@ If you encounter any conflicts, please [report them](https://github.com/cloudver
 - [ ] Test in various environments
 - [x] Add object caching
 - [x] Add uninstall.php
-- [ ] Bug: When _Enabled_ checkbox is unticked, URLs are still rewritten
 
 #### Medium-Term
 

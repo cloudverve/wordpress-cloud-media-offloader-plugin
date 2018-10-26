@@ -8,8 +8,8 @@ class Core extends Plugin {
 
   function __construct() {
 
-    // Check API credentials
-    if( !$this->check_api_credentials( true ) ) return;
+    // Check API credentials and exit if offloading is disabled in settings
+    if( !$this->get_carbon_plugin_option( 'enabled' ) || !$this->check_api_credentials( true ) ) return;
 
     // Get settings and get variables
     $this->mime_list = B2::get_mime_list();
