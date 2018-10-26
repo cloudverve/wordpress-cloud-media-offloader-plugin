@@ -67,7 +67,7 @@ class Settings_Page extends Plugin {
         ->help_text( __( 'Settings will only be deleted if you remove the plugin from Installed Plugins. They will not be removed by simply deactivating the plugin.', self::$textdomain ) ),
       Field::make( 'separator', $this->prefix( 'separator_general_credentials' ), __( 'Access Credentials', self::$textdomain ) ),
       Field::make( 'html', $this->prefix( 'html_general_credentials' ) )
-        ->set_html( __( 'You can find these values by logging into your <a href="https://www.backblaze.com/b2/cloud-storage.html#af9kre" target="_blank">Backblaze</a> account, clicking <strong>Buckets</strong>, then clicking the <strong>Show Account ID and Application Key</strong> link.<br />After modifying your credentials, you must <strong>Save Changes</strong> to update bucket list.', self::$textdomain ) ),
+        ->set_html( sprintf( __( 'You can find these values by logging into your <a href="%s" target="_blank">Backblaze</a> account, clicking <strong>Buckets</strong>, then clicking the <strong>Show Account ID and Application Key</strong> link.<br />After modifying your credentials, you must <strong>Save Changes</strong> to update bucket list.', self::$textdomain ), 'https://www.backblaze.com/b2/cloud-storage.html#af9kre' ) ),
       Field::make( 'text', $this->prefix( 'account_id' ), __( 'Account ID', self::$textdomain ) )
         ->set_classes( 'cmo-field-length-small' ),
       Field::make( 'text', $this->prefix( 'application_key' ), __('Application Key', self::$textdomain ) )

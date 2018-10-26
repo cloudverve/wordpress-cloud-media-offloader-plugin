@@ -262,4 +262,17 @@ class Plugin extends \WordPress_ToolKit\ToolKit {
 
   }
 
+  /**
+    * Specify additional string translatiions
+    * @since 0.8.0
+    */
+  private function translations() {
+
+    $translations = [
+      __( 'Cloud Media Offloader', self::$textdomain ),
+      __( 'Serve WordPress Media Library files from the Backblaze B2 cloud storage service.', self::$textdomain )
+    ];
+
+  }
+
 }
