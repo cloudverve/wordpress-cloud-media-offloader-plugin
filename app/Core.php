@@ -288,7 +288,7 @@ class Core extends Plugin {
     $target = $file['destfile'];
     if( $resized_image ) {
       $resized_image = parse_url( $resized_image, PHP_URL_PATH );
-      $target = $file['destpath'] . $resized_image;
+      $target = $file['destpath'] . '/' . $resized_image;
     }
     $args = [ 'BucketName' => $bucket_name, 'FileName' => $target ];
 
