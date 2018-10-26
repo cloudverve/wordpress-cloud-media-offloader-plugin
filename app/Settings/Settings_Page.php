@@ -70,7 +70,8 @@ class Settings_Page extends Plugin {
         ->set_html( sprintf( __( 'You can find these values by logging into your <a href="%s" target="_blank">Backblaze</a> account, clicking <strong>Buckets</strong>, then clicking the <strong>Show Account ID and Application Key</strong> link.<br />After modifying your credentials, you must <strong>Save Changes</strong> to update bucket list.', self::$textdomain ), 'https://www.backblaze.com/b2/cloud-storage.html#af9kre' ) ),
       Field::make( 'text', $this->prefix( 'account_id' ), __( 'Account ID', self::$textdomain ) )
         ->set_classes( 'cmo-field-length-small' ),
-      Field::make( 'text', $this->prefix( 'application_key' ), __('Application Key', self::$textdomain ) )
+      Field::make( 'text', $this->prefix( 'application_key' ), __( 'Master Application Key', self::$textdomain ) )
+        ->help_text( __( 'These values can be found by clicking the <em>Show Account ID and Application Key</em> link at the top of the bucket list page in the B2 control panel.', self::$textdomain ) )
         ->set_classes( 'cmo-field-length-small' )
         ->set_attribute( 'type', 'password' ),
       Field::make( 'separator', $this->prefix( 'separator_general_bucket_path' ), __( 'Bucket & Path', self::$textdomain ) )
