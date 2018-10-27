@@ -4,7 +4,7 @@
  * Plugin Name:       Cloud Media Offloader
  * Plugin URI:        https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin
  * Description:       Serve WordPress Media Library files from the Backblaze B2 cloud storage service.
- * Version:           0.8.0
+ * Version:           0.8.1
  * Author:            CloudVerve, LLC
  * Author URI:        https://www.cloudverve.com
  * License:           GPL-2.0
