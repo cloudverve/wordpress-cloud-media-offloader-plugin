@@ -10,7 +10,7 @@
 
 This is currently under development and contains bugs. Test in a development environment first and use at your own risk.
 
-#### :fast_forward: Download Installable ZIP: [cloud-media-offloader.zip](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.8.0/cloud-media-offloader.zip)
+#### :fast_forward: Download Installable ZIP: [cloud-media-offloader.zip](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.8.1/cloud-media-offloader.zip)
 
 ## Contents
 
@@ -38,12 +38,11 @@ One of the best ways that you can contribute is to help me make it better, eithe
 
 * I am open to pull requests and welcome improvements.
 * [Feedback](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/issues) on how I can make it better.
-* **Testing!** If you try the plugin - please use the [installable ZIP](#installation), let me know what works and what doesn't. If you have an [issue](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/issues), it is helpful if you can describe (as much as you are aware of) your environment - install method, WordPress version, PHP version, operating system, and web server (Apache, Nginx, etc).
 * Translations (or [donations](https://paypal.me/danielhendricks) to create/maintain them)
 
 ## Installation
 
-Download the [installable WordPress ZIP file](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.8.0/cloud-media-offloader.zip) and install via **Plugins** > **Add New** in WP Admin.
+Download the [installable WordPress ZIP file](https://github.com/cloudverve/wordpress-cloud-media-offloader-plugin/releases/download/0.8.1/cloud-media-offloader.zip) and install via **Plugins** > **Add New** in WP Admin.
 
 ### Requirements
 
